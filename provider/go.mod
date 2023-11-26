@@ -1,6 +1,8 @@
-module github.com/pulumi/pulumi-xyz/provider
+module github.com/usrbinkat/pulumi-pinecone-native/provider
 
 go 1.21
+
+replace github.com/usrbinkat/pulumi-pinecone-native/provider => ../provider
 
 require (
 	github.com/pulumi/pulumi-go-provider v0.11.1

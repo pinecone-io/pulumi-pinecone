@@ -26,7 +26,7 @@ import (
 // Version is initialized by the Go linker to contain the semver of this build.
 var Version string
 
-const Name string = "xyz"
+const Name string = "pinecone"
 
 func Provider() p.Provider {
 	// We tell the provider what resources it needs to support.

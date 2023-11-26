@@ -1,8 +1,8 @@
-name: provider-xyz-native
+name: provider-pinecone-native
 runtime: yaml
 plugins:
   providers:
-    - name: xyz
+    - name: pinecone
       path: ../../bin
 
 resources:

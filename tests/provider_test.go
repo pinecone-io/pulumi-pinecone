@@ -25,7 +25,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	xyz "github.com/pulumi/pulumi-xyz/provider"
+	pinecone "github.com/usrbinkat/pulumi-pinecone-native/provider"
 )
 
 func TestRandomCreate(t *testing.T) {
@@ -52,5 +52,5 @@ func urn(typ string) resource.URN {
 
 // Create a test server.
 func provider() integration.Server {
-	return integration.NewServer(xyz.Name, semver.MustParse("1.0.0"), xyz.Provider())
+	return integration.NewServer(pinecone.Name, semver.MustParse("1.0.0"), pinecone.Provider())
 }

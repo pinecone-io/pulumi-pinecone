@@ -1,6 +1,6 @@
-name: provider-xyz-native
+name: provider-pinecone-native
 runtime: nodejs
 plugins:
   providers:
-    - name: xyz
+    - name: pinecone
       path: ../../bin

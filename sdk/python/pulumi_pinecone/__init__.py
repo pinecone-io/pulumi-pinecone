@@ -11,11 +11,11 @@ _utilities.register(
     resource_modules="""
 [
  {
-  "pkg": "xyz",
+  "pkg": "pinecone",
   "mod": "index",
-  "fqn": "pulumi_xyz",
+  "fqn": "pulumi_pinecone",
   "classes": {
-   "xyz:index:Random": "Random"
+   "pinecone:index:Random": "Random"
   }
  }
 ]
@@ -23,9 +23,9 @@ _utilities.register(
     resource_packages="""
 [
  {
-  "pkg": "xyz",
-  "token": "pulumi:providers:xyz",
-  "fqn": "pulumi_xyz",
+  "pkg": "pinecone",
+  "token": "pulumi:providers:pinecone",
+  "fqn": "pulumi_pinecone",
   "class": "Provider"
  }
 ]
