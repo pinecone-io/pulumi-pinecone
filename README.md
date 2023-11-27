@@ -1,12 +1,15 @@
-# Pulumi Native Provider Boilerplate
+# Pinecone - Pulumi Native Provider
 
-This repository is a boilerplate showing how to create and locally test a native Pulumi provider.
+This Pulumi Pinecone Native Provider enables you to manage your Pinecone collections and indexes using any language of Pulumi Infrastructure as Code.
 
-## Authoring a Pulumi Native Provider
+---
+**NOTE**
 
-This boilerplate creates a working Pulumi-owned provider named `xyz`.
-It implements a random number generator that you can [build and test out for yourself](#test-against-the-example) and then replace the Random code with code specific to your provider.
+Pinecone Native is in pre-alpha development and may not work as expected.
 
+## Provider Developers
+
+### Getting Started
 
 ### Prerequisites
 
@@ -28,38 +31,16 @@ If you are not using VSCode, you will need to ensure the following tools are ins
 1. Create a new Github CodeSpaces environment using this repository.
 1. Open a terminal in the CodeSpaces environment.
 1. Run `make build install` to build and install the provider.
-1. Run `make gen_examples` to generate the example programs in `examples/` off of the source `examples/yaml` example program.
+1. Export your Pinecone API Token: `export PC_API_TOKEN="0000b000-86cf-4ecf-a753-00000000000"`
 1. Run `make up` to run the example program in `examples/yaml`.
 1. Run `make down` to tear down the example program.
 
-### Creating a new provider repository
-
-Pulumi offers this repository as a [GitHub template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for convenience.  From this repository:
-
-1. Click "Use this template".
-1. Set the following options:
-   * Owner: pulumi 
-   * Repository name: pulumi-xyz-native (replace "xyz" with the name of your provider)
-   * Description: Pulumi provider for xyz
-   * Repository type: Public
-1. Clone the generated repository.
-
-From the templated repository:
-
-1. Search-replace `xyz` with the name of your desired provider.
-
-#### Build the provider and install the plugin
-
-   ```bash
-   $ make build install
-   ```
-   
 This will:
 
 1. Create the SDK codegen binary and place it in a `./bin` folder (gitignored)
 2. Create the provider binary and place it in the `./bin` folder (gitignored)
 3. Generate the dotnet, Go, Node, and Python SDKs and place them in the `./sdk` folder
-4. Install the provider on your machine.
+4. Install the provider locally.
 
 #### Test against the example
    
@@ -71,14 +52,12 @@ $ pulumi stack init test
 $ pulumi up
 ```
 
-Now that you have completed all of the above steps, you have a working provider that generates a random string for you.
-
 #### A brief repository overview
 
 You now have:
 
 1. A `provider/` folder containing the building and implementation logic
-    1. `cmd/pulumi-resource-xyz/main.go` - holds the provider's sample implementation logic.
+    1. `cmd/pulumi-resource-pinecone/main.go` - holds the provider's sample implementation logic.
 2. `deployment-templates` - a set of files to help you around deployment and publication
 3. `sdk` - holds the generated code libraries created by `pulumi-gen-xyz/main.go`
 4. `examples` a folder of Pulumi programs to try locally and/or use in CI.
@@ -88,16 +67,6 @@ You now have:
 
 This repository depends on the pulumi-go-provider library. For more details on building providers, please check
 the [Pulumi Go Provider docs](https://github.com/pulumi/pulumi-go-provider).
-
-### Build Examples
-
-Create an example program using the resources defined in your provider, and place it in the `examples/` folder.
-
-You can now repeat the steps for [build, install, and test](#test-against-the-example).
-
-## Configuring CI and releases
-
-1. Follow the instructions laid out in the [deployment templates](./deployment-templates/README-DEPLOYMENT.md).
 
 ## References
 
