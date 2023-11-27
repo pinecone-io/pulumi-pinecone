@@ -1,0 +1,6 @@
+name: provider-pinecone-native
+runtime: go
+plugins:
+  providers:
+    - name: pinecone
+      path: ../../bin
