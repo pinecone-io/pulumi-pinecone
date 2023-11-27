@@ -1,6 +1,0 @@
-name: provider-pinecone-native
-runtime: nodejs
-plugins:
-  providers:
-    - name: pinecone
-      path: ../../bin

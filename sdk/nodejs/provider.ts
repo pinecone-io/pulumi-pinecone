@@ -19,6 +19,14 @@ export class Provider extends pulumi.ProviderResource {
         return obj['__pulumiType'] === "pulumi:providers:" + Provider.__pulumiType;
     }
 
+    /**
+     * The API token for Pinecone.
+     */
+    public readonly apiToken!: pulumi.Output<string>;
+    /**
+     * The environment for the Pinecone API.
+     */
+    public readonly pineconeEnv!: pulumi.Output<string>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -27,12 +35,22 @@ export class Provider extends pulumi.ProviderResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: ProviderArgs, opts?: pulumi.ResourceOptions) {
+    constructor(name: string, args: ProviderArgs, opts?: pulumi.ResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
+            if ((!args || args.apiToken === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'apiToken'");
+            }
+            if ((!args || args.pineconeEnv === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'pineconeEnv'");
+            }
+            resourceInputs["apiToken"] = args?.apiToken ? pulumi.secret(args.apiToken) : undefined;
+            resourceInputs["pineconeEnv"] = args ? args.pineconeEnv : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["apiToken"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
     }
 }
@@ -41,4 +59,12 @@ export class Provider extends pulumi.ProviderResource {
  * The set of arguments for constructing a Provider resource.
  */
 export interface ProviderArgs {
+    /**
+     * The API token for Pinecone.
+     */
+    apiToken: pulumi.Input<string>;
+    /**
+     * The environment for the Pinecone API.
+     */
+    pineconeEnv: pulumi.Input<string>;
 }

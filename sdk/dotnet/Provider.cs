@@ -13,13 +13,26 @@ namespace Pulumi.Pinecone
     public partial class Provider : global::Pulumi.ProviderResource
     {
         /// <summary>
+        /// The API token for Pinecone.
+        /// </summary>
+        [Output("apiToken")]
+        public Output<string> ApiToken { get; private set; } = null!;
+
+        /// <summary>
+        /// The environment for the Pinecone API.
+        /// </summary>
+        [Output("pineconeEnv")]
+        public Output<string> PineconeEnv { get; private set; } = null!;
+
+
+        /// <summary>
         /// Create a Provider resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Provider(string name, ProviderArgs? args = null, CustomResourceOptions? options = null)
+        public Provider(string name, ProviderArgs args, CustomResourceOptions? options = null)
             : base("pinecone", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -29,6 +42,10 @@ namespace Pulumi.Pinecone
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                AdditionalSecretOutputs =
+                {
+                    "apiToken",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -39,6 +56,28 @@ namespace Pulumi.Pinecone
 
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
+        [Input("apiToken", required: true)]
+        private Input<string>? _apiToken;
+
+        /// <summary>
+        /// The API token for Pinecone.
+        /// </summary>
+        public Input<string>? ApiToken
+        {
+            get => _apiToken;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _apiToken = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        /// <summary>
+        /// The environment for the Pinecone API.
+        /// </summary>
+        [Input("pineconeEnv", required: true)]
+        public Input<string> PineconeEnv { get; set; } = null!;
+
         public ProviderArgs()
         {
         }

@@ -92,6 +92,7 @@ up::
 	pulumi stack init dev && \
 	pulumi stack select dev && \
 	pulumi config set name dev && \
+	pulumi config set --secret apiToken ${PC_API_TOKEN} && \
 	pulumi up -y
 
 down::
@@ -108,7 +109,9 @@ devcontainer::
 
 .PHONY: build
 
-build:: provider dotnet_sdk go_sdk nodejs_sdk python_sdk
+# TODO: fix dotnet_sdk builds
+#build:: provider dotnet_sdk go_sdk nodejs_sdk python_sdk
+build:: provider go_sdk nodejs_sdk python_sdk
 
 # Required for the codegen action that runs in pulumi/pulumi
 only_build:: build

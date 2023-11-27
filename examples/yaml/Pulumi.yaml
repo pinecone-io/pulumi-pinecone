@@ -6,11 +6,17 @@ plugins:
       path: ../../bin
 
 resources:
-  myRandomResource:
-    type: xyz:Random
+  myPineconeIndex:
+    type: pinecone:index:PineconeIndex
     properties:
-      length: 24
+      indexName: "example-index"
+      indexDimension: 512
+      indexMetric: "cosine"
+      indexPods: 1
+      indexReplicas: 1
+      indexPodType: "p1.x1"
+      pineconeEnv: "gcp-starter"
 
 outputs:
   output:
-    value: ${myRandomResource.result}
+    value: ${myPineconeIndex.result}

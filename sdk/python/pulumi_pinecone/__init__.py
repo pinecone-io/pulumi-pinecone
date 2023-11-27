@@ -6,16 +6,26 @@ from . import _utilities
 import typing
 # Export this package's modules as members:
 from .provider import *
-from .random import *
+
+# Make subpackages available:
+if typing.TYPE_CHECKING:
+    import pulumi_pinecone.config as __config
+    config = __config
+    import pulumi_pinecone.provider as __provider
+    provider = __provider
+else:
+    config = _utilities.lazy_import('pulumi_pinecone.config')
+    provider = _utilities.lazy_import('pulumi_pinecone.provider')
+
 _utilities.register(
     resource_modules="""
 [
  {
   "pkg": "pinecone",
-  "mod": "index",
-  "fqn": "pulumi_pinecone",
+  "mod": "provider",
+  "fqn": "pulumi_pinecone.provider",
   "classes": {
-   "pinecone:index:Random": "Random"
+   "pinecone:provider:PineconeIndex": "PineconeIndex"
   }
  }
 ]

@@ -1,91 +1,134 @@
-// Copyright 2016-2023, Pulumi Corporation.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
+// File: provider/provider.go
 package provider
 
 import (
-	"math/rand"
-	"time"
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"regexp"
 
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 )
 
-// Version is initialized by the Go linker to contain the semver of this build.
-var Version string
-
-const Name string = "pinecone"
+const (
+	Name    = "pinecone"
+	Version = "0.1.0"
+)
 
 func Provider() p.Provider {
-	// We tell the provider what resources it needs to support.
-	// In this case, a single custom resource.
 	return infer.Provider(infer.Options{
-		Resources: []infer.InferredResource{
-			infer.Resource[Random, RandomArgs, RandomState](),
-		},
+		Resources: []infer.InferredResource{infer.Resource[*PineconeIndex, PineconeIndexArgs, PineconeIndexState]()},
 		ModuleMap: map[tokens.ModuleName]tokens.ModuleName{
-			"provider": "index",
+			"pinecone": "index",
 		},
+		Config: infer.Config[Config](),
 	})
 }
 
-// Each resource has a controlling struct.
-// Resource behavior is determined by implementing methods on the controlling struct.
-// The `Create` method is mandatory, but other methods are optional.
-// - Check: Remap inputs before they are typed.
-// - Diff: Change how instances of a resource are compared.
-// - Update: Mutate a resource in place.
-// - Read: Get the state of a resource from the backing provider.
-// - Delete: Custom logic when the resource is deleted.
-// - Annotate: Describe fields and set defaults for a resource.
-// - WireDependencies: Control how outputs and secrets flows through values.
-type Random struct{}
-
-// Each resource has in input struct, defining what arguments it accepts.
-type RandomArgs struct {
-	// Fields projected into Pulumi must be public and hava a `pulumi:"..."` tag.
-	// The pulumi tag doesn't need to match the field name, but its generally a
-	// good idea.
-	Length int `pulumi:"length"`
+type Config struct {
+	APIToken    string `pulumi:"apiToken" provider:"secret"`
+	PineconeEnv string `pulumi:"pineconeEnv"`
 }
 
-// Each resource has a state, describing the fields that exist on the created resource.
-type RandomState struct {
-	// It is generally a good idea to embed args in outputs, but it isn't strictly necessary.
-	RandomArgs
-	// Here we define a required output called result.
-	Result string `pulumi:"result"`
+func (c *Config) Annotate(a infer.Annotator) {
+	a.Describe(&c.APIToken, "The API token for Pinecone.")
+	a.Describe(&c.PineconeEnv, "The environment for the Pinecone API.")
 }
 
-// All resources must implement Create at a minumum.
-func (Random) Create(ctx p.Context, name string, input RandomArgs, preview bool) (string, RandomState, error) {
-	state := RandomState{RandomArgs: input}
-	if preview {
-		return name, state, nil
+func (c *Config) Configure(ctx p.Context) error {
+	if c.APIToken == "" {
+		return fmt.Errorf("API token is required")
 	}
-	state.Result = makeRandom(input.Length)
-	return name, state, nil
+	if c.PineconeEnv == "" {
+		return fmt.Errorf("Pinecone environment is required")
+	}
+	return nil
 }
 
-func makeRandom(length int) string {
-	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
-	charset := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+type PineconeIndex struct{}
 
-	result := make([]rune, length)
-	for i := range result {
-		result[i] = charset[seededRand.Intn(len(charset))]
+type PineconeIndexArgs struct {
+	IndexName      string `pulumi:"indexName"`
+	IndexDimension int    `pulumi:"indexDimension"`
+	IndexMetric    string `pulumi:"indexMetric"`
+	IndexPods      int    `pulumi:"indexPods"`
+	IndexReplicas  int    `pulumi:"indexReplicas"`
+	IndexPodType   string `pulumi:"indexPodType"`
+}
+
+func (pia *PineconeIndexArgs) Annotate(a infer.Annotator) {
+	a.Describe(&pia.IndexName, "The name of the Pinecone index.")
+	a.Describe(&pia.IndexDimension, "The dimensions of the vectors in the index.")
+}
+
+type PineconeIndexState struct {
+	IndexName string `pulumi:"indexName"`
+}
+
+func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs, preview bool) (string, PineconeIndexState, error) {
+	config := infer.GetConfig[Config](ctx)
+
+	// Validate index name
+	if err := validateIndexName(args.IndexName); err != nil {
+		return "", PineconeIndexState{}, err
 	}
-	return string(result)
+
+	// Construct API URL
+	url := fmt.Sprintf("https://controller.%s.pinecone.io/databases", config.PineconeEnv)
+
+	// Define index parameters.
+	indexData := map[string]interface{}{
+		"name":      args.IndexName,
+		"dimension": args.IndexDimension,
+		"metric":    args.IndexMetric,
+		"pods":      args.IndexPods,
+		"replicas":  args.IndexReplicas,
+		"pod_type":  args.IndexPodType,
+	}
+
+	jsonData, err := json.Marshal(indexData)
+	if err != nil {
+		return "", PineconeIndexState{}, fmt.Errorf("error marshaling index data: %s", err)
+	}
+
+	// Create POST request with index params.
+	req, err := http.NewRequestWithContext(context.Background(), "POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		return "", PineconeIndexState{}, fmt.Errorf("error creating request: %s", err)
+	}
+
+	// Add headers to request.
+	req.Header.Add("Api-Key", config.APIToken)
+	req.Header.Add("accept", "text/plain")
+	req.Header.Add("content-type", "application/json")
+
+	// Send request.
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", PineconeIndexState{}, fmt.Errorf("error sending request: %s", err)
+	}
+	defer res.Body.Close()
+
+	// Check response status code.
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return "", PineconeIndexState{}, fmt.Errorf("HTTP Error code: %s", res.Status)
+	}
+
+	// Return state.
+	return args.IndexName, PineconeIndexState{IndexName: args.IndexName}, nil
+}
+
+func validateIndexName(name string) error {
+	matched, err := regexp.MatchString("^[a-z0-9-]+$", name)
+	if err != nil {
+		return fmt.Errorf("error validating index name: %s", err)
+	}
+	if !matched {
+		return fmt.Errorf("index name can only contain lower case alphanumeric characters and dashes")
+	}
+	return nil
 }
