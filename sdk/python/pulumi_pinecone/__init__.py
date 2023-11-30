@@ -5,27 +5,25 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
+from .pinecone_index_resource import *
 from .provider import *
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:
     import pulumi_pinecone.config as __config
     config = __config
-    import pulumi_pinecone.provider as __provider
-    provider = __provider
 else:
     config = _utilities.lazy_import('pulumi_pinecone.config')
-    provider = _utilities.lazy_import('pulumi_pinecone.provider')
 
 _utilities.register(
     resource_modules="""
 [
  {
   "pkg": "pinecone",
-  "mod": "provider",
-  "fqn": "pulumi_pinecone.provider",
+  "mod": "index",
+  "fqn": "pulumi_pinecone",
   "classes": {
-   "pinecone:provider:PineconeIndex": "PineconeIndex"
+   "pinecone:index:PineconeIndexResource": "PineconeIndexResource"
   }
  }
 ]

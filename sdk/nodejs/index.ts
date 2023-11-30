@@ -5,6 +5,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
+export { PineconeIndexResourceArgs } from "./pineconeIndexResource";
+export type PineconeIndexResource = import("./pineconeIndexResource").PineconeIndexResource;
+export const PineconeIndexResource: typeof import("./pineconeIndexResource").PineconeIndexResource = null as any;
+utilities.lazyLoad(exports, ["PineconeIndexResource"], () => require("./pineconeIndexResource"));
+
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
@@ -13,12 +18,23 @@ utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
 // Export sub-modules:
 import * as config from "./config";
-import * as provider from "./provider";
 
 export {
     config,
-    provider,
 };
+
+const _module = {
+    version: utilities.getVersion(),
+    construct: (name: string, type: string, urn: string): pulumi.Resource => {
+        switch (type) {
+            case "pinecone:index:PineconeIndexResource":
+                return new PineconeIndexResource(name, <any>undefined, { urn })
+            default:
+                throw new Error(`unknown resource type ${type}`);
+        }
+    },
+};
+pulumi.runtime.registerResourceModule("pinecone", "index", _module)
 pulumi.runtime.registerResourcePackage("pinecone", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {

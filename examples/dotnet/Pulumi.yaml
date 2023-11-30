@@ -1,4 +1,4 @@
-name: provider-pinecone-native
+name: pinecone
 runtime: dotnet
 plugins:
   providers:

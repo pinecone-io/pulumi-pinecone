@@ -1,4 +1,4 @@
-module provider-pinecone-native
+module pinecone
 
 go 1.20
 

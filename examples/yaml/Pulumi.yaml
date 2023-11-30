@@ -1,4 +1,4 @@
-name: provider-pinecone-native
+name: pinecone
 runtime: yaml
 plugins:
   providers:
@@ -7,16 +7,15 @@ plugins:
 
 resources:
   myPineconeIndex:
-    type: pinecone:index:PineconeIndex
+    type: pinecone:index:PineconeIndexResource
     properties:
-      indexName: "example-index"
-      indexDimension: 512
-      indexMetric: "cosine"
-      indexPods: 1
-      indexReplicas: 1
-      indexPodType: "p1.x1"
-      pineconeEnv: "gcp-starter"
+      name: "example-index"
+      dimension: 512
+      metric: "cosine"
+      pods: 1
+      replicas: 1
+      podType: "p1.x1"
 
 outputs:
   output:
-    value: ${myPineconeIndex.result}
+    value: ${myPineconeIndex.id}

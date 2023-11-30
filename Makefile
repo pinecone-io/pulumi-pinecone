@@ -19,7 +19,8 @@ TESTPARALLELISM := 4
 
 ensure::
 	cd provider && go mod tidy
-	cd sdk && go mod tidy
+	# TODO: fix error "internal: no Go source files"
+	#cd sdk && go mod tidy
 	cd tests && go mod tidy
 
 provider::
@@ -93,6 +94,7 @@ up::
 	pulumi stack select dev && \
 	pulumi config set name dev && \
 	pulumi config set --secret apiToken ${PC_API_TOKEN} && \
+	pulumi config set pineconeEnv gcp-starter && \
 	pulumi up -y
 
 down::

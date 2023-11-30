@@ -16,9 +16,8 @@
         "config/index.ts",
         "config/vars.ts",
         "index.ts",
+        "pineconeIndexResource.ts",
         "provider.ts",
-        "provider/index.ts",
-        "provider/pineconeIndex.ts",
         "utilities.ts"
     ]
 }
