@@ -5,10 +5,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { PineconeIndexResourceArgs } from "./pineconeIndexResource";
-export type PineconeIndexResource = import("./pineconeIndexResource").PineconeIndexResource;
-export const PineconeIndexResource: typeof import("./pineconeIndexResource").PineconeIndexResource = null as any;
-utilities.lazyLoad(exports, ["PineconeIndexResource"], () => require("./pineconeIndexResource"));
+export { PineconeIndexArgs } from "./pineconeIndex";
+export type PineconeIndex = import("./pineconeIndex").PineconeIndex;
+export const PineconeIndex: typeof import("./pineconeIndex").PineconeIndex = null as any;
+utilities.lazyLoad(exports, ["PineconeIndex"], () => require("./pineconeIndex"));
 
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
@@ -27,8 +27,8 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "pinecone:index:PineconeIndexResource":
-                return new PineconeIndexResource(name, <any>undefined, { urn })
+            case "pinecone:index:PineconeIndex":
+                return new PineconeIndex(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

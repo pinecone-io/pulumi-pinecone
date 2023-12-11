@@ -9,10 +9,10 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
-__all__ = ['PineconeIndexResourceArgs', 'PineconeIndexResource']
+__all__ = ['PineconeIndexArgs', 'PineconeIndex']
 
 @pulumi.input_type
-class PineconeIndexResourceArgs:
+class PineconeIndexArgs:
     def __init__(__self__, *,
                  dimension: pulumi.Input[int],
                  metric: pulumi.Input[str],
@@ -21,7 +21,7 @@ class PineconeIndexResourceArgs:
                  pods: pulumi.Input[int],
                  replicas: pulumi.Input[int]):
         """
-        The set of arguments for constructing a PineconeIndexResource resource.
+        The set of arguments for constructing a PineconeIndex resource.
         :param pulumi.Input[int] dimension: The dimensions of the vectors in the index.
         :param pulumi.Input[str] metric: The metric used to compute the distance between vectors.
         :param pulumi.Input[str] name: The name of the Pinecone index.
@@ -109,7 +109,7 @@ class PineconeIndexResourceArgs:
         pulumi.set(self, "replicas", value)
 
 
-class PineconeIndexResource(pulumi.CustomResource):
+class PineconeIndex(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -122,7 +122,7 @@ class PineconeIndexResource(pulumi.CustomResource):
                  replicas: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         """
-        Create a PineconeIndexResource resource with the given unique name, props, and options.
+        Create a PineconeIndex resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[int] dimension: The dimensions of the vectors in the index.
@@ -136,17 +136,17 @@ class PineconeIndexResource(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: PineconeIndexResourceArgs,
+                 args: PineconeIndexArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a PineconeIndexResource resource with the given unique name, props, and options.
+        Create a PineconeIndex resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
-        :param PineconeIndexResourceArgs args: The arguments to use to populate this resource's properties.
+        :param PineconeIndexArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(PineconeIndexResourceArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(PineconeIndexArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -168,7 +168,7 @@ class PineconeIndexResource(pulumi.CustomResource):
         if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = PineconeIndexResourceArgs.__new__(PineconeIndexResourceArgs)
+            __props__ = PineconeIndexArgs.__new__(PineconeIndexArgs)
 
             if dimension is None and not opts.urn:
                 raise TypeError("Missing required property 'dimension'")
@@ -189,8 +189,8 @@ class PineconeIndexResource(pulumi.CustomResource):
                 raise TypeError("Missing required property 'replicas'")
             __props__.__dict__["replicas"] = replicas
             __props__.__dict__["index_name"] = None
-        super(PineconeIndexResource, __self__).__init__(
-            'pinecone:index:PineconeIndexResource',
+        super(PineconeIndex, __self__).__init__(
+            'pinecone:index:PineconeIndex',
             resource_name,
             __props__,
             opts)
@@ -198,9 +198,9 @@ class PineconeIndexResource(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'PineconeIndexResource':
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'PineconeIndex':
         """
-        Get an existing PineconeIndexResource resource's state with the given name, id, and optional extra
+        Get an existing PineconeIndex resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
 
         :param str resource_name: The unique name of the resulting resource.
@@ -209,10 +209,10 @@ class PineconeIndexResource(pulumi.CustomResource):
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = PineconeIndexResourceArgs.__new__(PineconeIndexResourceArgs)
+        __props__ = PineconeIndexArgs.__new__(PineconeIndexArgs)
 
         __props__.__dict__["index_name"] = None
-        return PineconeIndexResource(resource_name, opts=opts, __props__=__props__)
+        return PineconeIndex(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter(name="indexName")

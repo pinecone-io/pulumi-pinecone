@@ -5,7 +5,7 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
-from .pinecone_index_resource import *
+from .pinecone_index import *
 from .provider import *
 
 # Make subpackages available:
@@ -23,7 +23,7 @@ _utilities.register(
   "mod": "index",
   "fqn": "pulumi_pinecone",
   "classes": {
-   "pinecone:index:PineconeIndexResource": "PineconeIndexResource"
+   "pinecone:index:PineconeIndex": "PineconeIndex"
   }
  }
 ]

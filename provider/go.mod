@@ -2,8 +2,6 @@ module github.com/usrbinkat/pulumi-pinecone-native/provider
 
 go 1.21
 
-replace github.com/usrbinkat/pulumi-pinecone-native/provider => ../provider
-
 require (
 	github.com/pulumi/pulumi-go-provider v0.13.0
 	github.com/pulumi/pulumi/sdk/v3 v3.94.2
@@ -98,3 +96,9 @@ require (
 	lukechampine.com/frand v1.4.2 // indirect
 	sourcegraph.com/sourcegraph/appdash v0.0.0-20211028080628-e2786a622600 // indirect
 )
+
+replace github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/client => ./pkg/pinecone/client
+
+replace github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/index => ./pkg/pinecone/index
+
+replace github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/utils => ./pkg/pinecone/utils

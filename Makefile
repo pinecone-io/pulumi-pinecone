@@ -16,6 +16,7 @@ GOPATH			:= $(shell go env GOPATH)
 WORKING_DIR     := $(shell pwd)
 EXAMPLES_DIR    := ${WORKING_DIR}/examples/yaml
 TESTPARALLELISM := 4
+BUILD_DIR		:= ${WORKING_DIR}/provider/cmd/pulumi-resource-pinecone
 
 ensure::
 	cd provider && go mod tidy
@@ -24,7 +25,7 @@ ensure::
 	cd tests && go mod tidy
 
 provider::
-	(cd provider && go build -o $(WORKING_DIR)/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
+	(cd ${BUILD_DIR} && go build -o $(WORKING_DIR)/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
 
 provider_debug::
 	(cd provider && go build -o $(WORKING_DIR)/bin/${PROVIDER} -gcflags="all=-N -l" -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))

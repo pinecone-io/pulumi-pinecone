@@ -3,7 +3,7 @@ package main
 
 import (
 	p "github.com/pulumi/pulumi-go-provider"
-	pinecone "github.com/usrbinkat/pulumi-pinecone-native/provider"
+	pinecone "github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone"
 )
 
 // Serve the provider against Pulumi's Provider protocol.

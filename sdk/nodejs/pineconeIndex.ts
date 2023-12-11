@@ -4,43 +4,43 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
-export class PineconeIndexResource extends pulumi.CustomResource {
+export class PineconeIndex extends pulumi.CustomResource {
     /**
-     * Get an existing PineconeIndexResource resource's state with the given name, ID, and optional extra
+     * Get an existing PineconeIndex resource's state with the given name, ID, and optional extra
      * properties used to qualify the lookup.
      *
      * @param name The _unique_ name of the resulting resource.
      * @param id The _unique_ provider ID of the resource to lookup.
      * @param opts Optional settings to control the behavior of the CustomResource.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): PineconeIndexResource {
-        return new PineconeIndexResource(name, undefined as any, { ...opts, id: id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): PineconeIndex {
+        return new PineconeIndex(name, undefined as any, { ...opts, id: id });
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'pinecone:index:PineconeIndexResource';
+    public static readonly __pulumiType = 'pinecone:index:PineconeIndex';
 
     /**
-     * Returns true if the given object is an instance of PineconeIndexResource.  This is designed to work even
+     * Returns true if the given object is an instance of PineconeIndex.  This is designed to work even
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
-    public static isInstance(obj: any): obj is PineconeIndexResource {
+    public static isInstance(obj: any): obj is PineconeIndex {
         if (obj === undefined || obj === null) {
             return false;
         }
-        return obj['__pulumiType'] === PineconeIndexResource.__pulumiType;
+        return obj['__pulumiType'] === PineconeIndex.__pulumiType;
     }
 
     public /*out*/ readonly indexName!: pulumi.Output<string>;
 
     /**
-     * Create a PineconeIndexResource resource with the given unique name, arguments, and options.
+     * Create a PineconeIndex resource with the given unique name, arguments, and options.
      *
      * @param name The _unique_ name of the resource.
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: PineconeIndexResourceArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: PineconeIndexArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -73,14 +73,14 @@ export class PineconeIndexResource extends pulumi.CustomResource {
             resourceInputs["indexName"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(PineconeIndexResource.__pulumiType, name, resourceInputs, opts);
+        super(PineconeIndex.__pulumiType, name, resourceInputs, opts);
     }
 }
 
 /**
- * The set of arguments for constructing a PineconeIndexResource resource.
+ * The set of arguments for constructing a PineconeIndex resource.
  */
-export interface PineconeIndexResourceArgs {
+export interface PineconeIndexArgs {
     /**
      * The dimensions of the vectors in the index.
      */

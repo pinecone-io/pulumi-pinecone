@@ -7,7 +7,7 @@ plugins:
 
 resources:
   myPineconeIndex:
-    type: pinecone:index:PineconeIndexResource
+    type: pinecone:index:PineconeIndex
     properties:
       name: "example-index"
       dimension: 512
