@@ -14,6 +14,8 @@ apiToken: Optional[str]
 The API token for Pinecone.
 """
 
+name: Optional[str]
+
 pineconeEnv: Optional[str]
 """
 The environment for the Pinecone API.

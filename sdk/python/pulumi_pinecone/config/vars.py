@@ -23,6 +23,10 @@ class _ExportableConfig(types.ModuleType):
         return __config__.get('apiToken')
 
     @property
+    def name(self) -> Optional[str]:
+        return __config__.get('name')
+
+    @property
     def pinecone_env(self) -> Optional[str]:
         """
         The environment for the Pinecone API.

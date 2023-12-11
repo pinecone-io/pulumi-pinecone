@@ -1,7 +1,7 @@
 import pulumi
 import pulumi_pinecone as pinecone
 
-my_pinecone_index = pinecone.PineconeIndexResource("myPineconeIndex",
+my_pinecone_index = pinecone.PineconeIndex("myPineconeIndex",
     name="example-index",
     dimension=512,
     metric="cosine",

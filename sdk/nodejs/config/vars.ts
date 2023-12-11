@@ -18,6 +18,14 @@ Object.defineProperty(exports, "apiToken", {
     enumerable: true,
 });
 
+export declare const name: string | undefined;
+Object.defineProperty(exports, "name", {
+    get() {
+        return __config.get("name");
+    },
+    enumerable: true,
+});
+
 /**
  * The environment for the Pinecone API.
  */

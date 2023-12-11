@@ -15,6 +15,7 @@ __all__ = ['ProviderArgs', 'Provider']
 class ProviderArgs:
     def __init__(__self__, *,
                  api_token: pulumi.Input[str],
+                 name: pulumi.Input[str],
                  pinecone_env: pulumi.Input[str]):
         """
         The set of arguments for constructing a Provider resource.
@@ -22,6 +23,7 @@ class ProviderArgs:
         :param pulumi.Input[str] pinecone_env: The environment for the Pinecone API.
         """
         pulumi.set(__self__, "api_token", api_token)
+        pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "pinecone_env", pinecone_env)
 
     @property
@@ -35,6 +37,15 @@ class ProviderArgs:
     @api_token.setter
     def api_token(self, value: pulumi.Input[str]):
         pulumi.set(self, "api_token", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
 
     @property
     @pulumi.getter(name="pineconeEnv")
@@ -55,6 +66,7 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_token: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
                  pinecone_env: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -88,6 +100,7 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_token: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
                  pinecone_env: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -101,6 +114,9 @@ class Provider(pulumi.ProviderResource):
             if api_token is None and not opts.urn:
                 raise TypeError("Missing required property 'api_token'")
             __props__.__dict__["api_token"] = None if api_token is None else pulumi.Output.secret(api_token)
+            if name is None and not opts.urn:
+                raise TypeError("Missing required property 'name'")
+            __props__.__dict__["name"] = name
             if pinecone_env is None and not opts.urn:
                 raise TypeError("Missing required property 'pinecone_env'")
             __props__.__dict__["pinecone_env"] = pinecone_env
@@ -119,6 +135,11 @@ class Provider(pulumi.ProviderResource):
         The API token for Pinecone.
         """
         return pulumi.get(self, "api_token")
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="pineconeEnv")

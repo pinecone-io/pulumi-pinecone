@@ -22,8 +22,5 @@ func Provider() p.Provider {
 			"index": "index",
 		},
 		Config: infer.Config[index.PineconeProviderConfig](),
-		//Init: func(ctx p.Context, c index.PineconeProviderConfig) (any, error) {
-		//	return client.NewPineconeClient(c.APIToken, c.PineconeEnv), nil
-		//},
 	})
 }

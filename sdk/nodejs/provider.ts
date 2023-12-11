@@ -23,6 +23,7 @@ export class Provider extends pulumi.ProviderResource {
      * The API token for Pinecone.
      */
     public readonly apiToken!: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * The environment for the Pinecone API.
      */
@@ -42,10 +43,14 @@ export class Provider extends pulumi.ProviderResource {
             if ((!args || args.apiToken === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'apiToken'");
             }
+            if ((!args || args.name === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'name'");
+            }
             if ((!args || args.pineconeEnv === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'pineconeEnv'");
             }
             resourceInputs["apiToken"] = args?.apiToken ? pulumi.secret(args.apiToken) : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["pineconeEnv"] = args ? args.pineconeEnv : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -63,6 +68,7 @@ export interface ProviderArgs {
      * The API token for Pinecone.
      */
     apiToken: pulumi.Input<string>;
+    name: pulumi.Input<string>;
     /**
      * The environment for the Pinecone API.
      */

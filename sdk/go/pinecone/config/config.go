@@ -15,6 +15,9 @@ var _ = internal.GetEnvOrDefault
 func GetApiToken(ctx *pulumi.Context) string {
 	return config.Get(ctx, "pinecone:apiToken")
 }
+func GetName(ctx *pulumi.Context) string {
+	return config.Get(ctx, "pinecone:name")
+}
 
 // The environment for the Pinecone API.
 func GetPineconeEnv(ctx *pulumi.Context) string {

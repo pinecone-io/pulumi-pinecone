@@ -7,7 +7,7 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		myPineconeIndex, err := pinecone.NewPineconeIndexResource(ctx, "myPineconeIndex", &pinecone.PineconeIndexResourceArgs{
+		myPineconeIndex, err := pinecone.NewPineconeIndex(ctx, "myPineconeIndex", &pinecone.PineconeIndexArgs{
 			Name:      pulumi.String("example-index"),
 			Dimension: pulumi.Int(512),
 			Metric:    pulumi.String("cosine"),

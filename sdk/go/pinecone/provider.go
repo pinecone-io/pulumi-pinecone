@@ -17,6 +17,7 @@ type Provider struct {
 
 	// The API token for Pinecone.
 	ApiToken pulumi.StringOutput `pulumi:"apiToken"`
+	Name     pulumi.StringOutput `pulumi:"name"`
 	// The environment for the Pinecone API.
 	PineconeEnv pulumi.StringOutput `pulumi:"pineconeEnv"`
 }
@@ -30,6 +31,9 @@ func NewProvider(ctx *pulumi.Context,
 
 	if args.ApiToken == nil {
 		return nil, errors.New("invalid value for required argument 'ApiToken'")
+	}
+	if args.Name == nil {
+		return nil, errors.New("invalid value for required argument 'Name'")
 	}
 	if args.PineconeEnv == nil {
 		return nil, errors.New("invalid value for required argument 'PineconeEnv'")
@@ -53,6 +57,7 @@ func NewProvider(ctx *pulumi.Context,
 type providerArgs struct {
 	// The API token for Pinecone.
 	ApiToken string `pulumi:"apiToken"`
+	Name     string `pulumi:"name"`
 	// The environment for the Pinecone API.
 	PineconeEnv string `pulumi:"pineconeEnv"`
 }
@@ -61,6 +66,7 @@ type providerArgs struct {
 type ProviderArgs struct {
 	// The API token for Pinecone.
 	ApiToken pulumi.StringInput
+	Name     pulumi.StringInput
 	// The environment for the Pinecone API.
 	PineconeEnv pulumi.StringInput
 }
@@ -105,6 +111,10 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 // The API token for Pinecone.
 func (o ProviderOutput) ApiToken() pulumi.StringOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.ApiToken }).(pulumi.StringOutput)
+}
+
+func (o ProviderOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
 // The environment for the Pinecone API.

@@ -5,7 +5,7 @@ using Pinecone = Pulumi.Pinecone;
 
 return await Deployment.RunAsync(() => 
 {
-    var myPineconeIndex = new Pinecone.PineconeIndexResource("myPineconeIndex", new()
+    var myPineconeIndex = new Pinecone.PineconeIndex("myPineconeIndex", new()
     {
         Name = "example-index",
         Dimension = 512,

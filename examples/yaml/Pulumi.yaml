@@ -1,3 +1,4 @@
+# File: examples/yaml/Pulumi.yaml
 name: pinecone
 runtime: yaml
 plugins:

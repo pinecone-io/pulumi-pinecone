@@ -22,6 +22,7 @@ type PineconeIndexArgs struct {
 type PineconeProviderConfig struct {
 	APIToken    string `pulumi:"apiToken" provider:"secret"`
 	PineconeEnv string `pulumi:"pineconeEnv"`
+	Name        string `pulumi:"name"`
 }
 
 type PineconeIndexState struct {
