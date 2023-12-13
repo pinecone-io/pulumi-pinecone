@@ -1,5 +1,7 @@
 # Pinecone - Pulumi Native Provider
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/usrbinkat/pulumi-pinecone-native)
+
 This Pulumi Pinecone Native Provider enables you to manage your Pinecone collections and indexes using any language of Pulumi Infrastructure as Code.
 
 ---
