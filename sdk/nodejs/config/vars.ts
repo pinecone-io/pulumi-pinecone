@@ -10,29 +10,10 @@ const __config = new pulumi.Config("pinecone");
 /**
  * The API token for Pinecone.
  */
-export declare const apiToken: string | undefined;
-Object.defineProperty(exports, "apiToken", {
+export declare const APIKey: string | undefined;
+Object.defineProperty(exports, "APIKey", {
     get() {
-        return __config.get("apiToken");
-    },
-    enumerable: true,
-});
-
-export declare const name: string | undefined;
-Object.defineProperty(exports, "name", {
-    get() {
-        return __config.get("name");
-    },
-    enumerable: true,
-});
-
-/**
- * The environment for the Pinecone API.
- */
-export declare const pineconeEnv: string | undefined;
-Object.defineProperty(exports, "pineconeEnv", {
-    get() {
-        return __config.get("pineconeEnv");
+        return __config.get("APIKey");
     },
     enumerable: true,
 });

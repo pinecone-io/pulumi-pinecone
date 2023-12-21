@@ -1,6 +1,5 @@
-# File: examples/yaml/Pulumi.yaml
-name: pinecone
-runtime: dotnet
+name: pinecone-ts
+runtime: nodejs
 plugins:
   providers:
     - name: pinecone

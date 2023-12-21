@@ -20,8 +20,12 @@ def readme():
 setup(name='pulumi_pinecone',
       python_requires='>=3.7',
       version=VERSION,
+      description="A Pulumi native provider for Pinecone",
       long_description=readme(),
       long_description_content_type='text/markdown',
+      keywords='pulumi command category/utility kind/native',
+      url='https://pulumi.com',
+      license='Apache-2.0',
       packages=find_packages(),
       package_data={
           'pulumi_pinecone': [
@@ -31,7 +35,7 @@ setup(name='pulumi_pinecone',
       },
       install_requires=[
           'parver>=0.2.1',
-          'pulumi',
+          'pulumi>=3.0.0,<4.0.0',
           'semver>=2.8.1'
       ],
       zip_safe=False)

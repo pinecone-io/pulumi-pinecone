@@ -2,6 +2,9 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
+import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
 export class PineconeIndex extends pulumi.CustomResource {
@@ -31,7 +34,23 @@ export class PineconeIndex extends pulumi.CustomResource {
         return obj['__pulumiType'] === PineconeIndex.__pulumiType;
     }
 
-    public /*out*/ readonly indexName!: pulumi.Output<string>;
+    /**
+     * The dimensions of the vectors in the index.
+     */
+    public readonly dimension!: pulumi.Output<number>;
+    public /*out*/ readonly host!: pulumi.Output<string>;
+    /**
+     * The metric used to compute the distance between vectors.
+     */
+    public readonly metric!: pulumi.Output<enums.IndexMetric>;
+    /**
+     * The name of the Pinecone index.
+     */
+    public readonly name!: pulumi.Output<string>;
+    /**
+     * Describe how the index should be deployed.
+     */
+    public readonly spec!: pulumi.Output<outputs.PineconeSpec>;
 
     /**
      * Create a PineconeIndex resource with the given unique name, arguments, and options.
@@ -53,24 +72,20 @@ export class PineconeIndex extends pulumi.CustomResource {
             if ((!args || args.name === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'name'");
             }
-            if ((!args || args.podType === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'podType'");
-            }
-            if ((!args || args.pods === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'pods'");
-            }
-            if ((!args || args.replicas === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'replicas'");
+            if ((!args || args.spec === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'spec'");
             }
             resourceInputs["dimension"] = args ? args.dimension : undefined;
             resourceInputs["metric"] = args ? args.metric : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["podType"] = args ? args.podType : undefined;
-            resourceInputs["pods"] = args ? args.pods : undefined;
-            resourceInputs["replicas"] = args ? args.replicas : undefined;
-            resourceInputs["indexName"] = undefined /*out*/;
+            resourceInputs["spec"] = args ? args.spec : undefined;
+            resourceInputs["host"] = undefined /*out*/;
         } else {
-            resourceInputs["indexName"] = undefined /*out*/;
+            resourceInputs["dimension"] = undefined /*out*/;
+            resourceInputs["host"] = undefined /*out*/;
+            resourceInputs["metric"] = undefined /*out*/;
+            resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["spec"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(PineconeIndex.__pulumiType, name, resourceInputs, opts);
@@ -88,21 +103,13 @@ export interface PineconeIndexArgs {
     /**
      * The metric used to compute the distance between vectors.
      */
-    metric: pulumi.Input<string>;
+    metric: pulumi.Input<enums.IndexMetric>;
     /**
      * The name of the Pinecone index.
      */
     name: pulumi.Input<string>;
     /**
-     * The type of pods to use for the index.
+     * Describe how the index should be deployed.
      */
-    podType: pulumi.Input<string>;
-    /**
-     * The number of pods to use for the index.
-     */
-    pods: pulumi.Input<number>;
-    /**
-     * The number of replicas to use for the index.
-     */
-    replicas: pulumi.Input<number>;
+    spec: pulumi.Input<inputs.PineconeSpecArgs>;
 }

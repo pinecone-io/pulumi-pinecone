@@ -3,6 +3,7 @@ package utils
 
 import (
 	"fmt"
+	"net/http"
 	"regexp"
 )
 
@@ -15,4 +16,14 @@ func ValidateIndexName(name string) error {
 		return fmt.Errorf("index name can only contain lower case alphanumeric characters and dashes")
 	}
 	return nil
+}
+
+type CustomTransport struct {
+	Transport http.RoundTripper
+	APIKey    string
+}
+
+func (c *CustomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	req.Header.Add("Api-Key", c.APIKey)
+	return c.Transport.RoundTrip(req)
 }
