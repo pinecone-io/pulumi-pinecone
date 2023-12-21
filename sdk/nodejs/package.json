@@ -1,11 +1,19 @@
 {
     "name": "@pulumi/pinecone",
     "version": "${VERSION}",
+    "keywords": [
+        "pulumi",
+        "command",
+        "category/utility",
+        "kind/native"
+    ],
+    "homepage": "https://pulumi.com",
+    "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.42.0"
+        "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {
         "@types/node": "^14",
@@ -13,6 +21,7 @@
     },
     "pulumi": {
         "resource": true,
-        "name": "pinecone"
+        "name": "pinecone",
+        "server": "github://api.github.com/usrbinkat"
     }
 }

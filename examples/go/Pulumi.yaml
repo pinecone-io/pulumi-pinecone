@@ -1,4 +1,4 @@
-name: pinecone
+name: pinecone-go
 runtime: go
 plugins:
   providers:

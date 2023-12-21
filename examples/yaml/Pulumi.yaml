@@ -1,21 +1,23 @@
-name: pinecone
+# File: examples/yaml/Pulumi.yaml
+name: pinecone-yaml
 runtime: yaml
 plugins:
   providers:
-    - name: pinecone
-      path: ../../bin
+  - name: pinecone
+    path: ../../bin
 
 resources:
   myPineconeIndex:
-    type: pinecone:index:PineconeIndexResource
+    type: pinecone:index:PineconeIndex
     properties:
       name: "example-index"
       dimension: 512
       metric: "cosine"
-      pods: 1
-      replicas: 1
-      podType: "p1.x1"
+      spec:
+        serverless:
+          cloud: aws
+          region: us-west-2
 
 outputs:
   output:
-    value: ${myPineconeIndex.id}
+    value: ${myPineconeIndex.host}

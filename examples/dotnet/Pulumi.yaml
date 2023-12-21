@@ -1,6 +1,0 @@
-name: pinecone
-runtime: dotnet
-plugins:
-  providers:
-    - name: pinecone
-      path: ../../bin

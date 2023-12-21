@@ -16,16 +16,9 @@ __config__ = pulumi.Config('pinecone')
 
 class _ExportableConfig(types.ModuleType):
     @property
-    def api_token(self) -> Optional[str]:
+    def api_key(self) -> Optional[str]:
         """
         The API token for Pinecone.
         """
-        return __config__.get('apiToken')
-
-    @property
-    def pinecone_env(self) -> Optional[str]:
-        """
-        The environment for the Pinecone API.
-        """
-        return __config__.get('pineconeEnv')
+        return __config__.get('APIKey')
 

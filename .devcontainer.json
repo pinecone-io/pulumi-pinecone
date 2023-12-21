@@ -3,27 +3,45 @@
 // - https://containers.dev/implementors/features
 // - https://code.visualstudio.com/docs/getstarted/settings
 {
-  "name": "pulumi",
-  "image": "ghcr.io/pulumi/devcontainer",
+  "name": "konductor",
+  "image": "ghcr.io/containercraft/konductor:latest",
   "customizations": {
     "vscode": {
-      "settings": [
-        "go.testTags", "all",
-        "go.buildTags", "all",
-        "editor.minimap.enabled", false,
-        "explorer.openEditors.visible", 1,
-        "editor.quickSuggestionsDelay", 0,
-        "editor.suggestSelection", "first",
-        "editor.snippetSuggestions", "top",
-        "editor.gotoLocation.multipleReferences", "goto",
-        "editor.gotoLocation.multipleDefinitions", "goto",
-        "editor.gotoLocation.multipleDeclarations", "goto",
-        "editor.gotoLocation.multipleImplementations", "goto",
-        "editor.gotoLocation.multipleTypeDefinitions", "goto",
-        "editor.terminal.integrated.shell.linux", "/usr/bin/zsh",
-        "files.trimTrailingWhitespace", true,
-        "files.trimFinalNewlines", true
-      ],
+      "settings": {
+        // https://github.com/VSCodeVim/Vim
+        "keyboard.dispatch": "keyCode",
+        "vim.insertModeKeyBindings": [
+          {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+          }
+        ],
+        "vim.handleKeys": {
+          "<C-a>": false,
+          "<C-f>": false
+        },
+        "extensions.experimental.affinity": {
+          "vscodevim.vim": 1
+        },
+        "go.testTags": "all",
+        "go.buildTags": "all",
+        "editor.minimap.enabled": false,
+        "editor.quickSuggestionsDelay": 0,
+        "editor.suggestSelection": "first",
+        "editor.snippetSuggestions": "top",
+        "editor.gotoLocation.multipleReferences": "goto",
+        "editor.gotoLocation.multipleDefinitions": "goto",
+        "editor.gotoLocation.multipleDeclarations": "goto",
+        "editor.gotoLocation.multipleImplementations": "goto",
+        "editor.gotoLocation.multipleTypeDefinitions": "goto",
+        "editor.terminal.integrated.shell.linux": "/usr/bin/fish",
+        "terminal.integrated.sendKeybindingsToShell": true,
+        "terminal.integrated.fontFamily": "FiraMono Nerd Font Mono",
+        "workbench.colorTheme": "Dracula Soft",
+        "explorer.openEditors.visible": 1,
+        "files.trimTrailingWhitespace": true,
+        "files.trimFinalNewlines": true
+      },
       "extensions": [
         "golang.go",
         "github.copilot",
@@ -42,26 +60,21 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
-        "installZsh": true,
-        "configureZshAsDefaultShell": true,
-        "installOhMyZsh": true,
-        "installOhMyZshConfig": true,
-        "upgradePackages": true,
-        "nonFreePackages": true,
         "username": "vscode",
+        "userGid": "automatic",
         "userUid": "automatic",
-        "userGid": "automatic"
+        "upgradePackages": true,
+        "nonFreePackages": true
     },
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
         "moby": false,
         "installDockerBuildx": true,
         "version": "latest",
         "dockerDashComposeVersion": "v2"
-    }
+    },
   },
   "postCreateCommand": "git submodule update --init --recursive",
   "remoteUser": "vscode",
-  "forwardPorts": [1313],
+  "forwardPorts": [1313, 2222, 6000, 7681, 8080],
   "runArgs": ["--network=host"]
 }
-

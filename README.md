@@ -30,10 +30,12 @@ If you are not using VSCode, you will need to ensure the following tools are ins
 
 ### Build & test the boilerplate XYZ provider
 
-1. Create a new Github CodeSpaces environment using this repository.
-1. Open a terminal in the CodeSpaces environment.
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/usrbinkat/pulumi-pinecone-native)
+
+1. [Open repo in GitHub Codespaces](https://codespaces.new/usrbinkat/pulumi-pinecone-native).
+1. Open a terminal in the CodeSpaces IDE.
 1. Run `make build install` to build and install the provider.
-1. Export your Pinecone API Token: `export PC_API_TOKEN="0000b000-86cf-4ecf-a753-00000000000"`
+1. Export your Pinecone API Token: `export PINECONE_API_KEY="0000b000-86cf-4ecf-a753-00000000000"`
 1. Run `make up` to run the example program in `examples/yaml`.
 1. Run `make down` to tear down the example program.
 
@@ -43,9 +45,11 @@ This will:
 2. Create the provider binary and place it in the `./bin` folder (gitignored)
 3. Generate the dotnet, Go, Node, and Python SDKs and place them in the `./sdk` folder
 4. Install the provider locally.
+5. Run the example program in `examples/yaml` using the locally built provider.
+6. Tear down the example program.
 
 #### Test against the example
-   
+
 ```bash
 $ cd examples/simple
 $ yarn link @pulumi/xyz

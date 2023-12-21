@@ -1,0 +1,6 @@
+name: pinecone-ts
+runtime: nodejs
+plugins:
+  providers:
+    - name: pinecone
+      path: ../../bin

@@ -7,8 +7,8 @@ import (
 	"fmt"
 
 	"github.com/blang/semver"
+	"github.com/pulumi/pulumi-pinecone/sdk/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"internal"
 )
 
 type module struct {
@@ -21,8 +21,10 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
-	case "pinecone:index:PineconeIndexResource":
-		r = &PineconeIndexResource{}
+	case "pinecone:index:PineconeCollection":
+		r = &PineconeCollection{}
+	case "pinecone:index:PineconeIndex":
+		r = &PineconeIndex{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

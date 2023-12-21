@@ -5,8 +5,14 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
-from .pinecone_index_resource import *
+from ._enums import *
+from .lookup_pinecone_collection import *
+from .lookup_pinecone_index import *
+from .pinecone_collection import *
+from .pinecone_index import *
 from .provider import *
+from ._inputs import *
+from . import outputs
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:
@@ -23,7 +29,8 @@ _utilities.register(
   "mod": "index",
   "fqn": "pulumi_pinecone",
   "classes": {
-   "pinecone:index:PineconeIndexResource": "PineconeIndexResource"
+   "pinecone:index:PineconeCollection": "PineconeCollection",
+   "pinecone:index:PineconeIndex": "PineconeIndex"
   }
  }
 ]

@@ -16,8 +16,15 @@
         "config/index.ts",
         "config/vars.ts",
         "index.ts",
-        "pineconeIndexResource.ts",
+        "lookupPineconeCollection.ts",
+        "lookupPineconeIndex.ts",
+        "pineconeCollection.ts",
+        "pineconeIndex.ts",
         "provider.ts",
+        "types/enums/index.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
         "utilities.ts"
     ]
 }

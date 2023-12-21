@@ -7,38 +7,29 @@ import (
 	"context"
 	"reflect"
 
-	"errors"
+	"github.com/pulumi/pulumi-pinecone/sdk/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"internal"
 )
 
 type Provider struct {
 	pulumi.ProviderResourceState
 
 	// The API token for Pinecone.
-	ApiToken pulumi.StringOutput `pulumi:"apiToken"`
-	// The environment for the Pinecone API.
-	PineconeEnv pulumi.StringOutput `pulumi:"pineconeEnv"`
+	APIKey pulumi.StringPtrOutput `pulumi:"APIKey"`
 }
 
 // NewProvider registers a new resource with the given unique name, arguments, and options.
 func NewProvider(ctx *pulumi.Context,
 	name string, args *ProviderArgs, opts ...pulumi.ResourceOption) (*Provider, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &ProviderArgs{}
 	}
 
-	if args.ApiToken == nil {
-		return nil, errors.New("invalid value for required argument 'ApiToken'")
-	}
-	if args.PineconeEnv == nil {
-		return nil, errors.New("invalid value for required argument 'PineconeEnv'")
-	}
-	if args.ApiToken != nil {
-		args.ApiToken = pulumi.ToSecret(args.ApiToken).(pulumi.StringInput)
+	if args.APIKey != nil {
+		args.APIKey = pulumi.ToSecret(args.APIKey).(pulumi.StringPtrInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
-		"apiToken",
+		"APIKey",
 	})
 	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -52,17 +43,13 @@ func NewProvider(ctx *pulumi.Context,
 
 type providerArgs struct {
 	// The API token for Pinecone.
-	ApiToken string `pulumi:"apiToken"`
-	// The environment for the Pinecone API.
-	PineconeEnv string `pulumi:"pineconeEnv"`
+	APIKey *string `pulumi:"APIKey"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
 	// The API token for Pinecone.
-	ApiToken pulumi.StringInput
-	// The environment for the Pinecone API.
-	PineconeEnv pulumi.StringInput
+	APIKey pulumi.StringPtrInput
 }
 
 func (ProviderArgs) ElementType() reflect.Type {
@@ -103,13 +90,8 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 }
 
 // The API token for Pinecone.
-func (o ProviderOutput) ApiToken() pulumi.StringOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.ApiToken }).(pulumi.StringOutput)
-}
-
-// The environment for the Pinecone API.
-func (o ProviderOutput) PineconeEnv() pulumi.StringOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.PineconeEnv }).(pulumi.StringOutput)
+func (o ProviderOutput) APIKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.APIKey }).(pulumi.StringPtrOutput)
 }
 
 func init() {

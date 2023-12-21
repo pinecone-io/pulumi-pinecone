@@ -16,15 +16,21 @@ GOPATH			:= $(shell go env GOPATH)
 WORKING_DIR     := $(shell pwd)
 EXAMPLES_DIR    := ${WORKING_DIR}/examples/yaml
 TESTPARALLELISM := 4
+BUILD_DIR		:= ${WORKING_DIR}/provider/cmd/pulumi-resource-pinecone
 
 ensure::
 	cd provider && go mod tidy
 	# TODO: fix error "internal: no Go source files"
 	#cd sdk && go mod tidy
-	cd tests && go mod tidy
+	#cd tests && go mod tidy
 
-provider::
-	(cd provider && go build -o $(WORKING_DIR)/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
+generate:
+	@echo "Generating Go client from Swagger definition..."
+	@go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
+	@go generate ./${PROVIDER_PATH}/pkg/$(PACK)/provider.go
+
+provider:: generate
+	(cd ${BUILD_DIR} && go build -o $(WORKING_DIR)/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
 
 provider_debug::
 	(cd provider && go build -o $(WORKING_DIR)/bin/${PROVIDER} -gcflags="all=-N -l" -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
@@ -107,7 +113,7 @@ down::
 devcontainer::
 	git submodule update --init --recursive .devcontainer
 	git submodule update --remote --merge .devcontainer
-	cp -f .devcontainer/devcontainer.json .devcontainer.json
+	cp -f .devcontainer/.devcontainer.json .devcontainer.json
 
 .PHONY: build
 
