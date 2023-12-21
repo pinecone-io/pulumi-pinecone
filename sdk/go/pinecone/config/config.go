@@ -4,22 +4,14 @@
 package config
 
 import (
+	"github.com/pulumi/pulumi-pinecone/sdk/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
-	"internal"
 )
 
 var _ = internal.GetEnvOrDefault
 
 // The API token for Pinecone.
-func GetApiToken(ctx *pulumi.Context) string {
-	return config.Get(ctx, "pinecone:apiToken")
-}
-func GetName(ctx *pulumi.Context) string {
-	return config.Get(ctx, "pinecone:name")
-}
-
-// The environment for the Pinecone API.
-func GetPineconeEnv(ctx *pulumi.Context) string {
-	return config.Get(ctx, "pinecone:pineconeEnv")
+func GetAPIKey(ctx *pulumi.Context) string {
+	return config.Get(ctx, "pinecone:apikey")
 }

@@ -9,15 +9,8 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
-apiToken: Optional[str]
+APIKey: Optional[str]
 """
 The API token for Pinecone.
-"""
-
-name: Optional[str]
-
-pineconeEnv: Optional[str]
-"""
-The environment for the Pinecone API.
 """
 

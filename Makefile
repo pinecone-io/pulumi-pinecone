@@ -22,9 +22,14 @@ ensure::
 	cd provider && go mod tidy
 	# TODO: fix error "internal: no Go source files"
 	#cd sdk && go mod tidy
-	cd tests && go mod tidy
+	#cd tests && go mod tidy
 
-provider::
+generate:
+	@echo "Generating Go client from Swagger definition..."
+	@go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
+	@go generate ./${PROVIDER_PATH}/pkg/$(PACK)/provider.go
+
+provider:: generate
 	(cd ${BUILD_DIR} && go build -o $(WORKING_DIR)/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
 
 provider_debug::

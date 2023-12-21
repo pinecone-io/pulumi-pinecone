@@ -8,14 +8,22 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/pulumi/pulumi-pinecone/sdk/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"internal"
 )
 
 type PineconeIndex struct {
 	pulumi.CustomResourceState
 
-	IndexName pulumi.StringOutput `pulumi:"indexName"`
+	// The dimensions of the vectors in the index.
+	Dimension pulumi.IntOutput    `pulumi:"dimension"`
+	Host      pulumi.StringOutput `pulumi:"host"`
+	// The metric used to compute the distance between vectors.
+	Metric IndexMetricOutput `pulumi:"metric"`
+	// The name of the Pinecone index.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Describe how the index should be deployed.
+	Spec PineconeSpecOutput `pulumi:"spec"`
 }
 
 // NewPineconeIndex registers a new resource with the given unique name, arguments, and options.
@@ -34,14 +42,8 @@ func NewPineconeIndex(ctx *pulumi.Context,
 	if args.Name == nil {
 		return nil, errors.New("invalid value for required argument 'Name'")
 	}
-	if args.PodType == nil {
-		return nil, errors.New("invalid value for required argument 'PodType'")
-	}
-	if args.Pods == nil {
-		return nil, errors.New("invalid value for required argument 'Pods'")
-	}
-	if args.Replicas == nil {
-		return nil, errors.New("invalid value for required argument 'Replicas'")
+	if args.Spec == nil {
+		return nil, errors.New("invalid value for required argument 'Spec'")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource PineconeIndex
@@ -79,15 +81,11 @@ type pineconeIndexArgs struct {
 	// The dimensions of the vectors in the index.
 	Dimension int `pulumi:"dimension"`
 	// The metric used to compute the distance between vectors.
-	Metric string `pulumi:"metric"`
+	Metric IndexMetric `pulumi:"metric"`
 	// The name of the Pinecone index.
 	Name string `pulumi:"name"`
-	// The type of pods to use for the index.
-	PodType string `pulumi:"podType"`
-	// The number of pods to use for the index.
-	Pods int `pulumi:"pods"`
-	// The number of replicas to use for the index.
-	Replicas int `pulumi:"replicas"`
+	// Describe how the index should be deployed.
+	Spec PineconeSpec `pulumi:"spec"`
 }
 
 // The set of arguments for constructing a PineconeIndex resource.
@@ -95,15 +93,11 @@ type PineconeIndexArgs struct {
 	// The dimensions of the vectors in the index.
 	Dimension pulumi.IntInput
 	// The metric used to compute the distance between vectors.
-	Metric pulumi.StringInput
+	Metric IndexMetricInput
 	// The name of the Pinecone index.
 	Name pulumi.StringInput
-	// The type of pods to use for the index.
-	PodType pulumi.StringInput
-	// The number of pods to use for the index.
-	Pods pulumi.IntInput
-	// The number of replicas to use for the index.
-	Replicas pulumi.IntInput
+	// Describe how the index should be deployed.
+	Spec PineconeSpecInput
 }
 
 func (PineconeIndexArgs) ElementType() reflect.Type {
@@ -129,6 +123,56 @@ func (i *PineconeIndex) ToPineconeIndexOutputWithContext(ctx context.Context) Pi
 	return pulumi.ToOutputWithContext(ctx, i).(PineconeIndexOutput)
 }
 
+// PineconeIndexArrayInput is an input type that accepts PineconeIndexArray and PineconeIndexArrayOutput values.
+// You can construct a concrete instance of `PineconeIndexArrayInput` via:
+//
+//	PineconeIndexArray{ PineconeIndexArgs{...} }
+type PineconeIndexArrayInput interface {
+	pulumi.Input
+
+	ToPineconeIndexArrayOutput() PineconeIndexArrayOutput
+	ToPineconeIndexArrayOutputWithContext(context.Context) PineconeIndexArrayOutput
+}
+
+type PineconeIndexArray []PineconeIndexInput
+
+func (PineconeIndexArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*PineconeIndex)(nil)).Elem()
+}
+
+func (i PineconeIndexArray) ToPineconeIndexArrayOutput() PineconeIndexArrayOutput {
+	return i.ToPineconeIndexArrayOutputWithContext(context.Background())
+}
+
+func (i PineconeIndexArray) ToPineconeIndexArrayOutputWithContext(ctx context.Context) PineconeIndexArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PineconeIndexArrayOutput)
+}
+
+// PineconeIndexMapInput is an input type that accepts PineconeIndexMap and PineconeIndexMapOutput values.
+// You can construct a concrete instance of `PineconeIndexMapInput` via:
+//
+//	PineconeIndexMap{ "key": PineconeIndexArgs{...} }
+type PineconeIndexMapInput interface {
+	pulumi.Input
+
+	ToPineconeIndexMapOutput() PineconeIndexMapOutput
+	ToPineconeIndexMapOutputWithContext(context.Context) PineconeIndexMapOutput
+}
+
+type PineconeIndexMap map[string]PineconeIndexInput
+
+func (PineconeIndexMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*PineconeIndex)(nil)).Elem()
+}
+
+func (i PineconeIndexMap) ToPineconeIndexMapOutput() PineconeIndexMapOutput {
+	return i.ToPineconeIndexMapOutputWithContext(context.Background())
+}
+
+func (i PineconeIndexMap) ToPineconeIndexMapOutputWithContext(ctx context.Context) PineconeIndexMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PineconeIndexMapOutput)
+}
+
 type PineconeIndexOutput struct{ *pulumi.OutputState }
 
 func (PineconeIndexOutput) ElementType() reflect.Type {
@@ -143,11 +187,75 @@ func (o PineconeIndexOutput) ToPineconeIndexOutputWithContext(ctx context.Contex
 	return o
 }
 
-func (o PineconeIndexOutput) IndexName() pulumi.StringOutput {
-	return o.ApplyT(func(v *PineconeIndex) pulumi.StringOutput { return v.IndexName }).(pulumi.StringOutput)
+// The dimensions of the vectors in the index.
+func (o PineconeIndexOutput) Dimension() pulumi.IntOutput {
+	return o.ApplyT(func(v *PineconeIndex) pulumi.IntOutput { return v.Dimension }).(pulumi.IntOutput)
+}
+
+func (o PineconeIndexOutput) Host() pulumi.StringOutput {
+	return o.ApplyT(func(v *PineconeIndex) pulumi.StringOutput { return v.Host }).(pulumi.StringOutput)
+}
+
+// The metric used to compute the distance between vectors.
+func (o PineconeIndexOutput) Metric() IndexMetricOutput {
+	return o.ApplyT(func(v *PineconeIndex) IndexMetricOutput { return v.Metric }).(IndexMetricOutput)
+}
+
+// The name of the Pinecone index.
+func (o PineconeIndexOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v *PineconeIndex) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+// Describe how the index should be deployed.
+func (o PineconeIndexOutput) Spec() PineconeSpecOutput {
+	return o.ApplyT(func(v *PineconeIndex) PineconeSpecOutput { return v.Spec }).(PineconeSpecOutput)
+}
+
+type PineconeIndexArrayOutput struct{ *pulumi.OutputState }
+
+func (PineconeIndexArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*PineconeIndex)(nil)).Elem()
+}
+
+func (o PineconeIndexArrayOutput) ToPineconeIndexArrayOutput() PineconeIndexArrayOutput {
+	return o
+}
+
+func (o PineconeIndexArrayOutput) ToPineconeIndexArrayOutputWithContext(ctx context.Context) PineconeIndexArrayOutput {
+	return o
+}
+
+func (o PineconeIndexArrayOutput) Index(i pulumi.IntInput) PineconeIndexOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *PineconeIndex {
+		return vs[0].([]*PineconeIndex)[vs[1].(int)]
+	}).(PineconeIndexOutput)
+}
+
+type PineconeIndexMapOutput struct{ *pulumi.OutputState }
+
+func (PineconeIndexMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*PineconeIndex)(nil)).Elem()
+}
+
+func (o PineconeIndexMapOutput) ToPineconeIndexMapOutput() PineconeIndexMapOutput {
+	return o
+}
+
+func (o PineconeIndexMapOutput) ToPineconeIndexMapOutputWithContext(ctx context.Context) PineconeIndexMapOutput {
+	return o
+}
+
+func (o PineconeIndexMapOutput) MapIndex(k pulumi.StringInput) PineconeIndexOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) *PineconeIndex {
+		return vs[0].(map[string]*PineconeIndex)[vs[1].(string)]
+	}).(PineconeIndexOutput)
 }
 
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*PineconeIndexInput)(nil)).Elem(), &PineconeIndex{})
+	pulumi.RegisterInputType(reflect.TypeOf((*PineconeIndexArrayInput)(nil)).Elem(), PineconeIndexArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*PineconeIndexMapInput)(nil)).Elem(), PineconeIndexMap{})
 	pulumi.RegisterOutputType(PineconeIndexOutput{})
+	pulumi.RegisterOutputType(PineconeIndexArrayOutput{})
+	pulumi.RegisterOutputType(PineconeIndexMapOutput{})
 }
