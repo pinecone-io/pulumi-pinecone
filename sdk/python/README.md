@@ -28,9 +28,9 @@ If you are not using VSCode, you will need to ensure the following tools are ins
 
 ### Build & test the boilerplate XYZ provider
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/usrbinkat/pulumi-pinecone-native)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/pinecone-io/pulumi-pinecone)
 
-1. [Open repo in GitHub Codespaces](https://codespaces.new/usrbinkat/pulumi-pinecone-native).
+1. [Open repo in GitHub Codespaces](https://codespaces.new/pinecone-io/pulumi-pinecone).
 1. Open a terminal in the CodeSpaces IDE.
 1. Run `make build install` to build and install the provider.
 1. Export your Pinecone API Token: `export PC_API_TOKEN="0000b000-86cf-4ecf-a753-00000000000"`

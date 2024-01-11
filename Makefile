@@ -2,7 +2,7 @@ PROJECT_NAME := Pulumi Pinecone Resource Provider
 
 PACK             := pinecone
 PACKDIR          := sdk
-PROJECT          := github.com/usrbinkat/pulumi-pinecone-native
+PROJECT          := github.com/pinecone-io/pulumi-pinecone
 NODE_MODULE_NAME := @pulumi/pinecone
 NUGET_PKG_NAME   := Pulumi.Pinecone
 

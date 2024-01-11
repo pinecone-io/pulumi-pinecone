@@ -8,8 +8,8 @@ import (
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi-go-provider/middleware/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
-	"github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/config"
-	"github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/index"
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/index"
 )
 
 func Provider() p.Provider {
@@ -37,7 +37,7 @@ func Provider() p.Provider {
 			Homepage:          "https://pulumi.com",
 			License:           "Apache-2.0",
 			Repository:        "",
-			PluginDownloadURL: "github://api.github.com/usrbinkat",
+			PluginDownloadURL: "github://api.github.com/pinecone-io",
 			Publisher:         "Pulumi",
 			LogoURL:           "",
 			LanguageMap: map[string]any{

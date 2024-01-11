@@ -1,4 +1,4 @@
-module github.com/usrbinkat/pulumi-pinecone-native/provider
+module github.com/pinecone-io/pulumi-pinecone/provider
 
 go 1.21
 
