@@ -1,4 +1,4 @@
-# Pinecone - Pulumi Native Provider
+# Pinecone - Pulumi Provider
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/usrbinkat/pulumi-pinecone-native)
 
