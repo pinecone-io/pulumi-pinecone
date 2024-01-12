@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Pinecone
+namespace PineconeDatabase.Pinecone
 {
     [PineconeResourceType("pulumi:providers:pinecone")]
     public partial class Provider : global::Pulumi.ProviderResource
@@ -15,14 +16,8 @@ namespace Pulumi.Pinecone
         /// <summary>
         /// The API token for Pinecone.
         /// </summary>
-        [Output("apiToken")]
-        public Output<string> ApiToken { get; private set; } = null!;
-
-        /// <summary>
-        /// The environment for the Pinecone API.
-        /// </summary>
-        [Output("pineconeEnv")]
-        public Output<string> PineconeEnv { get; private set; } = null!;
+        [Output("APIKey")]
+        public Output<string?> APIKey { get; private set; } = null!;
 
 
         /// <summary>
@@ -32,7 +27,7 @@ namespace Pulumi.Pinecone
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Provider(string name, ProviderArgs args, CustomResourceOptions? options = null)
+        public Provider(string name, ProviderArgs? args = null, CustomResourceOptions? options = null)
             : base("pinecone", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -42,9 +37,10 @@ namespace Pulumi.Pinecone
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/pinecone-io/pulumi-pinecone",
                 AdditionalSecretOutputs =
                 {
-                    "apiToken",
+                    "APIKey",
                 },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
@@ -56,27 +52,21 @@ namespace Pulumi.Pinecone
 
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
-        [Input("apiToken", required: true)]
-        private Input<string>? _apiToken;
+        [Input("APIKey")]
+        private Input<string>? _APIKey;
 
         /// <summary>
         /// The API token for Pinecone.
         /// </summary>
-        public Input<string>? ApiToken
+        public Input<string>? APIKey
         {
-            get => _apiToken;
+            get => _APIKey;
             set
             {
                 var emptySecret = Output.CreateSecret(0);
-                _apiToken = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+                _APIKey = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
             }
         }
-
-        /// <summary>
-        /// The environment for the Pinecone API.
-        /// </summary>
-        [Input("pineconeEnv", required: true)]
-        public Input<string> PineconeEnv { get; set; } = null!;
 
         public ProviderArgs()
         {

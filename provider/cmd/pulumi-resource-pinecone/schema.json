@@ -127,7 +127,7 @@
             "packageReferences": {
                 "Pulumi": "3.*"
             },
-            "rootNamespace": "Pinecone"
+            "rootNamespace": "PineconeDatabase"
         },
         "go": {
             "generateResourceContainerTypes": true,

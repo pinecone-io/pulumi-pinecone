@@ -124,7 +124,7 @@ devcontainer::
 
 # TODO: fix dotnet_sdk builds
 #build:: provider dotnet_sdk go_sdk nodejs_sdk python_sdk
-build:: provider go_sdk nodejs_sdk python_sdk
+build:: provider go_sdk nodejs_sdk python_sdk dotnet_sdk
 
 # Required for the codegen action that runs in pulumi/pulumi
 only_build:: build
@@ -159,3 +159,6 @@ install_go_sdk::
 install_nodejs_sdk::
 	-yarn unlink --cwd $(WORKING_DIR)/sdk/nodejs/bin
 	yarn link --cwd $(WORKING_DIR)/sdk/nodejs/bin
+
+clean::
+	rm -rf sdk/{dotnet,nodejs,go,python}
