@@ -46,12 +46,12 @@ test_provider::
 dotnet_sdk:: DOTNET_VERSION := $(shell pulumictl get version --language dotnet)
 dotnet_sdk::
 	rm -rf sdk/dotnet
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language dotnet
+	pulumi package gen-sdk --language dotnet $(SCHEMA_FILE)
 	cd ${PACKDIR}/dotnet/&& \
 		echo "${DOTNET_VERSION}" >version.txt && \
 		dotnet build /p:Version=${DOTNET_VERSION}
 
-go_sdk:: $(WORKING_DIR)/bin/$(PROVIDER)
+go_sdk::
 	rm -rf sdk/go
 	pulumi package gen-sdk --language go $(SCHEMA_FILE)
 
