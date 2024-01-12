@@ -10,6 +10,8 @@ VERSION_PATH    := ${PROVIDER_PATH}.Version
 
 GOPATH			:= $(shell go env GOPATH)
 
+CODEGEN         := pulumi-gen-${PACK}
+SCHEMA_FILE     := provider/cmd/pulumi-resource-pinecone/schema.json
 WORKING_DIR     := $(shell pwd)
 EXAMPLES_DIR    := ${WORKING_DIR}/examples/yaml
 TESTPARALLELISM := 4
@@ -22,12 +24,17 @@ ensure::
 	cd sdk && go mod tidy
 	#cd tests && go mod tidy
 
+codegen::
+	(cd provider && VERSION=${VERSION} go generate cmd/${PROVIDER}/main.go)
+	(cd provider && go build -o $(WORKING_DIR)/bin/${CODEGEN} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" ${PROJECT}/${PROVIDER_PATH}/cmd/$(CODEGEN))
+	$(WORKING_DIR)/bin/${CODEGEN} $(SCHEMA_FILE) --version ${VERSION}
+
 generate:
 	@echo "Generating Go client from Swagger definition..."
 	@go install github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen@latest
 	@go generate ./${PROVIDER_PATH}/pkg/$(PACK)/provider.go
 
-provider:: generate
+provider:: codegen generate
 	(cd ${BUILD_DIR} && go build -o $(WORKING_DIR)/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" $(PROJECT)/${PROVIDER_PATH}/cmd/$(PROVIDER))
 
 provider_debug::
@@ -46,12 +53,12 @@ dotnet_sdk::
 
 go_sdk:: $(WORKING_DIR)/bin/$(PROVIDER)
 	rm -rf sdk/go
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language go
+	pulumi package gen-sdk --language go $(SCHEMA_FILE)
 
 nodejs_sdk:: VERSION := $(shell pulumictl get version --language javascript)
 nodejs_sdk::
 	rm -rf sdk/nodejs
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language nodejs
+	pulumi package gen-sdk --language nodejs $(SCHEMA_FILE)
 	cd ${PACKDIR}/nodejs/ && \
 		yarn install && \
 		yarn run tsc && \
@@ -62,7 +69,7 @@ nodejs_sdk::
 python_sdk:: PYPI_VERSION := $(shell pulumictl get version --language python)
 python_sdk::
 	rm -rf sdk/python
-	pulumi package gen-sdk $(WORKING_DIR)/bin/$(PROVIDER) --language python
+	pulumi package gen-sdk --language python $(SCHEMA_FILE)
 	cp README.md ${PACKDIR}/python/
 	cd ${PACKDIR}/python/ && \
 		python3 setup.py clean --all 2>/dev/null && \

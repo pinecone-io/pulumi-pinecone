@@ -38,7 +38,7 @@ This will:
 #### Test against the example
 
 ```bash
-$ cd examples/simple
+$ cd examples/ts
 $ yarn link @pinecone-database/pinecone
 $ yarn install
 $ pulumi stack init test
