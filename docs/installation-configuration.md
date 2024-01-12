@@ -16,4 +16,4 @@ The Pulumi Pinecone provider is available as a package in all Pulumi languages:
 
 The following configuration points are available for the `pinecone` provider:
 
-- `pinecone:APIKey` - This is the Pinecone API key. (environment: `PINECONE_API_KEY``)
+- `pinecone:APIKey` - This is the Pinecone API key. (environment: `PINECONE_API_KEY`)
