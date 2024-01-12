@@ -137,7 +137,7 @@
             "dependencies": {
                 "@pulumi/pulumi": "^3.0.0"
             },
-            "packageName": "@pinecone-database/pinecone"
+            "packageName": "@pinecone-database/pulumi"
         },
         "python": {
             "packageName": "pinecone_pulumi",

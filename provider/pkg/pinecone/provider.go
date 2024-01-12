@@ -58,7 +58,7 @@ func Provider() p.Provider {
 					"dependencies": map[string]string{
 						"@pulumi/pulumi": "^3.0.0",
 					},
-					"packageName": "@pinecone-database/pinecone",
+					"packageName": "@pinecone-database/pulumi",
 				},
 				"python": map[string]any{
 					"requires": map[string]string{
