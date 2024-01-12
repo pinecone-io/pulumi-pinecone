@@ -1,5 +1,5 @@
 {
-    "name": "@pinecone-database/pinecone",
+    "name": "@pinecone-database/pulumi",
     "version": "${VERSION}",
     "keywords": [
         "pulumi",
