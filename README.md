@@ -15,7 +15,7 @@ This package is available for several languages/platforms:
 To use from JavaScript or TypeScript in Node.js, install using either `npm`:
 
 ```bash
-npm install @pinecone-database/pinecone
+npm install @pinecone-database/pulumi
 ```
 
 or `yarn`:

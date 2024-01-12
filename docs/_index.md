@@ -16,11 +16,10 @@ This Pulumi Pinecone Provider enables you to manage your [Pinecone](https://www.
 ```javascript
 "use strict";
 const pulumi = require("@pulumi/pulumi");
-const pinecone = require("@pinecone-database/port");
+const pinecone = require("@pinecone-database/pulumi");
 
 const entity = new pinecone.PineconeIndex("myPineconeIndex", {
     name: "example-index",
-    dimension: 512,
     metric: pinecone.IndexMetric.Cosine,
     spec: {
         serverless: {
@@ -39,11 +38,10 @@ exports.host = myPineconeIndex.host;
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
-import * as pinecone from "@pinecone-database/pinecone";
+import * as pinecone from "@pinecone-database/pulumi";
 
 const myPineconeIndex = new pinecone.PineconeIndex("myPineconeIndex", {
     name: "example-index",
-    dimension: 512,
     metric: pinecone.IndexMetric.Cosine,
     spec: {
         serverless: {
@@ -64,11 +62,10 @@ export const output = {
 ```python
 """A Python Pulumi program"""
 import pulumi
-import pulumi_pinecone as pinecone
+import pinecone_pulumi as pinecone
 
 my_pinecone_index = pinecone.PineconeIndex("myPineconeIndex",
    name="example-index",
-   dimension=512,
    metric=pinecone.IndexMetric.COSINE,
    spec=pinecone.PineconeSpecArgs(
        serverless=pinecone.PineconeServerlessSpecArgs(
@@ -97,7 +94,6 @@ func main() {
 
 		myPineconeIndex, err := pinecone.NewPineconeIndex(ctx, "myPineconeIndex", &pinecone.PineconeIndexArgs{
 			Name:      pulumi.String("example-index2"),
-			Dimension: pulumi.Int(512),
 			Metric:    pinecone.IndexMetricCosine,
 			Spec: &pinecone.PineconeSpecArgs{
 				Serverless: &pinecone.PineconeServerlessSpecArgs{

@@ -6,6 +6,6 @@
 	"dependencies": {
 		"typescript": "^4.0.0",
 		"@pulumi/pulumi": "^3.0.0",
-		"@pinecone-database/pinecone": "0.0.1"
+		"@pinecone-database/pulumi": "0.3.0"
 	}
 }
