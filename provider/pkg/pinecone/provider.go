@@ -4,12 +4,15 @@ package provider
 //go:generate oapi-codegen -generate types,client -o ./client/pinecone.gen.go -package client ./swagger/pinecone-swagger.yaml
 
 import (
+	"github.com/blang/semver"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/index"
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi-go-provider/integration"
 	"github.com/pulumi/pulumi-go-provider/middleware/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
+	"strings"
 )
 
 func Provider() p.Provider {
@@ -67,4 +70,11 @@ func Provider() p.Provider {
 		},
 		Config: infer.Config[*config.PineconeProviderConfig](),
 	})
+}
+
+func Schema(version string) (string, error) {
+	version = strings.TrimPrefix(version, "v")
+	s, err := integration.NewServer("pinecone", semver.MustParse(version), Provider()).
+		GetSchema(p.GetSchemaRequest{})
+	return s.Schema, err
 }

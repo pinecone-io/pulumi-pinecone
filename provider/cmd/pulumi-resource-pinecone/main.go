@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	p "github.com/pulumi/pulumi-go-provider"
 	pinecone "github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/version"
+	p "github.com/pulumi/pulumi-go-provider"
 )
 
 // Serve the provider against Pulumi's Provider protocol.

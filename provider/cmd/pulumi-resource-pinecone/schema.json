@@ -1,0 +1,372 @@
+{
+    "config": {
+        "variables": {
+            "APIKey": {
+                "description": "The API token for Pinecone.",
+                "secret": true,
+                "type": "string"
+            }
+        }
+    },
+    "description": "A Pulumi native provider for Pinecone",
+    "displayName": "Pinecone",
+    "functions": {
+        "pinecone:index:lookupPineconeCollection": {
+            "description": "The result of a get operation on a Pinecone collection.",
+            "inputs": {
+                "properties": {
+                    "name": {
+                        "description": "The name of the Pinecone collection.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "type": "object"
+            },
+            "outputs": {
+                "description": "The result of a get operation on a Pinecone collection.",
+                "properties": {
+                    "dimension": {
+                        "description": "The dimension of the vectors stored in each record held in the collection.",
+                        "type": "integer"
+                    },
+                    "environment": {
+                        "description": "The environment where the collection is hosted.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of the collection to be created.",
+                        "type": "string"
+                    },
+                    "recordCount": {
+                        "description": "The number of records stored in the collection.",
+                        "type": "integer"
+                    },
+                    "size": {
+                        "description": "The size of the collection in bytes.",
+                        "type": "integer"
+                    },
+                    "source": {
+                        "description": "The name of the index to be used as the source for the collection.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "source",
+                    "size",
+                    "dimension",
+                    "recordCount",
+                    "environment"
+                ],
+                "type": "object"
+            }
+        },
+        "pinecone:index:lookupPineconeIndex": {
+            "description": "The result of a get operation on a Pinecone index.",
+            "inputs": {
+                "properties": {
+                    "name": {
+                        "description": "The name of the Pinecone index.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "type": "object"
+            },
+            "outputs": {
+                "description": "The result of a get operation on a Pinecone index.",
+                "properties": {
+                    "dimension": {
+                        "description": "The dimensions of the vectors in the index. Defaults to 1536.",
+                        "type": "integer"
+                    },
+                    "host": {
+                        "type": "string"
+                    },
+                    "metric": {
+                        "$ref": "#/types/pinecone:index:IndexMetric",
+                        "description": "The metric used to compute the distance between vectors."
+                    },
+                    "name": {
+                        "description": "The name of the Pinecone index.",
+                        "type": "string"
+                    },
+                    "spec": {
+                        "$ref": "#/types/pinecone:index:PineconeSpec",
+                        "description": "Describe how the index should be deployed."
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "name",
+                    "metric",
+                    "spec",
+                    "host",
+                    "status"
+                ],
+                "type": "object"
+            }
+        }
+    },
+    "homepage": "https://pulumi.com",
+    "keywords": [
+        "pulumi",
+        "pinecone",
+        "category/utility",
+        "kind/native"
+    ],
+    "language": {
+        "csharp": {
+            "packageReferences": {
+                "Pulumi": "3.*"
+            },
+            "rootNamespace": "Pinecone"
+        },
+        "go": {
+            "generateResourceContainerTypes": true,
+            "importBasePath": "github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone"
+        },
+        "nodejs": {
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "packageName": "@pinecone-database/pinecone"
+        },
+        "python": {
+            "packageName": "pinecone_pulumi",
+            "requires": {
+                "pulumi": ">=3.0.0,<4.0.0"
+            }
+        }
+    },
+    "license": "Apache-2.0",
+    "name": "pinecone",
+    "pluginDownloadURL": "github://api.github.com/pinecone-io/pulumi-pinecone",
+    "provider": {
+        "inputProperties": {
+            "APIKey": {
+                "description": "The API token for Pinecone.",
+                "secret": true,
+                "type": "string"
+            }
+        },
+        "properties": {
+            "APIKey": {
+                "description": "The API token for Pinecone.",
+                "secret": true,
+                "type": "string"
+            }
+        }
+    },
+    "publisher": "pinecone-io",
+    "repository": "https://github.com/pinecone-io/pulumi-pinecone",
+    "resources": {
+        "pinecone:index:PineconeCollection": {
+            "inputProperties": {
+                "name": {
+                    "description": "The name of the collection to be created.",
+                    "type": "string"
+                },
+                "source": {
+                    "description": "The name of the index to be used as the source for the collection.",
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "dimension": {
+                    "description": "The dimension of the vectors stored in each record held in the collection.",
+                    "type": "integer"
+                },
+                "environment": {
+                    "description": "The environment where the collection is hosted.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of the collection to be created.",
+                    "type": "string"
+                },
+                "recordCount": {
+                    "description": "The number of records stored in the collection.",
+                    "type": "integer"
+                },
+                "size": {
+                    "description": "The size of the collection in bytes.",
+                    "type": "integer"
+                },
+                "source": {
+                    "description": "The name of the index to be used as the source for the collection.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "source",
+                "size",
+                "dimension",
+                "recordCount",
+                "environment"
+            ],
+            "requiredInputs": [
+                "name",
+                "source"
+            ]
+        },
+        "pinecone:index:PineconeIndex": {
+            "inputProperties": {
+                "dimension": {
+                    "description": "The dimensions of the vectors in the index. Defaults to 1536.",
+                    "type": "integer"
+                },
+                "metric": {
+                    "$ref": "#/types/pinecone:index:IndexMetric",
+                    "description": "The metric used to compute the distance between vectors."
+                },
+                "name": {
+                    "description": "The name of the Pinecone index.",
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/types/pinecone:index:PineconeSpec",
+                    "description": "Describe how the index should be deployed."
+                }
+            },
+            "properties": {
+                "dimension": {
+                    "description": "The dimensions of the vectors in the index. Defaults to 1536.",
+                    "type": "integer"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "metric": {
+                    "$ref": "#/types/pinecone:index:IndexMetric",
+                    "description": "The metric used to compute the distance between vectors."
+                },
+                "name": {
+                    "description": "The name of the Pinecone index.",
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/types/pinecone:index:PineconeSpec",
+                    "description": "Describe how the index should be deployed."
+                }
+            },
+            "required": [
+                "name",
+                "metric",
+                "spec",
+                "host"
+            ],
+            "requiredInputs": [
+                "name",
+                "metric",
+                "spec"
+            ]
+        }
+    },
+    "types": {
+        "pinecone:index:IndexMetric": {
+            "enum": [
+                {
+                    "value": "dotproduct"
+                },
+                {
+                    "value": "cosine"
+                },
+                {
+                    "value": "euclidean"
+                }
+            ],
+            "type": "string"
+        },
+        "pinecone:index:MetaDataConfig": {
+            "properties": {
+                "indexed": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "pinecone:index:PineconePodSpec": {
+            "properties": {
+                "environment": {
+                    "type": "string"
+                },
+                "metaDataConfig": {
+                    "$ref": "#/types/pinecone:index:MetaDataConfig"
+                },
+                "podType": {
+                    "type": "string"
+                },
+                "pods": {
+                    "type": "integer"
+                },
+                "replicas": {
+                    "type": "integer"
+                },
+                "shards": {
+                    "type": "integer"
+                },
+                "sourceCollection": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "environment",
+                "replicas",
+                "podType"
+            ],
+            "type": "object"
+        },
+        "pinecone:index:PineconeServerlessSpec": {
+            "properties": {
+                "cloud": {
+                    "$ref": "#/types/pinecone:index:ServerlessSpecCloud"
+                },
+                "region": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cloud",
+                "region"
+            ],
+            "type": "object"
+        },
+        "pinecone:index:PineconeSpec": {
+            "properties": {
+                "pod": {
+                    "$ref": "#/types/pinecone:index:PineconePodSpec"
+                },
+                "serverless": {
+                    "$ref": "#/types/pinecone:index:PineconeServerlessSpec"
+                }
+            },
+            "type": "object"
+        },
+        "pinecone:index:ServerlessSpecCloud": {
+            "enum": [
+                {
+                    "value": "aws"
+                },
+                {
+                    "value": "azure"
+                },
+                {
+                    "value": "gcp"
+                }
+            ],
+            "type": "string"
+        }
+    }
+}
