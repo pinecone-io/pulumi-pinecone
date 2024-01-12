@@ -1,5 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
-import * as pinecone from "@pinecone-database/pinecone";
+import * as pinecone from "@pinecone-database/pulumi";
 
 const myPineconeIndex = new pinecone.PineconeIndex("myPineconeIndex", {
     name: "example-index",

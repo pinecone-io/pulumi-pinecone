@@ -8,7 +8,7 @@ layout: package
 
 The Pulumi Pinecone provider is available as a package in all Pulumi languages:
 
-* JavaScript/TypeScript: [`@pinecone-database/pinecone`](https://www.npmjs.com/package/@pinecone-database/pinecone)
+* JavaScript/TypeScript: [`@pinecone-database/pulumi`](https://www.npmjs.com/package/@pinecone-database/pulumi)
 * Python: [`pinecone_pulumi`](https://pypi.org/project/pinecone_pulumi/)
 * Go: [`github.com/pinecone-io/pulumi-pinecone/sdk/go/port`](https://github.com/pinecone-io/pulumi-pinecone)
 
