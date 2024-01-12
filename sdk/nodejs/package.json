@@ -1,13 +1,14 @@
 {
-    "name": "@pulumi/pinecone",
+    "name": "@pinecone-database/pinecone",
     "version": "${VERSION}",
     "keywords": [
         "pulumi",
-        "command",
+        "pinecone",
         "category/utility",
         "kind/native"
     ],
     "homepage": "https://pulumi.com",
+    "repository": "https://github.com/pinecone-io/pulumi-pinecone",
     "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
@@ -22,6 +23,6 @@
     "pulumi": {
         "resource": true,
         "name": "pinecone",
-        "server": "github://api.github.com/pinecone-io"
+        "server": "github://api.github.com/pinecone-io/pulumi-pinecone"
     }
 }

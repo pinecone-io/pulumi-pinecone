@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/blang/semver"
-	"github.com/pulumi/pulumi-pinecone/sdk/go/pinecone/internal"
+	"github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

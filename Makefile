@@ -3,9 +3,6 @@ PROJECT_NAME := Pulumi Pinecone Resource Provider
 PACK             := pinecone
 PACKDIR          := sdk
 PROJECT          := github.com/pinecone-io/pulumi-pinecone
-NODE_MODULE_NAME := @pulumi/pinecone
-NUGET_PKG_NAME   := Pulumi.Pinecone
-
 PROVIDER        := pulumi-resource-${PACK}
 VERSION         ?= $(shell pulumictl get version)
 PROVIDER_PATH   := provider
@@ -18,15 +15,16 @@ EXAMPLES_DIR    := ${WORKING_DIR}/examples/yaml
 TESTPARALLELISM := 4
 BUILD_DIR		:= ${WORKING_DIR}/provider/cmd/pulumi-resource-pinecone
 
+export PATH := $(HOME)/go/bin:$(PATH)
+
 ensure::
 	cd provider && go mod tidy
-	# TODO: fix error "internal: no Go source files"
-	#cd sdk && go mod tidy
+	cd sdk && go mod tidy
 	#cd tests && go mod tidy
 
 generate:
 	@echo "Generating Go client from Swagger definition..."
-	@go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
+	@go install github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen@latest
 	@go generate ./${PROVIDER_PATH}/pkg/$(PACK)/provider.go
 
 provider:: generate
@@ -113,7 +111,7 @@ down::
 devcontainer::
 	git submodule update --init --recursive .devcontainer
 	git submodule update --remote --merge .devcontainer
-	cp -f .devcontainer/.devcontainer.json .devcontainer.json
+	cp -f .devcontainer/devcontainer.json .devcontainer.json
 
 .PHONY: build
 

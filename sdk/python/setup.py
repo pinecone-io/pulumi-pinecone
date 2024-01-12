@@ -17,18 +17,21 @@ def readme():
         return "pinecone Pulumi Package - Development Version"
 
 
-setup(name='pulumi_pinecone',
+setup(name='pinecone_pulumi',
       python_requires='>=3.7',
       version=VERSION,
       description="A Pulumi native provider for Pinecone",
       long_description=readme(),
       long_description_content_type='text/markdown',
-      keywords='pulumi command category/utility kind/native',
+      keywords='pulumi pinecone category/utility kind/native',
       url='https://pulumi.com',
+      project_urls={
+          'Repository': 'https://github.com/pinecone-io/pulumi-pinecone'
+      },
       license='Apache-2.0',
       packages=find_packages(),
       package_data={
-          'pulumi_pinecone': [
+          'pinecone_pulumi': [
               'py.typed',
               'pulumi-plugin.json',
           ]
