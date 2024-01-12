@@ -15,8 +15,8 @@ import (
 type PineconeIndex struct {
 	pulumi.CustomResourceState
 
-	// The dimensions of the vectors in the index.
-	Dimension pulumi.IntOutput    `pulumi:"dimension"`
+	// The dimensions of the vectors in the index. Defaults to 1536.
+	Dimension pulumi.IntPtrOutput `pulumi:"dimension"`
 	Host      pulumi.StringOutput `pulumi:"host"`
 	// The metric used to compute the distance between vectors.
 	Metric IndexMetricOutput `pulumi:"metric"`
@@ -33,9 +33,6 @@ func NewPineconeIndex(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Dimension == nil {
-		return nil, errors.New("invalid value for required argument 'Dimension'")
-	}
 	if args.Metric == nil {
 		return nil, errors.New("invalid value for required argument 'Metric'")
 	}
@@ -78,8 +75,8 @@ func (PineconeIndexState) ElementType() reflect.Type {
 }
 
 type pineconeIndexArgs struct {
-	// The dimensions of the vectors in the index.
-	Dimension int `pulumi:"dimension"`
+	// The dimensions of the vectors in the index. Defaults to 1536.
+	Dimension *int `pulumi:"dimension"`
 	// The metric used to compute the distance between vectors.
 	Metric IndexMetric `pulumi:"metric"`
 	// The name of the Pinecone index.
@@ -90,8 +87,8 @@ type pineconeIndexArgs struct {
 
 // The set of arguments for constructing a PineconeIndex resource.
 type PineconeIndexArgs struct {
-	// The dimensions of the vectors in the index.
-	Dimension pulumi.IntInput
+	// The dimensions of the vectors in the index. Defaults to 1536.
+	Dimension pulumi.IntPtrInput
 	// The metric used to compute the distance between vectors.
 	Metric IndexMetricInput
 	// The name of the Pinecone index.
@@ -187,9 +184,9 @@ func (o PineconeIndexOutput) ToPineconeIndexOutputWithContext(ctx context.Contex
 	return o
 }
 
-// The dimensions of the vectors in the index.
-func (o PineconeIndexOutput) Dimension() pulumi.IntOutput {
-	return o.ApplyT(func(v *PineconeIndex) pulumi.IntOutput { return v.Dimension }).(pulumi.IntOutput)
+// The dimensions of the vectors in the index. Defaults to 1536.
+func (o PineconeIndexOutput) Dimension() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *PineconeIndex) pulumi.IntPtrOutput { return v.Dimension }).(pulumi.IntPtrOutput)
 }
 
 func (o PineconeIndexOutput) Host() pulumi.StringOutput {

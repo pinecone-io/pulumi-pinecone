@@ -3,7 +3,6 @@ import * as pinecone from "@pinecone-database/pinecone";
 
 const myPineconeIndex = new pinecone.PineconeIndex("myPineconeIndex", {
     name: "example-index",
-    dimension: 512,
     metric: pinecone.IndexMetric.Cosine,
     spec: {
         serverless: {

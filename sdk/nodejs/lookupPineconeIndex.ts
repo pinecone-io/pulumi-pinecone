@@ -30,9 +30,9 @@ export interface LookupPineconeIndexArgs {
  */
 export interface LookupPineconeIndexResult {
     /**
-     * The dimensions of the vectors in the index.
+     * The dimensions of the vectors in the index. Defaults to 1536.
      */
-    readonly dimension: number;
+    readonly dimension?: number;
     readonly host: string;
     /**
      * The metric used to compute the distance between vectors.

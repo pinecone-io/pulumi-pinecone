@@ -17,33 +17,22 @@ __all__ = ['PineconeIndexArgs', 'PineconeIndex']
 @pulumi.input_type
 class PineconeIndexArgs:
     def __init__(__self__, *,
-                 dimension: pulumi.Input[int],
                  metric: pulumi.Input['IndexMetric'],
                  name: pulumi.Input[str],
-                 spec: pulumi.Input['PineconeSpecArgs']):
+                 spec: pulumi.Input['PineconeSpecArgs'],
+                 dimension: Optional[pulumi.Input[int]] = None):
         """
         The set of arguments for constructing a PineconeIndex resource.
-        :param pulumi.Input[int] dimension: The dimensions of the vectors in the index.
         :param pulumi.Input['IndexMetric'] metric: The metric used to compute the distance between vectors.
         :param pulumi.Input[str] name: The name of the Pinecone index.
         :param pulumi.Input['PineconeSpecArgs'] spec: Describe how the index should be deployed.
+        :param pulumi.Input[int] dimension: The dimensions of the vectors in the index. Defaults to 1536.
         """
-        pulumi.set(__self__, "dimension", dimension)
         pulumi.set(__self__, "metric", metric)
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "spec", spec)
-
-    @property
-    @pulumi.getter
-    def dimension(self) -> pulumi.Input[int]:
-        """
-        The dimensions of the vectors in the index.
-        """
-        return pulumi.get(self, "dimension")
-
-    @dimension.setter
-    def dimension(self, value: pulumi.Input[int]):
-        pulumi.set(self, "dimension", value)
+        if dimension is not None:
+            pulumi.set(__self__, "dimension", dimension)
 
     @property
     @pulumi.getter
@@ -81,6 +70,18 @@ class PineconeIndexArgs:
     def spec(self, value: pulumi.Input['PineconeSpecArgs']):
         pulumi.set(self, "spec", value)
 
+    @property
+    @pulumi.getter
+    def dimension(self) -> Optional[pulumi.Input[int]]:
+        """
+        The dimensions of the vectors in the index. Defaults to 1536.
+        """
+        return pulumi.get(self, "dimension")
+
+    @dimension.setter
+    def dimension(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "dimension", value)
+
 
 class PineconeIndex(pulumi.CustomResource):
     @overload
@@ -96,7 +97,7 @@ class PineconeIndex(pulumi.CustomResource):
         Create a PineconeIndex resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[int] dimension: The dimensions of the vectors in the index.
+        :param pulumi.Input[int] dimension: The dimensions of the vectors in the index. Defaults to 1536.
         :param pulumi.Input['IndexMetric'] metric: The metric used to compute the distance between vectors.
         :param pulumi.Input[str] name: The name of the Pinecone index.
         :param pulumi.Input[pulumi.InputType['PineconeSpecArgs']] spec: Describe how the index should be deployed.
@@ -137,8 +138,6 @@ class PineconeIndex(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = PineconeIndexArgs.__new__(PineconeIndexArgs)
 
-            if dimension is None and not opts.urn:
-                raise TypeError("Missing required property 'dimension'")
             __props__.__dict__["dimension"] = dimension
             if metric is None and not opts.urn:
                 raise TypeError("Missing required property 'metric'")
@@ -181,9 +180,9 @@ class PineconeIndex(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def dimension(self) -> pulumi.Output[int]:
+    def dimension(self) -> pulumi.Output[Optional[int]]:
         """
-        The dimensions of the vectors in the index.
+        The dimensions of the vectors in the index. Defaults to 1536.
         """
         return pulumi.get(self, "dimension")
 

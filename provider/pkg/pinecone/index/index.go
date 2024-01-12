@@ -4,12 +4,12 @@ package index
 import (
 	"context"
 	"fmt"
-	p "github.com/pulumi/pulumi-go-provider"
-	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
+	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"net/http"
 )
 
@@ -49,11 +49,32 @@ type PineconeSpec struct {
 	Pod        PineconePodSpec        `pulumi:"pod,optional,omitempty"`
 }
 
+// PineconeIndexArgs describes the configuration options available for creating or managing a Pinecone index.
 type PineconeIndexArgs struct {
-	IndexName      string                `pulumi:"name"`
-	IndexDimension client.IndexDimension `pulumi:"dimension"`
-	IndexMetric    IndexMetric           `pulumi:"metric"`
-	IndexSpec      PineconeSpec          `pulumi:"spec"`
+	/**
+	 * IndexName specifies the unique name for the Pinecone index. This is a mandatory field and is used to
+	 * identify the index in the Pinecone environment.
+	 */
+	IndexName string `pulumi:"name"`
+
+	/**
+	 * IndexDimension specifies the dimensions of the vectors that the index will store. It is optional and, if
+	 * not provided, a default dimension may be used based on the Pinecone environment settings.
+	 *
+	 * Defaults to 1536.
+	 */
+	IndexDimension client.IndexDimension `pulumi:"dimension,omitempty,optional"`
+
+	/**
+	 * IndexMetric determines the type of metric to be used for measuring distances in the vector space. This
+	 * could be, for example, Euclidean or cosine distance, depending on the IndexMetric value.
+	 */
+	IndexMetric IndexMetric `pulumi:"metric"`
+
+	/**
+	 * IndexSpec defines the specific configuration and settings for the Pinecone index.
+	 */
+	IndexSpec PineconeSpec `pulumi:"spec"`
 }
 
 func (ServerlessSpecCloud) Values() []infer.EnumValue[ServerlessSpecCloud] {
@@ -79,7 +100,7 @@ type PineconeIndexState struct {
 
 func (pia *PineconeIndexArgs) Annotate(a infer.Annotator) {
 	a.Describe(&pia.IndexName, "The name of the Pinecone index.")
-	a.Describe(&pia.IndexDimension, "The dimensions of the vectors in the index.")
+	a.Describe(&pia.IndexDimension, "The dimensions of the vectors in the index. Defaults to 1536.")
 	a.Describe(&pia.IndexMetric, "The metric used to compute the distance between vectors.")
 	a.Describe(&pia.IndexSpec, "Describe how the index should be deployed.")
 }
@@ -90,13 +111,19 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 		return "", PineconeIndexState{}, fmt.Errorf("invalid index name: %w", err)
 	}
 
+	indexDimension := args.IndexDimension
+	if indexDimension == 0 {
+		indexDimension = utils.IndexDimensionDefault
+	}
+	ctx.Logf(diag.Debug, "Pinecone index dimension: %d", indexDimension)
+
 	if preview {
 		ctx.Logf(diag.Debug, "Previewing Pinecone index creation: %s", args.IndexName)
 		return args.IndexName, PineconeIndexState{
 			PineconeIndexArgs: PineconeIndexArgs{
 				IndexName:      args.IndexName,
 				IndexMetric:    args.IndexMetric,
-				IndexDimension: args.IndexDimension,
+				IndexDimension: indexDimension,
 				IndexSpec:      args.IndexSpec,
 			},
 		}, nil
@@ -145,7 +172,7 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 	}
 
 	response, err := pineconeClient.CreateIndexWithResponse(context.Background(), client.CreateIndexJSONRequestBody{
-		Dimension: args.IndexDimension,
+		Dimension: indexDimension,
 		Metric:    client.IndexMetric(args.IndexMetric),
 		Name:      args.IndexName,
 		Spec:      spec,

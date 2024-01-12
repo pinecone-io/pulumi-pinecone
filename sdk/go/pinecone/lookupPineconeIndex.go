@@ -29,8 +29,8 @@ type LookupPineconeIndexArgs struct {
 
 // The result of a get operation on a Pinecone index.
 type LookupPineconeIndexResult struct {
-	// The dimensions of the vectors in the index.
-	Dimension int    `pulumi:"dimension"`
+	// The dimensions of the vectors in the index. Defaults to 1536.
+	Dimension *int   `pulumi:"dimension"`
 	Host      string `pulumi:"host"`
 	// The metric used to compute the distance between vectors.
 	Metric IndexMetric `pulumi:"metric"`
@@ -78,9 +78,9 @@ func (o LookupPineconeIndexResultOutput) ToLookupPineconeIndexResultOutputWithCo
 	return o
 }
 
-// The dimensions of the vectors in the index.
-func (o LookupPineconeIndexResultOutput) Dimension() pulumi.IntOutput {
-	return o.ApplyT(func(v LookupPineconeIndexResult) int { return v.Dimension }).(pulumi.IntOutput)
+// The dimensions of the vectors in the index. Defaults to 1536.
+func (o LookupPineconeIndexResultOutput) Dimension() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v LookupPineconeIndexResult) *int { return v.Dimension }).(pulumi.IntPtrOutput)
 }
 
 func (o LookupPineconeIndexResultOutput) Host() pulumi.StringOutput {
