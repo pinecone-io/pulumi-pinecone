@@ -6,14 +6,39 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
+using Pulumi;
 
-namespace Pulumi.Pinecone.Provider
+namespace PineconeDatabase.Pinecone
 {
-    [PineconeResourceType("pinecone:provider:PineconeIndex")]
+    [PineconeResourceType("pinecone:index:PineconeIndex")]
     public partial class PineconeIndex : global::Pulumi.CustomResource
     {
-        [Output("indexName")]
-        public Output<string> IndexName { get; private set; } = null!;
+        /// <summary>
+        /// The dimensions of the vectors in the index. Defaults to 1536.
+        /// </summary>
+        [Output("dimension")]
+        public Output<int?> Dimension { get; private set; } = null!;
+
+        [Output("host")]
+        public Output<string> Host { get; private set; } = null!;
+
+        /// <summary>
+        /// The metric used to compute the distance between vectors.
+        /// </summary>
+        [Output("metric")]
+        public Output<PineconeDatabase.Pinecone.IndexMetric> Metric { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the Pinecone index.
+        /// </summary>
+        [Output("name")]
+        public Output<string> Name { get; private set; } = null!;
+
+        /// <summary>
+        /// Describe how the index should be deployed.
+        /// </summary>
+        [Output("spec")]
+        public Output<Outputs.PineconeSpec> Spec { get; private set; } = null!;
 
 
         /// <summary>
@@ -24,12 +49,12 @@ namespace Pulumi.Pinecone.Provider
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public PineconeIndex(string name, PineconeIndexArgs args, CustomResourceOptions? options = null)
-            : base("pinecone:provider:PineconeIndex", name, args ?? new PineconeIndexArgs(), MakeResourceOptions(options, ""))
+            : base("pinecone:index:PineconeIndex", name, args ?? new PineconeIndexArgs(), MakeResourceOptions(options, ""))
         {
         }
 
         private PineconeIndex(string name, Input<string> id, CustomResourceOptions? options = null)
-            : base("pinecone:provider:PineconeIndex", name, null, MakeResourceOptions(options, id))
+            : base("pinecone:index:PineconeIndex", name, null, MakeResourceOptions(options, id))
         {
         }
 
@@ -38,6 +63,7 @@ namespace Pulumi.Pinecone.Provider
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/pinecone-io/pulumi-pinecone",
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -61,28 +87,28 @@ namespace Pulumi.Pinecone.Provider
     public sealed class PineconeIndexArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The dimensions of the vectors in the index.
+        /// The dimensions of the vectors in the index. Defaults to 1536.
         /// </summary>
-        [Input("indexDimension", required: true)]
-        public Input<int> IndexDimension { get; set; } = null!;
+        [Input("dimension")]
+        public Input<int>? Dimension { get; set; }
 
-        [Input("indexMetric", required: true)]
-        public Input<string> IndexMetric { get; set; } = null!;
+        /// <summary>
+        /// The metric used to compute the distance between vectors.
+        /// </summary>
+        [Input("metric", required: true)]
+        public Input<PineconeDatabase.Pinecone.IndexMetric> Metric { get; set; } = null!;
 
         /// <summary>
         /// The name of the Pinecone index.
         /// </summary>
-        [Input("indexName", required: true)]
-        public Input<string> IndexName { get; set; } = null!;
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
 
-        [Input("indexPodType", required: true)]
-        public Input<string> IndexPodType { get; set; } = null!;
-
-        [Input("indexPods", required: true)]
-        public Input<int> IndexPods { get; set; } = null!;
-
-        [Input("indexReplicas", required: true)]
-        public Input<int> IndexReplicas { get; set; } = null!;
+        /// <summary>
+        /// Describe how the index should be deployed.
+        /// </summary>
+        [Input("spec", required: true)]
+        public Input<Inputs.PineconeSpecArgs> Spec { get; set; } = null!;
 
         public PineconeIndexArgs()
         {

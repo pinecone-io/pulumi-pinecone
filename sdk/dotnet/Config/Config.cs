@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Pulumi.Pinecone
+namespace PineconeDatabase.Pinecone
 {
     public static class Config
     {
@@ -32,24 +32,14 @@ namespace Pulumi.Pinecone
 
         private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("pinecone");
 
-        private static readonly __Value<string?> _apiToken = new __Value<string?>(() => __config.Get("apiToken"));
+        private static readonly __Value<string?> _APIKey = new __Value<string?>(() => __config.Get("APIKey"));
         /// <summary>
         /// The API token for Pinecone.
         /// </summary>
-        public static string? ApiToken
+        public static string? APIKey
         {
-            get => _apiToken.Get();
-            set => _apiToken.Set(value);
-        }
-
-        private static readonly __Value<string?> _pineconeEnv = new __Value<string?>(() => __config.Get("pineconeEnv"));
-        /// <summary>
-        /// The environment for the Pinecone API.
-        /// </summary>
-        public static string? PineconeEnv
-        {
-            get => _pineconeEnv.Get();
-            set => _pineconeEnv.Set(value);
+            get => _APIKey.Get();
+            set => _APIKey.Set(value);
         }
 
     }

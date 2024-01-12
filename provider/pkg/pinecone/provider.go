@@ -52,7 +52,7 @@ func Provider() p.Provider {
 					"packageReferences": map[string]string{
 						"Pulumi": "3.*",
 					},
-					"rootNamespace": "Pinecone",
+					"rootNamespace": "PineconeDatabase",
 				},
 				"nodejs": map[string]any{
 					"dependencies": map[string]string{
