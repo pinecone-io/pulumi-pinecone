@@ -1,11 +1,11 @@
-module github.com/usrbinkat/pulumi-pinecone-native/provider
+module github.com/pinecone-io/pulumi-pinecone/provider
 
 go 1.21
 
 require (
-	github.com/oapi-codegen/runtime v1.1.0
+	github.com/oapi-codegen/runtime v1.1.1
 	github.com/pulumi/pulumi-go-provider v0.14.0
-	github.com/pulumi/pulumi/sdk/v3 v3.97.0
+	github.com/pulumi/pulumi/sdk/v3 v3.101.1
 )
 
 require (
@@ -65,8 +65,8 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/term v1.1.0 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
-	github.com/pulumi/esc v0.6.1 // indirect
-	github.com/pulumi/pulumi/pkg/v3 v3.97.0 // indirect
+	github.com/pulumi/esc v0.6.2 // indirect
+	github.com/pulumi/pulumi/pkg/v3 v3.98.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06 // indirect

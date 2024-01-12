@@ -4,12 +4,12 @@ package provider
 //go:generate oapi-codegen -generate types,client -o ./client/pinecone.gen.go -package client ./swagger/pinecone-swagger.yaml
 
 import (
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/index"
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi-go-provider/middleware/schema"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
-	"github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/config"
-	"github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/index"
 )
 
 func Provider() p.Provider {
@@ -30,38 +30,38 @@ func Provider() p.Provider {
 			Description: "A Pulumi native provider for Pinecone",
 			Keywords: []string{
 				"pulumi",
-				"command",
+				"pinecone",
 				"category/utility",
 				"kind/native",
 			},
 			Homepage:          "https://pulumi.com",
 			License:           "Apache-2.0",
-			Repository:        "",
-			PluginDownloadURL: "github://api.github.com/usrbinkat",
-			Publisher:         "Pulumi",
+			Repository:        "https://github.com/pinecone-io/pulumi-pinecone",
+			PluginDownloadURL: "github://api.github.com/pinecone-io/pulumi-pinecone",
+			Publisher:         "pinecone-io",
 			LogoURL:           "",
 			LanguageMap: map[string]any{
 				"go": map[string]any{
 					"generateResourceContainerTypes": true,
-					"importBasePath":                 "github.com/pulumi/pulumi-pinecone/sdk/go/pinecone",
+					"importBasePath":                 "github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone",
 				},
 				"csharp": map[string]any{
 					"packageReferences": map[string]string{
 						"Pulumi": "3.*",
 					},
-					"rootNamespace": "Pulumi",
+					"rootNamespace": "Pinecone",
 				},
 				"nodejs": map[string]any{
 					"dependencies": map[string]string{
 						"@pulumi/pulumi": "^3.0.0",
 					},
-					"packageName": "@pulumi/pinecone",
+					"packageName": "@pinecone-database/pinecone",
 				},
 				"python": map[string]any{
 					"requires": map[string]string{
 						"pulumi": ">=3.0.0,<4.0.0",
 					},
-					"packageName": "pulumi_pinecone",
+					"packageName": "pinecone_pulumi",
 				},
 			},
 		},

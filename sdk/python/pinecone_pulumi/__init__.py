@@ -16,10 +16,10 @@ from . import outputs
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:
-    import pulumi_pinecone.config as __config
+    import pinecone_pulumi.config as __config
     config = __config
 else:
-    config = _utilities.lazy_import('pulumi_pinecone.config')
+    config = _utilities.lazy_import('pinecone_pulumi.config')
 
 _utilities.register(
     resource_modules="""
@@ -27,7 +27,7 @@ _utilities.register(
  {
   "pkg": "pinecone",
   "mod": "index",
-  "fqn": "pulumi_pinecone",
+  "fqn": "pinecone_pulumi",
   "classes": {
    "pinecone:index:PineconeCollection": "PineconeCollection",
    "pinecone:index:PineconeIndex": "PineconeIndex"
@@ -40,7 +40,7 @@ _utilities.register(
  {
   "pkg": "pinecone",
   "token": "pulumi:providers:pinecone",
-  "fqn": "pulumi_pinecone",
+  "fqn": "pinecone_pulumi",
   "class": "Provider"
  }
 ]

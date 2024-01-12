@@ -12,3 +12,4 @@ ci-scripts
 /nuget/
 provider/**/schema-embed.json
 **/dist
+.devcontainer.json

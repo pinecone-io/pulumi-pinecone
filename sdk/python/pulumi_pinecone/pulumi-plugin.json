@@ -1,5 +1,0 @@
-{
-  "resource": true,
-  "name": "pinecone",
-  "server": "github://api.github.com/usrbinkat"
-}

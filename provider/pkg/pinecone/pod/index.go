@@ -5,9 +5,9 @@ import (
 	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
-	"github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/client"
-	"github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/config"
-	"github.com/usrbinkat/pulumi-pinecone-native/provider/pkg/pinecone/utils"
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
 	"net/http"
 )
 
