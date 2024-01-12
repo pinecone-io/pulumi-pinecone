@@ -44,4 +44,4 @@ go get github.com/pinecone-io/pulumi-pinecone/sdk
 
 The following configuration points are available for the `pinecone` provider:
 
-- `pinecone:APIKey` - This is the Pinecone API key. (environment: `PINECONE_API_KEY``)
+- `pinecone:APIKey` - This is the Pinecone API key. (environment: `PINECONE_API_KEY`)
