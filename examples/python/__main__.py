@@ -3,7 +3,6 @@ import pulumi_pinecone as pinecone
 
 my_pinecone_index = pinecone.PineconeIndex("myPineconeIndex",
     name="example-index",
-    dimension=512,
     metric=pinecone.IndexMetric.COSINE,
     spec=pinecone.PineconeSpecArgs(
         serverless=pinecone.PineconeServerlessSpecArgs(

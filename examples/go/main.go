@@ -9,9 +9,8 @@ func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
 		myPineconeIndex, err := pinecone.NewPineconeIndex(ctx, "myPineconeIndex", &pinecone.PineconeIndexArgs{
-			Name:      pulumi.String("example-index2"),
-			Dimension: pulumi.Int(512),
-			Metric:    pinecone.IndexMetricCosine,
+			Name:   pulumi.String("example-index2"),
+			Metric: pinecone.IndexMetricCosine,
 			Spec: &pinecone.PineconeSpecArgs{
 				Serverless: &pinecone.PineconeServerlessSpecArgs{
 					Cloud:  pinecone.ServerlessSpecCloudAws,

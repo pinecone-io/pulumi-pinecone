@@ -45,9 +45,9 @@ class LookupPineconeIndexResult:
 
     @property
     @pulumi.getter
-    def dimension(self) -> int:
+    def dimension(self) -> Optional[int]:
         """
-        The dimensions of the vectors in the index.
+        The dimensions of the vectors in the index. Defaults to 1536.
         """
         return pulumi.get(self, "dimension")
 

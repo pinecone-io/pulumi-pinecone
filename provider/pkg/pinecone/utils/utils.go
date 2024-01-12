@@ -3,6 +3,7 @@ package utils
 
 import (
 	"fmt"
+	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"net/http"
 	"regexp"
 )
@@ -27,3 +28,5 @@ func (c *CustomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add("Api-Key", c.APIKey)
 	return c.Transport.RoundTrip(req)
 }
+
+var IndexDimensionDefault client.IndexDimension = 1536

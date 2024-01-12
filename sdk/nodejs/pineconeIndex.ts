@@ -35,9 +35,9 @@ export class PineconeIndex extends pulumi.CustomResource {
     }
 
     /**
-     * The dimensions of the vectors in the index.
+     * The dimensions of the vectors in the index. Defaults to 1536.
      */
-    public readonly dimension!: pulumi.Output<number>;
+    public readonly dimension!: pulumi.Output<number | undefined>;
     public /*out*/ readonly host!: pulumi.Output<string>;
     /**
      * The metric used to compute the distance between vectors.
@@ -63,9 +63,6 @@ export class PineconeIndex extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.dimension === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'dimension'");
-            }
             if ((!args || args.metric === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'metric'");
             }
@@ -97,9 +94,9 @@ export class PineconeIndex extends pulumi.CustomResource {
  */
 export interface PineconeIndexArgs {
     /**
-     * The dimensions of the vectors in the index.
+     * The dimensions of the vectors in the index. Defaults to 1536.
      */
-    dimension: pulumi.Input<number>;
+    dimension?: pulumi.Input<number>;
     /**
      * The metric used to compute the distance between vectors.
      */
