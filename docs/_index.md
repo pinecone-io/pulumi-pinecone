@@ -8,7 +8,7 @@ This Pulumi Pinecone Provider enables you to manage your [Pinecone](https://www.
 
 ## Example
 
-{{< chooser language "javascript,typescript,python,go" >}}
+{{< chooser language "javascript,typescript,python,go,csharp,yaml" >}}
 
 
 {{% choosable language javascript %}}
@@ -18,18 +18,18 @@ This Pulumi Pinecone Provider enables you to manage your [Pinecone](https://www.
 const pulumi = require("@pulumi/pulumi");
 const pinecone = require("@pinecone-database/pulumi");
 
-const entity = new pinecone.PineconeIndex("myPineconeIndex", {
-    name: "example-index",
+const myExampleIndex = new pinecone.PineconeIndex("my-example-index", {
+    name: "my-example-index",
     metric: pinecone.IndexMetric.Cosine,
     spec: {
         serverless: {
             cloud: pinecone.ServerlessSpecCloud.Aws,
             region: "us-west-2",
-        },
-    },
+        }
+    }
 });
 
-exports.host = myPineconeIndex.host;
+exports.host = myExampleIndex.host;
 ```
 
 {{% /choosable %}}
@@ -40,8 +40,8 @@ exports.host = myPineconeIndex.host;
 import * as pulumi from "@pulumi/pulumi";
 import * as pinecone from "@pinecone-database/pulumi";
 
-const myPineconeIndex = new pinecone.PineconeIndex("myPineconeIndex", {
-    name: "example-index",
+const myExampleIndex = new pinecone.PineconeIndex("my-example-index", {
+    name: "example-index-ts",
     metric: pinecone.IndexMetric.Cosine,
     spec: {
         serverless: {
@@ -50,9 +50,7 @@ const myPineconeIndex = new pinecone.PineconeIndex("myPineconeIndex", {
         },
     },
 });
-export const output = {
-    value: myPineconeIndex.host,
-};
+export const host = myExampleIndex.host;
 ```
 
 {{% /choosable %}}
@@ -79,6 +77,7 @@ pulumi.export("output", {
 ```
 
 {{% /choosable %}}
+
 {{% choosable language go %}}
 
 ```go
@@ -92,9 +91,9 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
-		myPineconeIndex, err := pinecone.NewPineconeIndex(ctx, "myPineconeIndex", &pinecone.PineconeIndexArgs{
-			Name:      pulumi.String("example-index2"),
-			Metric:    pinecone.IndexMetricCosine,
+		myExampleIndex, err := pinecone.NewPineconeIndex(ctx, "my-example-index", &pinecone.PineconeIndexArgs{
+			Name:   pulumi.String("example-index-go"),
+			Metric: pinecone.IndexMetricCosine,
 			Spec: &pinecone.PineconeSpecArgs{
 				Serverless: &pinecone.PineconeServerlessSpecArgs{
 					Cloud:  pinecone.ServerlessSpecCloudAws,
@@ -105,12 +104,67 @@ func main() {
 		if err != nil {
 			return err
 		}
-		ctx.Export("myPineconeIndex", myPineconeIndex.Name)
-		ctx.Export("myPineconeIndexHost", myPineconeIndex.Host)
+		ctx.Export("myPineconeIndexHost", myExampleIndex.Host)
 
 		return nil
 	})
 }
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using PineconeDatabase.Pinecone.Inputs;
+using Pulumi;
+using Pinecone = PineconeDatabase.Pinecone;
+
+return await Deployment.RunAsync(() =>
+{
+    var myExampleIndex = new Pinecone.PineconeIndex("myExampleIndex", new Pinecone.PineconeIndexArgs
+    {
+        Name = "example-index-csharp",
+        Metric= Pinecone.IndexMetric.Cosine,
+        Spec= new Pinecone.Inputs.PineconeSpecArgs {
+            Serverless= new PineconeServerlessSpecArgs{
+                Cloud= Pinecone.ServerlessSpecCloud.Aws,
+                Region= "us-west-2",
+        }
+    },
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["myPineconeIndexHost"] = myExampleIndex.Host
+    };
+});
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+name: pinecone-serverless-yaml
+description: A minimal Pinecone Serverless Pulumi YAML program
+runtime: yaml
+
+resources:
+  myExampleIndex:
+    type: pinecone:index:PineconeIndex
+    properties:
+      name: "example-index"
+      metric: "cosine"
+      spec:
+        serverless:
+          cloud: aws
+          region: us-west-2
+
+outputs:
+  output:
+    value: ${myExampleIndex.host}
 ```
 
 {{% /choosable %}}

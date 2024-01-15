@@ -7,7 +7,7 @@
         "category/utility",
         "kind/native"
     ],
-    "homepage": "https://pulumi.com",
+    "homepage": "https://www.pinecone.io",
     "repository": "https://github.com/pinecone-io/pulumi-pinecone",
     "license": "Apache-2.0",
     "scripts": {

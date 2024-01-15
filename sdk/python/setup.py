@@ -24,7 +24,7 @@ setup(name='pinecone_pulumi',
       long_description=readme(),
       long_description_content_type='text/markdown',
       keywords='pulumi pinecone category/utility kind/native',
-      url='https://pulumi.com',
+      url='https://www.pinecone.io',
       project_urls={
           'Repository': 'https://github.com/pinecone-io/pulumi-pinecone'
       },
