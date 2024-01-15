@@ -6,7 +6,7 @@
     <Company>pinecone-io</Company>
     <Description>A Pulumi native provider for Pinecone</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://pulumi.com</PackageProjectUrl>
+    <PackageProjectUrl>https://www.pinecone.io</PackageProjectUrl>
     <RepositoryUrl>https://github.com/pinecone-io/pulumi-pinecone</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
 

@@ -37,7 +37,7 @@ func Provider() p.Provider {
 				"category/utility",
 				"kind/native",
 			},
-			Homepage:          "https://pulumi.com",
+			Homepage:          "https://www.pinecone.io",
 			License:           "Apache-2.0",
 			Repository:        "https://github.com/pinecone-io/pulumi-pinecone",
 			PluginDownloadURL: "github://api.github.com/pinecone-io/pulumi-pinecone",
