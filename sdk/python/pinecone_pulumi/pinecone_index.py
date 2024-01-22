@@ -189,6 +189,9 @@ class PineconeIndex(pulumi.CustomResource):
     @property
     @pulumi.getter
     def host(self) -> pulumi.Output[str]:
+        """
+        The URL address where the index is hosted.
+        """
         return pulumi.get(self, "host")
 
     @property

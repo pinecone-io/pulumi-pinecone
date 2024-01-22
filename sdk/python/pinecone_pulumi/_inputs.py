@@ -125,12 +125,19 @@ class PineconeServerlessSpecArgs:
     def __init__(__self__, *,
                  cloud: pulumi.Input['ServerlessSpecCloud'],
                  region: pulumi.Input[str]):
+        """
+        :param pulumi.Input['ServerlessSpecCloud'] cloud: he public cloud where you would like your index hosted
+        :param pulumi.Input[str] region: The region where you would like your index to be created. Different cloud providers have different regions available.
+        """
         pulumi.set(__self__, "cloud", cloud)
         pulumi.set(__self__, "region", region)
 
     @property
     @pulumi.getter
     def cloud(self) -> pulumi.Input['ServerlessSpecCloud']:
+        """
+        he public cloud where you would like your index hosted
+        """
         return pulumi.get(self, "cloud")
 
     @cloud.setter
@@ -140,6 +147,9 @@ class PineconeServerlessSpecArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        The region where you would like your index to be created. Different cloud providers have different regions available.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -152,6 +162,10 @@ class PineconeSpecArgs:
     def __init__(__self__, *,
                  pod: Optional[pulumi.Input['PineconePodSpecArgs']] = None,
                  serverless: Optional[pulumi.Input['PineconeServerlessSpecArgs']] = None):
+        """
+        :param pulumi.Input['PineconePodSpecArgs'] pod: Configuration needed to deploy a pod index.
+        :param pulumi.Input['PineconeServerlessSpecArgs'] serverless: Configuration needed to deploy a serverless index.
+        """
         if pod is not None:
             pulumi.set(__self__, "pod", pod)
         if serverless is not None:
@@ -160,6 +174,9 @@ class PineconeSpecArgs:
     @property
     @pulumi.getter
     def pod(self) -> Optional[pulumi.Input['PineconePodSpecArgs']]:
+        """
+        Configuration needed to deploy a pod index.
+        """
         return pulumi.get(self, "pod")
 
     @pod.setter
@@ -169,6 +186,9 @@ class PineconeSpecArgs:
     @property
     @pulumi.getter
     def serverless(self) -> Optional[pulumi.Input['PineconeServerlessSpecArgs']]:
+        """
+        Configuration needed to deploy a serverless index.
+        """
         return pulumi.get(self, "serverless")
 
     @serverless.setter

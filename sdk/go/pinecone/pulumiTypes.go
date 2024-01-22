@@ -370,8 +370,10 @@ func (o PineconePodSpecPtrOutput) SourceCollection() pulumi.StringPtrOutput {
 }
 
 type PineconeServerlessSpec struct {
-	Cloud  ServerlessSpecCloud `pulumi:"cloud"`
-	Region string              `pulumi:"region"`
+	// he public cloud where you would like your index hosted
+	Cloud ServerlessSpecCloud `pulumi:"cloud"`
+	// The region where you would like your index to be created. Different cloud providers have different regions available.
+	Region string `pulumi:"region"`
 }
 
 // PineconeServerlessSpecInput is an input type that accepts PineconeServerlessSpecArgs and PineconeServerlessSpecOutput values.
@@ -386,8 +388,10 @@ type PineconeServerlessSpecInput interface {
 }
 
 type PineconeServerlessSpecArgs struct {
-	Cloud  ServerlessSpecCloudInput `pulumi:"cloud"`
-	Region pulumi.StringInput       `pulumi:"region"`
+	// he public cloud where you would like your index hosted
+	Cloud ServerlessSpecCloudInput `pulumi:"cloud"`
+	// The region where you would like your index to be created. Different cloud providers have different regions available.
+	Region pulumi.StringInput `pulumi:"region"`
 }
 
 func (PineconeServerlessSpecArgs) ElementType() reflect.Type {
@@ -467,10 +471,12 @@ func (o PineconeServerlessSpecOutput) ToPineconeServerlessSpecPtrOutputWithConte
 	}).(PineconeServerlessSpecPtrOutput)
 }
 
+// he public cloud where you would like your index hosted
 func (o PineconeServerlessSpecOutput) Cloud() ServerlessSpecCloudOutput {
 	return o.ApplyT(func(v PineconeServerlessSpec) ServerlessSpecCloud { return v.Cloud }).(ServerlessSpecCloudOutput)
 }
 
+// The region where you would like your index to be created. Different cloud providers have different regions available.
 func (o PineconeServerlessSpecOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v PineconeServerlessSpec) string { return v.Region }).(pulumi.StringOutput)
 }
@@ -499,6 +505,7 @@ func (o PineconeServerlessSpecPtrOutput) Elem() PineconeServerlessSpecOutput {
 	}).(PineconeServerlessSpecOutput)
 }
 
+// he public cloud where you would like your index hosted
 func (o PineconeServerlessSpecPtrOutput) Cloud() ServerlessSpecCloudPtrOutput {
 	return o.ApplyT(func(v *PineconeServerlessSpec) *ServerlessSpecCloud {
 		if v == nil {
@@ -508,6 +515,7 @@ func (o PineconeServerlessSpecPtrOutput) Cloud() ServerlessSpecCloudPtrOutput {
 	}).(ServerlessSpecCloudPtrOutput)
 }
 
+// The region where you would like your index to be created. Different cloud providers have different regions available.
 func (o PineconeServerlessSpecPtrOutput) Region() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *PineconeServerlessSpec) *string {
 		if v == nil {
@@ -518,7 +526,9 @@ func (o PineconeServerlessSpecPtrOutput) Region() pulumi.StringPtrOutput {
 }
 
 type PineconeSpec struct {
-	Pod        *PineconePodSpec        `pulumi:"pod"`
+	// Configuration needed to deploy a pod index.
+	Pod *PineconePodSpec `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
 	Serverless *PineconeServerlessSpec `pulumi:"serverless"`
 }
 
@@ -534,7 +544,9 @@ type PineconeSpecInput interface {
 }
 
 type PineconeSpecArgs struct {
-	Pod        PineconePodSpecPtrInput        `pulumi:"pod"`
+	// Configuration needed to deploy a pod index.
+	Pod PineconePodSpecPtrInput `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
 	Serverless PineconeServerlessSpecPtrInput `pulumi:"serverless"`
 }
 
@@ -564,10 +576,12 @@ func (o PineconeSpecOutput) ToPineconeSpecOutputWithContext(ctx context.Context)
 	return o
 }
 
+// Configuration needed to deploy a pod index.
 func (o PineconeSpecOutput) Pod() PineconePodSpecPtrOutput {
 	return o.ApplyT(func(v PineconeSpec) *PineconePodSpec { return v.Pod }).(PineconePodSpecPtrOutput)
 }
 
+// Configuration needed to deploy a serverless index.
 func (o PineconeSpecOutput) Serverless() PineconeServerlessSpecPtrOutput {
 	return o.ApplyT(func(v PineconeSpec) *PineconeServerlessSpec { return v.Serverless }).(PineconeServerlessSpecPtrOutput)
 }

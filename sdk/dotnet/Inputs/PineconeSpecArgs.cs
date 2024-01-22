@@ -13,9 +13,15 @@ namespace PineconeDatabase.Pinecone.Inputs
 
     public sealed class PineconeSpecArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Configuration needed to deploy a pod index.
+        /// </summary>
         [Input("pod")]
         public Input<Inputs.PineconePodSpecArgs>? Pod { get; set; }
 
+        /// <summary>
+        /// Configuration needed to deploy a serverless index.
+        /// </summary>
         [Input("serverless")]
         public Input<Inputs.PineconeServerlessSpecArgs>? Serverless { get; set; }
 

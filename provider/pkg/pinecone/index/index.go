@@ -98,11 +98,26 @@ type PineconeIndexState struct {
 	IndexHost string `pulumi:"host,omitempty"`
 }
 
-func (pia *PineconeIndexArgs) Annotate(a infer.Annotator) {
-	a.Describe(&pia.IndexName, "The name of the Pinecone index.")
-	a.Describe(&pia.IndexDimension, "The dimensions of the vectors in the index. Defaults to 1536.")
-	a.Describe(&pia.IndexMetric, "The metric used to compute the distance between vectors.")
-	a.Describe(&pia.IndexSpec, "Describe how the index should be deployed.")
+func (pip *PineconeIndexState) Annotate(a infer.Annotator) {
+	a.Describe(&pip.IndexHost, "The URL address where the index is hosted.")
+}
+
+func (pip *PineconeIndexArgs) Annotate(a infer.Annotator) {
+	a.Describe(&pip.IndexName, "The name of the Pinecone index.")
+	a.Describe(&pip.IndexDimension, "The dimensions of the vectors in the index. Defaults to 1536.")
+	a.Describe(&pip.IndexMetric, "The metric used to compute the distance between vectors.")
+	a.Describe(&pip.IndexSpec, "Describe how the index should be deployed.")
+}
+
+func (pip *PineconeServerlessSpec) Annotate(a infer.Annotator) {
+	a.Describe(&pip.Cloud, "he public cloud where you would like your index hosted")
+	a.Describe(&pip.Region, "The region where you would like your index to be created. Different cloud "+
+		"providers have different regions available.")
+}
+
+func (pip *PineconeSpec) Annotate(a infer.Annotator) {
+	a.Describe(&pip.Serverless, "Configuration needed to deploy a serverless index.")
+	a.Describe(&pip.Pod, "Configuration needed to deploy a pod index.")
 }
 
 func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs, preview bool) (string, PineconeIndexState, error) {

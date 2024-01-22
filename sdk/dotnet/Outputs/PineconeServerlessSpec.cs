@@ -14,7 +14,13 @@ namespace PineconeDatabase.Pinecone.Outputs
     [OutputType]
     public sealed class PineconeServerlessSpec
     {
+        /// <summary>
+        /// he public cloud where you would like your index hosted
+        /// </summary>
         public readonly PineconeDatabase.Pinecone.ServerlessSpecCloud Cloud;
+        /// <summary>
+        /// The region where you would like your index to be created. Different cloud providers have different regions available.
+        /// </summary>
         public readonly string Region;
 
         [OutputConstructor]

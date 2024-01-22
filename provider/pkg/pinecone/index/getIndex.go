@@ -2,20 +2,16 @@ package index
 
 import (
 	"fmt"
-	p "github.com/pulumi/pulumi-go-provider"
-	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
+	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"net/http"
 )
 
 type LookupPineconeIndex struct{}
-
-func (g *LookupPineconeIndex) Annotate(a infer.Annotator) {
-	a.Describe(&g, "The result of a get operation on a Pinecone index.")
-}
 
 func (*LookupPineconeIndex) Call(ctx p.Context, args LookupPineconeIndexArgs) (LookupPineconeIndexResult, error) {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
@@ -70,5 +66,7 @@ type LookupPineconeIndexResult struct {
 }
 
 func (g *LookupPineconeIndexResult) Annotate(a infer.Annotator) {
-	a.Describe(&g, "The result of a get operation on a Pinecone index.")
+	a.Describe(&g.IndexSpec, "Describe how the index should be deployed.")
+	a.Describe(&g.IndexHost, "The host of the index.")
+	a.Describe(&g.IndextStatus, "The status of the index.")
 }

@@ -21,12 +21,24 @@ export interface PineconePodSpec {
 }
 
 export interface PineconeServerlessSpec {
+    /**
+     * he public cloud where you would like your index hosted
+     */
     cloud: enums.ServerlessSpecCloud;
+    /**
+     * The region where you would like your index to be created. Different cloud providers have different regions available.
+     */
     region: string;
 }
 
 export interface PineconeSpec {
+    /**
+     * Configuration needed to deploy a pod index.
+     */
     pod?: outputs.PineconePodSpec;
+    /**
+     * Configuration needed to deploy a serverless index.
+     */
     serverless?: outputs.PineconeServerlessSpec;
 }
 
