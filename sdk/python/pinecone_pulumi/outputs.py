@@ -115,17 +115,27 @@ class PineconeServerlessSpec(dict):
     def __init__(__self__, *,
                  cloud: 'ServerlessSpecCloud',
                  region: str):
+        """
+        :param 'ServerlessSpecCloud' cloud: he public cloud where you would like your index hosted
+        :param str region: The region where you would like your index to be created. Different cloud providers have different regions available.
+        """
         pulumi.set(__self__, "cloud", cloud)
         pulumi.set(__self__, "region", region)
 
     @property
     @pulumi.getter
     def cloud(self) -> 'ServerlessSpecCloud':
+        """
+        he public cloud where you would like your index hosted
+        """
         return pulumi.get(self, "cloud")
 
     @property
     @pulumi.getter
     def region(self) -> str:
+        """
+        The region where you would like your index to be created. Different cloud providers have different regions available.
+        """
         return pulumi.get(self, "region")
 
 
@@ -134,6 +144,10 @@ class PineconeSpec(dict):
     def __init__(__self__, *,
                  pod: Optional['outputs.PineconePodSpec'] = None,
                  serverless: Optional['outputs.PineconeServerlessSpec'] = None):
+        """
+        :param 'PineconePodSpec' pod: Configuration needed to deploy a pod index.
+        :param 'PineconeServerlessSpec' serverless: Configuration needed to deploy a serverless index.
+        """
         if pod is not None:
             pulumi.set(__self__, "pod", pod)
         if serverless is not None:
@@ -142,11 +156,17 @@ class PineconeSpec(dict):
     @property
     @pulumi.getter
     def pod(self) -> Optional['outputs.PineconePodSpec']:
+        """
+        Configuration needed to deploy a pod index.
+        """
         return pulumi.get(self, "pod")
 
     @property
     @pulumi.getter
     def serverless(self) -> Optional['outputs.PineconeServerlessSpec']:
+        """
+        Configuration needed to deploy a serverless index.
+        """
         return pulumi.get(self, "serverless")
 
 

@@ -11,7 +11,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// The result of a get operation on a Pinecone index.
 func LookupPineconeIndex(ctx *pulumi.Context, args *LookupPineconeIndexArgs, opts ...pulumi.InvokeOption) (*LookupPineconeIndexResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupPineconeIndexResult
@@ -27,18 +26,19 @@ type LookupPineconeIndexArgs struct {
 	Name string `pulumi:"name"`
 }
 
-// The result of a get operation on a Pinecone index.
 type LookupPineconeIndexResult struct {
 	// The dimensions of the vectors in the index. Defaults to 1536.
-	Dimension *int   `pulumi:"dimension"`
-	Host      string `pulumi:"host"`
+	Dimension *int `pulumi:"dimension"`
+	// The host of the index.
+	Host string `pulumi:"host"`
 	// The metric used to compute the distance between vectors.
 	Metric IndexMetric `pulumi:"metric"`
 	// The name of the Pinecone index.
 	Name string `pulumi:"name"`
 	// Describe how the index should be deployed.
-	Spec   PineconeSpec `pulumi:"spec"`
-	Status bool         `pulumi:"status"`
+	Spec PineconeSpec `pulumi:"spec"`
+	// The status of the index.
+	Status bool `pulumi:"status"`
 }
 
 func LookupPineconeIndexOutput(ctx *pulumi.Context, args LookupPineconeIndexOutputArgs, opts ...pulumi.InvokeOption) LookupPineconeIndexResultOutput {
@@ -63,7 +63,6 @@ func (LookupPineconeIndexOutputArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*LookupPineconeIndexArgs)(nil)).Elem()
 }
 
-// The result of a get operation on a Pinecone index.
 type LookupPineconeIndexResultOutput struct{ *pulumi.OutputState }
 
 func (LookupPineconeIndexResultOutput) ElementType() reflect.Type {
@@ -83,6 +82,7 @@ func (o LookupPineconeIndexResultOutput) Dimension() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v LookupPineconeIndexResult) *int { return v.Dimension }).(pulumi.IntPtrOutput)
 }
 
+// The host of the index.
 func (o LookupPineconeIndexResultOutput) Host() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupPineconeIndexResult) string { return v.Host }).(pulumi.StringOutput)
 }
@@ -102,6 +102,7 @@ func (o LookupPineconeIndexResultOutput) Spec() PineconeSpecOutput {
 	return o.ApplyT(func(v LookupPineconeIndexResult) PineconeSpec { return v.Spec }).(PineconeSpecOutput)
 }
 
+// The status of the index.
 func (o LookupPineconeIndexResultOutput) Status() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupPineconeIndexResult) bool { return v.Status }).(pulumi.BoolOutput)
 }

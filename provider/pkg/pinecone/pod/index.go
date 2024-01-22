@@ -2,12 +2,12 @@ package pod
 
 import (
 	"fmt"
-	p "github.com/pulumi/pulumi-go-provider"
-	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
+	p "github.com/pulumi/pulumi-go-provider"
+	"github.com/pulumi/pulumi-go-provider/infer"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"net/http"
 )
 
@@ -19,16 +19,18 @@ type PodSpecReplicas = int32
 
 type PodSpecShards = int32
 
+type MetaDataConfig struct {
+	Indexed *[]string `pulumi:"indexed"`
+}
+
 type PineconePodSpec struct {
-	Environment    string          `pulumi:"environment"`
-	Replicas       PodSpecReplicas `pulumi:"replicas"`
-	Shards         PodSpecShards   `pulumi:"shards"`
-	PodType        PodSpecPodType  `pulumi:"podType"`
-	Pods           int             `pulumi:"pods"`
-	MetaDataConfig struct {
-		Indexed *[]string `pulumi:"indexed"`
-	} `pulumi:"metaDataConfig"`
-	SourceCollection *string `pulumi:"sourceCollection"`
+	Environment      string          `pulumi:"environment"`
+	Replicas         PodSpecReplicas `pulumi:"replicas"`
+	Shards           PodSpecShards   `pulumi:"shards"`
+	PodType          PodSpecPodType  `pulumi:"podType"`
+	Pods             int             `pulumi:"pods"`
+	MetaDataConfig   MetaDataConfig  `pulumi:"metaDataConfig"`
+	SourceCollection *string         `pulumi:"sourceCollection"`
 }
 
 type PineconeSpec struct {
@@ -42,11 +44,30 @@ type PineconePodIndexArgs struct {
 	IndexSpec      PineconeSpec          `pulumi:"spec"`
 }
 
+func (pim *MetaDataConfig) Annotate(a infer.Annotator) {
+	a.Describe(&pim.Indexed, " Indexed By default, all metadata is indexed; to change this behavior, use this"+
+		" property to specify an array of metadata fields which should be indexed.")
+}
+
 func (pia *PineconePodIndexArgs) Annotate(a infer.Annotator) {
 	a.Describe(&pia.IndexName, "The name of the Pinecone index.")
 	a.Describe(&pia.IndexDimension, "The dimensions of the vectors in the index.")
 	a.Describe(&pia.IndexMetric, "The metric used to compute the distance between vectors.")
 	a.Describe(&pia.IndexSpec, "Describe how the index should be deployed.")
+}
+
+func (pip *PineconePodSpec) Annotate(a infer.Annotator) {
+	a.Describe(&pip.Environment, "The environment where the index is hosted.")
+	a.Describe(&pip.Replicas, "The number of replicas. Replicas duplicate your index. They provide higher"+
+		" availability and throughput. Replicas can be scaled up or down as your needs change.")
+	a.Describe(&pip.Shards, "The number of shards. Shards split your data across multiple pods so you can"+
+		" fit more data into an index.")
+	a.Describe(&pip.PodType, "The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one"+
+		" of `x1`, `x2`, `x4`, or `x8`.")
+	a.Describe(&pip.Pods, "The number of pods to be used in the index. This should be equal to "+
+		"`shards` x `replicas`.")
+	a.Describe(&pip.MetaDataConfig, "Configuration for the behavior of Pinecone's internal metadata index.")
+	a.Describe(&pip.SourceCollection, "The name of the collection to be used as the source for the index.")
 }
 
 func (*PineconePodIndex) Create(ctx p.Context, name string, args PineconePodIndexArgs, preview bool) (string, PineconePodIndexState, error) {

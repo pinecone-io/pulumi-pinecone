@@ -17,7 +17,8 @@ type PineconeIndex struct {
 
 	// The dimensions of the vectors in the index. Defaults to 1536.
 	Dimension pulumi.IntPtrOutput `pulumi:"dimension"`
-	Host      pulumi.StringOutput `pulumi:"host"`
+	// The URL address where the index is hosted.
+	Host pulumi.StringOutput `pulumi:"host"`
 	// The metric used to compute the distance between vectors.
 	Metric IndexMetricOutput `pulumi:"metric"`
 	// The name of the Pinecone index.
@@ -189,6 +190,7 @@ func (o PineconeIndexOutput) Dimension() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *PineconeIndex) pulumi.IntPtrOutput { return v.Dimension }).(pulumi.IntPtrOutput)
 }
 
+// The URL address where the index is hosted.
 func (o PineconeIndexOutput) Host() pulumi.StringOutput {
 	return o.ApplyT(func(v *PineconeIndex) pulumi.StringOutput { return v.Host }).(pulumi.StringOutput)
 }

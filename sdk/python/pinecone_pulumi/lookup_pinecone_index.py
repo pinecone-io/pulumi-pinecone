@@ -20,9 +20,6 @@ __all__ = [
 
 @pulumi.output_type
 class LookupPineconeIndexResult:
-    """
-    The result of a get operation on a Pinecone index.
-    """
     def __init__(__self__, dimension=None, host=None, metric=None, name=None, spec=None, status=None):
         if dimension and not isinstance(dimension, int):
             raise TypeError("Expected argument 'dimension' to be a int")
@@ -54,6 +51,9 @@ class LookupPineconeIndexResult:
     @property
     @pulumi.getter
     def host(self) -> str:
+        """
+        The host of the index.
+        """
         return pulumi.get(self, "host")
 
     @property
@@ -83,6 +83,9 @@ class LookupPineconeIndexResult:
     @property
     @pulumi.getter
     def status(self) -> bool:
+        """
+        The status of the index.
+        """
         return pulumi.get(self, "status")
 
 
@@ -103,8 +106,7 @@ class AwaitableLookupPineconeIndexResult(LookupPineconeIndexResult):
 def lookup_pinecone_index(name: Optional[str] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableLookupPineconeIndexResult:
     """
-    The result of a get operation on a Pinecone index.
-
+    Use this data source to access information about an existing resource.
 
     :param str name: The name of the Pinecone index.
     """
@@ -126,8 +128,7 @@ def lookup_pinecone_index(name: Optional[str] = None,
 def lookup_pinecone_index_output(name: Optional[pulumi.Input[str]] = None,
                                  opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[LookupPineconeIndexResult]:
     """
-    The result of a get operation on a Pinecone index.
-
+    Use this data source to access information about an existing resource.
 
     :param str name: The name of the Pinecone index.
     """

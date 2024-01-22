@@ -65,7 +65,6 @@
             }
         },
         "pinecone:index:lookupPineconeIndex": {
-            "description": "The result of a get operation on a Pinecone index.",
             "inputs": {
                 "properties": {
                     "name": {
@@ -79,13 +78,13 @@
                 "type": "object"
             },
             "outputs": {
-                "description": "The result of a get operation on a Pinecone index.",
                 "properties": {
                     "dimension": {
                         "description": "The dimensions of the vectors in the index. Defaults to 1536.",
                         "type": "integer"
                     },
                     "host": {
+                        "description": "The host of the index.",
                         "type": "string"
                     },
                     "metric": {
@@ -101,6 +100,7 @@
                         "description": "Describe how the index should be deployed."
                     },
                     "status": {
+                        "description": "The status of the index.",
                         "type": "boolean"
                     }
                 },
@@ -243,6 +243,7 @@
                     "type": "integer"
                 },
                 "host": {
+                    "description": "The URL address where the index is hosted.",
                     "type": "string"
                 },
                 "metric": {
@@ -331,9 +332,11 @@
         "pinecone:index:PineconeServerlessSpec": {
             "properties": {
                 "cloud": {
-                    "$ref": "#/types/pinecone:index:ServerlessSpecCloud"
+                    "$ref": "#/types/pinecone:index:ServerlessSpecCloud",
+                    "description": "he public cloud where you would like your index hosted"
                 },
                 "region": {
+                    "description": "The region where you would like your index to be created. Different cloud providers have different regions available.",
                     "type": "string"
                 }
             },
@@ -346,10 +349,12 @@
         "pinecone:index:PineconeSpec": {
             "properties": {
                 "pod": {
-                    "$ref": "#/types/pinecone:index:PineconePodSpec"
+                    "$ref": "#/types/pinecone:index:PineconePodSpec",
+                    "description": "Configuration needed to deploy a pod index."
                 },
                 "serverless": {
-                    "$ref": "#/types/pinecone:index:PineconeServerlessSpec"
+                    "$ref": "#/types/pinecone:index:PineconeServerlessSpec",
+                    "description": "Configuration needed to deploy a serverless index."
                 }
             },
             "type": "object"

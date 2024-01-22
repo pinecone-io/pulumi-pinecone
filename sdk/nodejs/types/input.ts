@@ -21,11 +21,23 @@ export interface PineconePodSpecArgs {
 }
 
 export interface PineconeServerlessSpecArgs {
+    /**
+     * he public cloud where you would like your index hosted
+     */
     cloud: pulumi.Input<enums.ServerlessSpecCloud>;
+    /**
+     * The region where you would like your index to be created. Different cloud providers have different regions available.
+     */
     region: pulumi.Input<string>;
 }
 
 export interface PineconeSpecArgs {
+    /**
+     * Configuration needed to deploy a pod index.
+     */
     pod?: pulumi.Input<inputs.PineconePodSpecArgs>;
+    /**
+     * Configuration needed to deploy a serverless index.
+     */
     serverless?: pulumi.Input<inputs.PineconeServerlessSpecArgs>;
 }

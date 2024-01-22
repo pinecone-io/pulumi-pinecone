@@ -19,6 +19,9 @@ namespace PineconeDatabase.Pinecone
         [Output("dimension")]
         public Output<int?> Dimension { get; private set; } = null!;
 
+        /// <summary>
+        /// The URL address where the index is hosted.
+        /// </summary>
         [Output("host")]
         public Output<string> Host { get; private set; } = null!;
 

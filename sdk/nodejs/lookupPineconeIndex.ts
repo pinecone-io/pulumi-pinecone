@@ -7,9 +7,6 @@ import * as outputs from "./types/output";
 import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
-/**
- * The result of a get operation on a Pinecone index.
- */
 export function lookupPineconeIndex(args: LookupPineconeIndexArgs, opts?: pulumi.InvokeOptions): Promise<LookupPineconeIndexResult> {
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
@@ -25,14 +22,14 @@ export interface LookupPineconeIndexArgs {
     name: string;
 }
 
-/**
- * The result of a get operation on a Pinecone index.
- */
 export interface LookupPineconeIndexResult {
     /**
      * The dimensions of the vectors in the index. Defaults to 1536.
      */
     readonly dimension?: number;
+    /**
+     * The host of the index.
+     */
     readonly host: string;
     /**
      * The metric used to compute the distance between vectors.
@@ -46,11 +43,11 @@ export interface LookupPineconeIndexResult {
      * Describe how the index should be deployed.
      */
     readonly spec: outputs.PineconeSpec;
+    /**
+     * The status of the index.
+     */
     readonly status: boolean;
 }
-/**
- * The result of a get operation on a Pinecone index.
- */
 export function lookupPineconeIndexOutput(args: LookupPineconeIndexOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<LookupPineconeIndexResult> {
     return pulumi.output(args).apply((a: any) => lookupPineconeIndex(a, opts))
 }

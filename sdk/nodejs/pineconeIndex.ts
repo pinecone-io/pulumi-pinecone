@@ -38,6 +38,9 @@ export class PineconeIndex extends pulumi.CustomResource {
      * The dimensions of the vectors in the index. Defaults to 1536.
      */
     public readonly dimension!: pulumi.Output<number | undefined>;
+    /**
+     * The URL address where the index is hosted.
+     */
     public /*out*/ readonly host!: pulumi.Output<string>;
     /**
      * The metric used to compute the distance between vectors.

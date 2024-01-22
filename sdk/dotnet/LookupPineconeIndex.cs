@@ -12,15 +12,9 @@ namespace PineconeDatabase.Pinecone
 {
     public static class LookupPineconeIndex
     {
-        /// <summary>
-        /// The result of a get operation on a Pinecone index.
-        /// </summary>
         public static Task<LookupPineconeIndexResult> InvokeAsync(LookupPineconeIndexArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<LookupPineconeIndexResult>("pinecone:index:lookupPineconeIndex", args ?? new LookupPineconeIndexArgs(), options.WithDefaults());
 
-        /// <summary>
-        /// The result of a get operation on a Pinecone index.
-        /// </summary>
         public static Output<LookupPineconeIndexResult> Invoke(LookupPineconeIndexInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<LookupPineconeIndexResult>("pinecone:index:lookupPineconeIndex", args ?? new LookupPineconeIndexInvokeArgs(), options.WithDefaults());
     }
@@ -62,6 +56,9 @@ namespace PineconeDatabase.Pinecone
         /// The dimensions of the vectors in the index. Defaults to 1536.
         /// </summary>
         public readonly int? Dimension;
+        /// <summary>
+        /// The host of the index.
+        /// </summary>
         public readonly string Host;
         /// <summary>
         /// The metric used to compute the distance between vectors.
@@ -75,6 +72,9 @@ namespace PineconeDatabase.Pinecone
         /// Describe how the index should be deployed.
         /// </summary>
         public readonly Outputs.PineconeSpec Spec;
+        /// <summary>
+        /// The status of the index.
+        /// </summary>
         public readonly bool Status;
 
         [OutputConstructor]
