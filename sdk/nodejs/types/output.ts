@@ -7,22 +7,46 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
 export interface MetaDataConfig {
+    /**
+     *  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
+     */
     indexed?: string[];
 }
 
 export interface PineconePodSpec {
+    /**
+     * The environment where the index is hosted.
+     */
     environment: string;
+    /**
+     * Configuration for the behavior of Pinecone's internal metadata index.
+     */
     metaDataConfig?: outputs.MetaDataConfig;
+    /**
+     * The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+     */
     podType: string;
+    /**
+     * The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+     */
     pods?: number;
+    /**
+     * The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+     */
     replicas: number;
+    /**
+     * The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+     */
     shards?: number;
+    /**
+     * The name of the collection to be used as the source for the index.
+     */
     sourceCollection?: string;
 }
 
 export interface PineconeServerlessSpec {
     /**
-     * he public cloud where you would like your index hosted
+     * The public cloud where you would like your index hosted.
      */
     cloud: enums.ServerlessSpecCloud;
     /**

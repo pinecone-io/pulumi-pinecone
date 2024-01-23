@@ -14,6 +14,9 @@ namespace PineconeDatabase.Pinecone.Outputs
     [OutputType]
     public sealed class MetaDataConfig
     {
+        /// <summary>
+        ///  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
+        /// </summary>
         public readonly ImmutableArray<string> Indexed;
 
         [OutputConstructor]
