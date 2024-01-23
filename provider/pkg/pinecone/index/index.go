@@ -110,7 +110,7 @@ func (pip *PineconeIndexArgs) Annotate(a infer.Annotator) {
 }
 
 func (pip *PineconeServerlessSpec) Annotate(a infer.Annotator) {
-	a.Describe(&pip.Cloud, "he public cloud where you would like your index hosted")
+	a.Describe(&pip.Cloud, "The public cloud where you would like your index hosted.")
 	a.Describe(&pip.Region, "The region where you would like your index to be created. Different cloud "+
 		"providers have different regions available.")
 }
@@ -118,6 +118,25 @@ func (pip *PineconeServerlessSpec) Annotate(a infer.Annotator) {
 func (pip *PineconeSpec) Annotate(a infer.Annotator) {
 	a.Describe(&pip.Serverless, "Configuration needed to deploy a serverless index.")
 	a.Describe(&pip.Pod, "Configuration needed to deploy a pod index.")
+}
+
+func (pip *PineconePodSpec) Annotate(a infer.Annotator) {
+	a.Describe(&pip.Environment, "The environment where the index is hosted.")
+	a.Describe(&pip.Replicas, "The number of replicas. Replicas duplicate your index. They provide higher"+
+		" availability and throughput. Replicas can be scaled up or down as your needs change.")
+	a.Describe(&pip.Shards, "The number of shards. Shards split your data across multiple pods so you can"+
+		" fit more data into an index.")
+	a.Describe(&pip.PodType, "The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one"+
+		" of `x1`, `x2`, `x4`, or `x8`.")
+	a.Describe(&pip.Pods, "The number of pods to be used in the index. This should be equal to "+
+		"`shards` x `replicas`.")
+	a.Describe(&pip.MetaDataConfig, "Configuration for the behavior of Pinecone's internal metadata index.")
+	a.Describe(&pip.SourceCollection, "The name of the collection to be used as the source for the index.")
+}
+
+func (pim *MetaDataConfig) Annotate(a infer.Annotator) {
+	a.Describe(&pim.Indexed, " Indexed By default, all metadata is indexed; to change this behavior, use this"+
+		" property to specify an array of metadata fields which should be indexed.")
 }
 
 func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs, preview bool) (string, PineconeIndexState, error) {
@@ -194,6 +213,7 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 	})
 	if err != nil {
 		ctx.Logf(diag.Error, "Failed to create Pinecone index: %s with http status code: %d", args.IndexName, response.StatusCode())
+		ctx.Logf(diag.Error, "Please run the Pulumi command with the `-d` flag to see the full error message")
 		return "", PineconeIndexState{}, fmt.Errorf("failed to create Pinecone index: %w", err)
 	}
 	ctx.Logf(diag.Debug, "Pinecone index creation response: %s", string(response.Body))

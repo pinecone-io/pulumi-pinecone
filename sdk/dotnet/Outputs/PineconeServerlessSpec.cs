@@ -15,7 +15,7 @@ namespace PineconeDatabase.Pinecone.Outputs
     public sealed class PineconeServerlessSpec
     {
         /// <summary>
-        /// he public cloud where you would like your index hosted
+        /// The public cloud where you would like your index hosted.
         /// </summary>
         public readonly PineconeDatabase.Pinecone.ServerlessSpecCloud Cloud;
         /// <summary>

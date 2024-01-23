@@ -14,6 +14,7 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type MetaDataConfig struct {
+	//  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
 	Indexed []string `pulumi:"indexed"`
 }
 
@@ -29,6 +30,7 @@ type MetaDataConfigInput interface {
 }
 
 type MetaDataConfigArgs struct {
+	//  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
 	Indexed pulumi.StringArrayInput `pulumi:"indexed"`
 }
 
@@ -109,6 +111,7 @@ func (o MetaDataConfigOutput) ToMetaDataConfigPtrOutputWithContext(ctx context.C
 	}).(MetaDataConfigPtrOutput)
 }
 
+// Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
 func (o MetaDataConfigOutput) Indexed() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v MetaDataConfig) []string { return v.Indexed }).(pulumi.StringArrayOutput)
 }
@@ -137,6 +140,7 @@ func (o MetaDataConfigPtrOutput) Elem() MetaDataConfigOutput {
 	}).(MetaDataConfigOutput)
 }
 
+// Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
 func (o MetaDataConfigPtrOutput) Indexed() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *MetaDataConfig) []string {
 		if v == nil {
@@ -147,13 +151,20 @@ func (o MetaDataConfigPtrOutput) Indexed() pulumi.StringArrayOutput {
 }
 
 type PineconePodSpec struct {
-	Environment      string          `pulumi:"environment"`
-	MetaDataConfig   *MetaDataConfig `pulumi:"metaDataConfig"`
-	PodType          string          `pulumi:"podType"`
-	Pods             *int            `pulumi:"pods"`
-	Replicas         int             `pulumi:"replicas"`
-	Shards           *int            `pulumi:"shards"`
-	SourceCollection *string         `pulumi:"sourceCollection"`
+	// The environment where the index is hosted.
+	Environment string `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index.
+	MetaDataConfig *MetaDataConfig `pulumi:"metaDataConfig"`
+	// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+	PodType string `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+	Pods *int `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas int `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards *int `pulumi:"shards"`
+	// The name of the collection to be used as the source for the index.
+	SourceCollection *string `pulumi:"sourceCollection"`
 }
 
 // PineconePodSpecInput is an input type that accepts PineconePodSpecArgs and PineconePodSpecOutput values.
@@ -168,13 +179,20 @@ type PineconePodSpecInput interface {
 }
 
 type PineconePodSpecArgs struct {
-	Environment      pulumi.StringInput     `pulumi:"environment"`
-	MetaDataConfig   MetaDataConfigPtrInput `pulumi:"metaDataConfig"`
-	PodType          pulumi.StringInput     `pulumi:"podType"`
-	Pods             pulumi.IntPtrInput     `pulumi:"pods"`
-	Replicas         pulumi.IntInput        `pulumi:"replicas"`
-	Shards           pulumi.IntPtrInput     `pulumi:"shards"`
-	SourceCollection pulumi.StringPtrInput  `pulumi:"sourceCollection"`
+	// The environment where the index is hosted.
+	Environment pulumi.StringInput `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index.
+	MetaDataConfig MetaDataConfigPtrInput `pulumi:"metaDataConfig"`
+	// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+	PodType pulumi.StringInput `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+	Pods pulumi.IntPtrInput `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards pulumi.IntPtrInput `pulumi:"shards"`
+	// The name of the collection to be used as the source for the index.
+	SourceCollection pulumi.StringPtrInput `pulumi:"sourceCollection"`
 }
 
 func (PineconePodSpecArgs) ElementType() reflect.Type {
@@ -254,30 +272,37 @@ func (o PineconePodSpecOutput) ToPineconePodSpecPtrOutputWithContext(ctx context
 	}).(PineconePodSpecPtrOutput)
 }
 
+// The environment where the index is hosted.
 func (o PineconePodSpecOutput) Environment() pulumi.StringOutput {
 	return o.ApplyT(func(v PineconePodSpec) string { return v.Environment }).(pulumi.StringOutput)
 }
 
+// Configuration for the behavior of Pinecone's internal metadata index.
 func (o PineconePodSpecOutput) MetaDataConfig() MetaDataConfigPtrOutput {
 	return o.ApplyT(func(v PineconePodSpec) *MetaDataConfig { return v.MetaDataConfig }).(MetaDataConfigPtrOutput)
 }
 
+// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
 func (o PineconePodSpecOutput) PodType() pulumi.StringOutput {
 	return o.ApplyT(func(v PineconePodSpec) string { return v.PodType }).(pulumi.StringOutput)
 }
 
+// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
 func (o PineconePodSpecOutput) Pods() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v PineconePodSpec) *int { return v.Pods }).(pulumi.IntPtrOutput)
 }
 
+// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
 func (o PineconePodSpecOutput) Replicas() pulumi.IntOutput {
 	return o.ApplyT(func(v PineconePodSpec) int { return v.Replicas }).(pulumi.IntOutput)
 }
 
+// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
 func (o PineconePodSpecOutput) Shards() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v PineconePodSpec) *int { return v.Shards }).(pulumi.IntPtrOutput)
 }
 
+// The name of the collection to be used as the source for the index.
 func (o PineconePodSpecOutput) SourceCollection() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v PineconePodSpec) *string { return v.SourceCollection }).(pulumi.StringPtrOutput)
 }
@@ -306,6 +331,7 @@ func (o PineconePodSpecPtrOutput) Elem() PineconePodSpecOutput {
 	}).(PineconePodSpecOutput)
 }
 
+// The environment where the index is hosted.
 func (o PineconePodSpecPtrOutput) Environment() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *PineconePodSpec) *string {
 		if v == nil {
@@ -315,6 +341,7 @@ func (o PineconePodSpecPtrOutput) Environment() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Configuration for the behavior of Pinecone's internal metadata index.
 func (o PineconePodSpecPtrOutput) MetaDataConfig() MetaDataConfigPtrOutput {
 	return o.ApplyT(func(v *PineconePodSpec) *MetaDataConfig {
 		if v == nil {
@@ -324,6 +351,7 @@ func (o PineconePodSpecPtrOutput) MetaDataConfig() MetaDataConfigPtrOutput {
 	}).(MetaDataConfigPtrOutput)
 }
 
+// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
 func (o PineconePodSpecPtrOutput) PodType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *PineconePodSpec) *string {
 		if v == nil {
@@ -333,6 +361,7 @@ func (o PineconePodSpecPtrOutput) PodType() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
 func (o PineconePodSpecPtrOutput) Pods() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *PineconePodSpec) *int {
 		if v == nil {
@@ -342,6 +371,7 @@ func (o PineconePodSpecPtrOutput) Pods() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
+// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
 func (o PineconePodSpecPtrOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *PineconePodSpec) *int {
 		if v == nil {
@@ -351,6 +381,7 @@ func (o PineconePodSpecPtrOutput) Replicas() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
+// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
 func (o PineconePodSpecPtrOutput) Shards() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *PineconePodSpec) *int {
 		if v == nil {
@@ -360,6 +391,7 @@ func (o PineconePodSpecPtrOutput) Shards() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
+// The name of the collection to be used as the source for the index.
 func (o PineconePodSpecPtrOutput) SourceCollection() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *PineconePodSpec) *string {
 		if v == nil {
@@ -370,7 +402,7 @@ func (o PineconePodSpecPtrOutput) SourceCollection() pulumi.StringPtrOutput {
 }
 
 type PineconeServerlessSpec struct {
-	// he public cloud where you would like your index hosted
+	// The public cloud where you would like your index hosted.
 	Cloud ServerlessSpecCloud `pulumi:"cloud"`
 	// The region where you would like your index to be created. Different cloud providers have different regions available.
 	Region string `pulumi:"region"`
@@ -388,7 +420,7 @@ type PineconeServerlessSpecInput interface {
 }
 
 type PineconeServerlessSpecArgs struct {
-	// he public cloud where you would like your index hosted
+	// The public cloud where you would like your index hosted.
 	Cloud ServerlessSpecCloudInput `pulumi:"cloud"`
 	// The region where you would like your index to be created. Different cloud providers have different regions available.
 	Region pulumi.StringInput `pulumi:"region"`
@@ -471,7 +503,7 @@ func (o PineconeServerlessSpecOutput) ToPineconeServerlessSpecPtrOutputWithConte
 	}).(PineconeServerlessSpecPtrOutput)
 }
 
-// he public cloud where you would like your index hosted
+// The public cloud where you would like your index hosted.
 func (o PineconeServerlessSpecOutput) Cloud() ServerlessSpecCloudOutput {
 	return o.ApplyT(func(v PineconeServerlessSpec) ServerlessSpecCloud { return v.Cloud }).(ServerlessSpecCloudOutput)
 }
@@ -505,7 +537,7 @@ func (o PineconeServerlessSpecPtrOutput) Elem() PineconeServerlessSpecOutput {
 	}).(PineconeServerlessSpecOutput)
 }
 
-// he public cloud where you would like your index hosted
+// The public cloud where you would like your index hosted.
 func (o PineconeServerlessSpecPtrOutput) Cloud() ServerlessSpecCloudPtrOutput {
 	return o.ApplyT(func(v *PineconeServerlessSpec) *ServerlessSpecCloud {
 		if v == nil {

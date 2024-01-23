@@ -14,7 +14,7 @@ namespace PineconeDatabase.Pinecone.Inputs
     public sealed class PineconeServerlessSpecArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// he public cloud where you would like your index hosted
+        /// The public cloud where you would like your index hosted.
         /// </summary>
         [Input("cloud", required: true)]
         public Input<PineconeDatabase.Pinecone.ServerlessSpecCloud> Cloud { get; set; } = null!;

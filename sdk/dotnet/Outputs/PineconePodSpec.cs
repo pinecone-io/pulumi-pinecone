@@ -14,12 +14,33 @@ namespace PineconeDatabase.Pinecone.Outputs
     [OutputType]
     public sealed class PineconePodSpec
     {
+        /// <summary>
+        /// The environment where the index is hosted.
+        /// </summary>
         public readonly string Environment;
+        /// <summary>
+        /// Configuration for the behavior of Pinecone's internal metadata index.
+        /// </summary>
         public readonly Outputs.MetaDataConfig? MetaDataConfig;
+        /// <summary>
+        /// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+        /// </summary>
         public readonly string PodType;
+        /// <summary>
+        /// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+        /// </summary>
         public readonly int? Pods;
+        /// <summary>
+        /// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+        /// </summary>
         public readonly int Replicas;
+        /// <summary>
+        /// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+        /// </summary>
         public readonly int? Shards;
+        /// <summary>
+        /// The name of the collection to be used as the source for the index.
+        /// </summary>
         public readonly string? SourceCollection;
 
         [OutputConstructor]

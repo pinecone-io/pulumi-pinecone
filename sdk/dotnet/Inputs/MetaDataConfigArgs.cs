@@ -15,6 +15,10 @@ namespace PineconeDatabase.Pinecone.Inputs
     {
         [Input("indexed")]
         private InputList<string>? _indexed;
+
+        /// <summary>
+        ///  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
+        /// </summary>
         public InputList<string> Indexed
         {
             get => _indexed ?? (_indexed = new InputList<string>());

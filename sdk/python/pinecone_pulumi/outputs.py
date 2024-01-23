@@ -22,12 +22,18 @@ __all__ = [
 class MetaDataConfig(dict):
     def __init__(__self__, *,
                  indexed: Optional[Sequence[str]] = None):
+        """
+        :param Sequence[str] indexed:  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
+        """
         if indexed is not None:
             pulumi.set(__self__, "indexed", indexed)
 
     @property
     @pulumi.getter
     def indexed(self) -> Optional[Sequence[str]]:
+        """
+         Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
+        """
         return pulumi.get(self, "indexed")
 
 
@@ -62,6 +68,15 @@ class PineconePodSpec(dict):
                  pods: Optional[int] = None,
                  shards: Optional[int] = None,
                  source_collection: Optional[str] = None):
+        """
+        :param str environment: The environment where the index is hosted.
+        :param str pod_type: The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+        :param int replicas: The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+        :param 'MetaDataConfig' meta_data_config: Configuration for the behavior of Pinecone's internal metadata index.
+        :param int pods: The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+        :param int shards: The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+        :param str source_collection: The name of the collection to be used as the source for the index.
+        """
         pulumi.set(__self__, "environment", environment)
         pulumi.set(__self__, "pod_type", pod_type)
         pulumi.set(__self__, "replicas", replicas)
@@ -77,36 +92,57 @@ class PineconePodSpec(dict):
     @property
     @pulumi.getter
     def environment(self) -> str:
+        """
+        The environment where the index is hosted.
+        """
         return pulumi.get(self, "environment")
 
     @property
     @pulumi.getter(name="podType")
     def pod_type(self) -> str:
+        """
+        The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+        """
         return pulumi.get(self, "pod_type")
 
     @property
     @pulumi.getter
     def replicas(self) -> int:
+        """
+        The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+        """
         return pulumi.get(self, "replicas")
 
     @property
     @pulumi.getter(name="metaDataConfig")
     def meta_data_config(self) -> Optional['outputs.MetaDataConfig']:
+        """
+        Configuration for the behavior of Pinecone's internal metadata index.
+        """
         return pulumi.get(self, "meta_data_config")
 
     @property
     @pulumi.getter
     def pods(self) -> Optional[int]:
+        """
+        The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+        """
         return pulumi.get(self, "pods")
 
     @property
     @pulumi.getter
     def shards(self) -> Optional[int]:
+        """
+        The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+        """
         return pulumi.get(self, "shards")
 
     @property
     @pulumi.getter(name="sourceCollection")
     def source_collection(self) -> Optional[str]:
+        """
+        The name of the collection to be used as the source for the index.
+        """
         return pulumi.get(self, "source_collection")
 
 
@@ -116,7 +152,7 @@ class PineconeServerlessSpec(dict):
                  cloud: 'ServerlessSpecCloud',
                  region: str):
         """
-        :param 'ServerlessSpecCloud' cloud: he public cloud where you would like your index hosted
+        :param 'ServerlessSpecCloud' cloud: The public cloud where you would like your index hosted.
         :param str region: The region where you would like your index to be created. Different cloud providers have different regions available.
         """
         pulumi.set(__self__, "cloud", cloud)
@@ -126,7 +162,7 @@ class PineconeServerlessSpec(dict):
     @pulumi.getter
     def cloud(self) -> 'ServerlessSpecCloud':
         """
-        he public cloud where you would like your index hosted
+        The public cloud where you would like your index hosted.
         """
         return pulumi.get(self, "cloud")
 

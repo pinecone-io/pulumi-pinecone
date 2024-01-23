@@ -290,6 +290,7 @@
         "pinecone:index:MetaDataConfig": {
             "properties": {
                 "indexed": {
+                    "description": " Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.",
                     "items": {
                         "type": "string"
                     },
@@ -301,24 +302,31 @@
         "pinecone:index:PineconePodSpec": {
             "properties": {
                 "environment": {
+                    "description": "The environment where the index is hosted.",
                     "type": "string"
                 },
                 "metaDataConfig": {
-                    "$ref": "#/types/pinecone:index:MetaDataConfig"
+                    "$ref": "#/types/pinecone:index:MetaDataConfig",
+                    "description": "Configuration for the behavior of Pinecone's internal metadata index."
                 },
                 "podType": {
+                    "description": "The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.",
                     "type": "string"
                 },
                 "pods": {
+                    "description": "The number of pods to be used in the index. This should be equal to `shards` x `replicas`.",
                     "type": "integer"
                 },
                 "replicas": {
+                    "description": "The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.",
                     "type": "integer"
                 },
                 "shards": {
+                    "description": "The number of shards. Shards split your data across multiple pods so you can fit more data into an index.",
                     "type": "integer"
                 },
                 "sourceCollection": {
+                    "description": "The name of the collection to be used as the source for the index.",
                     "type": "string"
                 }
             },
@@ -333,7 +341,7 @@
             "properties": {
                 "cloud": {
                     "$ref": "#/types/pinecone:index:ServerlessSpecCloud",
-                    "description": "he public cloud where you would like your index hosted"
+                    "description": "The public cloud where you would like your index hosted."
                 },
                 "region": {
                     "description": "The region where you would like your index to be created. Different cloud providers have different regions available.",
