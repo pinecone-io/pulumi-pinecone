@@ -83,20 +83,20 @@ type CollectionList struct {
 // CollectionModel The CollectionModel describes the configuration and status of a Pinecone collection.
 type CollectionModel struct {
 	// Dimension The dimension of the vectors stored in each record held in the collection
-	Dimension int32 `json:"dimension"`
+	Dimension *int32 `json:"dimension,omitempty"`
 
 	// Environment The environment where the collection is hosted.
 	Environment *string `json:"environment,omitempty"`
 	Name        string  `json:"name"`
 
-	// RecordCount The number of records stored in the collection
-	RecordCount int32 `json:"record_count"`
-
 	// Size The size of the collection in bytes.
-	Size int64 `json:"size"`
+	Size *int64 `json:"size,omitempty"`
 
 	// Status The status of the collection.
 	Status CollectionModelStatus `json:"status"`
+
+	// VectorCount The number of records stored in the collection
+	VectorCount *int32 `json:"vector_count,omitempty"`
 }
 
 // CollectionModelStatus The status of the collection.
@@ -278,6 +278,9 @@ type N404CollectionNotFound = ErrorResponse
 
 // N404IndexNotFound The response shape used for all error responses
 type N404IndexNotFound = ErrorResponse
+
+// N404ServerlessSpecNotFound The response shape used for all error responses
+type N404ServerlessSpecNotFound = ErrorResponse
 
 // N405MethodNotSupportedForServerless The response shape used for all error responses
 type N405MethodNotSupportedForServerless = ErrorResponse
@@ -1183,6 +1186,7 @@ type CreateIndexResponse struct {
 	JSON201      *IndexModel
 	JSON400      *N400BadRequest
 	JSON401      *N401Unauthorized
+	JSON404      *N404ServerlessSpecNotFound
 	JSON409      *ErrorResponse
 	JSON422      *N422UnprocessableEntity
 	JSON429      *N429QuotaExceeded
@@ -1636,6 +1640,13 @@ func ParseCreateIndexResponse(rsp *http.Response) (*CreateIndexResponse, error) 
 			return nil, err
 		}
 		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest N404ServerlessSpecNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
 		var dest ErrorResponse

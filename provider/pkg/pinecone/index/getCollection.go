@@ -46,7 +46,7 @@ func (*LookupPineconeCollection) Call(ctx p.Context, args LookupPineconeCollecti
 			},
 			CollectionSize:        resp.JSON200.Size,
 			CollectionDimension:   resp.JSON200.Dimension,
-			CollectionRecordCount: resp.JSON200.RecordCount,
+			CollectionVectorCount: resp.JSON200.VectorCount,
 			CollectionEnvironment: resp.JSON200.Environment,
 		},
 	}, nil

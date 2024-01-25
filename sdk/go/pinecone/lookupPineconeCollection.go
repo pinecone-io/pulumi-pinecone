@@ -35,12 +35,12 @@ type LookupPineconeCollectionResult struct {
 	Environment string `pulumi:"environment"`
 	// The name of the collection to be created.
 	Name string `pulumi:"name"`
-	// The number of records stored in the collection.
-	RecordCount int `pulumi:"recordCount"`
 	// The size of the collection in bytes.
 	Size int `pulumi:"size"`
 	// The name of the index to be used as the source for the collection.
 	Source string `pulumi:"source"`
+	// The number of records stored in the collection.
+	VectorCount int `pulumi:"vectorCount"`
 }
 
 func LookupPineconeCollectionOutput(ctx *pulumi.Context, args LookupPineconeCollectionOutputArgs, opts ...pulumi.InvokeOption) LookupPineconeCollectionResultOutput {
@@ -95,11 +95,6 @@ func (o LookupPineconeCollectionResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupPineconeCollectionResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
-// The number of records stored in the collection.
-func (o LookupPineconeCollectionResultOutput) RecordCount() pulumi.IntOutput {
-	return o.ApplyT(func(v LookupPineconeCollectionResult) int { return v.RecordCount }).(pulumi.IntOutput)
-}
-
 // The size of the collection in bytes.
 func (o LookupPineconeCollectionResultOutput) Size() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupPineconeCollectionResult) int { return v.Size }).(pulumi.IntOutput)
@@ -108,6 +103,11 @@ func (o LookupPineconeCollectionResultOutput) Size() pulumi.IntOutput {
 // The name of the index to be used as the source for the collection.
 func (o LookupPineconeCollectionResultOutput) Source() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupPineconeCollectionResult) string { return v.Source }).(pulumi.StringOutput)
+}
+
+// The number of records stored in the collection.
+func (o LookupPineconeCollectionResultOutput) VectorCount() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupPineconeCollectionResult) int { return v.VectorCount }).(pulumi.IntOutput)
 }
 
 func init() {

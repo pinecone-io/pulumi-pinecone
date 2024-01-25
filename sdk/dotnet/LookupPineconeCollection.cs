@@ -71,10 +71,6 @@ namespace PineconeDatabase.Pinecone
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// The number of records stored in the collection.
-        /// </summary>
-        public readonly int RecordCount;
-        /// <summary>
         /// The size of the collection in bytes.
         /// </summary>
         public readonly int Size;
@@ -82,6 +78,10 @@ namespace PineconeDatabase.Pinecone
         /// The name of the index to be used as the source for the collection.
         /// </summary>
         public readonly string Source;
+        /// <summary>
+        /// The number of records stored in the collection.
+        /// </summary>
+        public readonly int VectorCount;
 
         [OutputConstructor]
         private LookupPineconeCollectionResult(
@@ -91,18 +91,18 @@ namespace PineconeDatabase.Pinecone
 
             string name,
 
-            int recordCount,
-
             int size,
 
-            string source)
+            string source,
+
+            int vectorCount)
         {
             Dimension = dimension;
             Environment = environment;
             Name = name;
-            RecordCount = recordCount;
             Size = size;
             Source = source;
+            VectorCount = vectorCount;
         }
     }
 }

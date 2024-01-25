@@ -44,10 +44,6 @@ export class PineconeCollection extends pulumi.CustomResource {
      */
     public readonly name!: pulumi.Output<string>;
     /**
-     * The number of records stored in the collection.
-     */
-    public /*out*/ readonly recordCount!: pulumi.Output<number>;
-    /**
      * The size of the collection in bytes.
      */
     public /*out*/ readonly size!: pulumi.Output<number>;
@@ -55,6 +51,10 @@ export class PineconeCollection extends pulumi.CustomResource {
      * The name of the index to be used as the source for the collection.
      */
     public readonly source!: pulumi.Output<string>;
+    /**
+     * The number of records stored in the collection.
+     */
+    public /*out*/ readonly vectorCount!: pulumi.Output<number>;
 
     /**
      * Create a PineconeCollection resource with the given unique name, arguments, and options.
@@ -77,15 +77,15 @@ export class PineconeCollection extends pulumi.CustomResource {
             resourceInputs["source"] = args ? args.source : undefined;
             resourceInputs["dimension"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["recordCount"] = undefined /*out*/;
             resourceInputs["size"] = undefined /*out*/;
+            resourceInputs["vectorCount"] = undefined /*out*/;
         } else {
             resourceInputs["dimension"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
-            resourceInputs["recordCount"] = undefined /*out*/;
             resourceInputs["size"] = undefined /*out*/;
             resourceInputs["source"] = undefined /*out*/;
+            resourceInputs["vectorCount"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(PineconeCollection.__pulumiType, name, resourceInputs, opts);

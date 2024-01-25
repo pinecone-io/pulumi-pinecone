@@ -6,10 +6,9 @@ info:
     billions of high-dimensional vectors.
   version: '1.0'
 tags:
-  - name: Manage Serverless Indexes
-  - name: Manage Pod Indexes
+- name: Manage Indexes
 servers:
-  - url: 'https://api.pinecone.io'
+- url: 'https://api.pinecone.io'
 paths:
   /collections:
     get:
@@ -29,28 +28,28 @@ paths:
                   summary: 'Multiple collections with different states'
                   value:
                     collections:
-                      - name: 'small-collection'
-                        size: 3126700
-                        status: 'Ready'
-                        dimension: 3
-                        record_count: 99
-                      - name: 'small-collection-new'
-                        size: 3126700
-                        status: 'Initializing'
-                        dimension: 3
-                        record_count: 99
-                      - name: 'big-collection'
-                        size: 160087040000000
-                        status: 'Ready'
-                        dimension: 1536
-                        record_count: 10000000
+                    - name: 'small-collection'
+                      size: 3126700
+                      status: 'Ready'
+                      dimension: 3
+                      vector_count: 99
+                    - name: 'small-collection-new'
+                      size: 3126700
+                      status: 'Initializing'
+                      dimension: 3
+                      vector_count: 99
+                    - name: 'big-collection'
+                      size: 160087040000000
+                      status: 'Ready'
+                      dimension: 1536
+                      vector_count: 10000000
                 no-collections:
                   summary: 'No collections created yet'
                   value:
                     collections: []
 
       tags:
-        - Manage Pod Indexes
+      - Manage Indexes
     post:
       operationId: create_collection
       description: This operation creates a Pinecone collection.
@@ -91,22 +90,22 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
       tags:
-        - Manage Pod Indexes
+      - Manage Indexes
     servers:
-      - url: 'https://api.pinecone.io'
+    - url: 'https://api.pinecone.io'
 
   '/collections/{collection_name}':
     get:
       operationId: describe_collection
       description: This operation gets a description of a collection.
       parameters:
-        - name: collection_name
-          required: true
-          in: path
-          description: The name of the collection to be described
-          schema:
-            type: string
-          example: 'test-collection'
+      - name: collection_name
+        required: true
+        in: path
+        description: The name of the collection to be described
+        schema:
+          type: string
+        example: 'test-collection'
       responses:
         '200':
           description: Configuration information and deployment status of the collection
@@ -122,7 +121,7 @@ paths:
                     size: 3126700
                     status: 'Ready'
                     dimension: 3
-                    record_count: 99
+                    vector_count: 99
         '401':
           $ref: '#/components/responses/401Unauthorized'
         '404':
@@ -130,18 +129,18 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
       tags:
-        - Manage Pod Indexes
+      - Manage Indexes
     delete:
       operationId: delete_collection
       description: This operation deletes an existing collection.
       parameters:
-        - name: collection_name
-          required: true
-          in: path
-          schema:
-            type: string
-          description: The name of the collection
-          example: 'test-collection'
+      - name: collection_name
+        required: true
+        in: path
+        schema:
+          type: string
+        description: The name of the collection
+        example: 'test-collection'
       responses:
         '202':
           description: The index has been successfully deleted.
@@ -156,9 +155,9 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
       tags:
-        - Manage Pod Indexes
+      - Manage Indexes
     servers:
-      - url: 'https://api.pinecone.io'
+    - url: 'https://api.pinecone.io'
 
   /indexes:
     get:
@@ -178,46 +177,46 @@ paths:
                   summary: 'A list containing one serverless index and one pod index'
                   value:
                     indexes:
-                      - name: 'semantic-search'
-                        dimension: 384
-                        metric: 'cosine'
-                        host: 'semantic-search-c01b5b5.svc.us-west1-gcp.pinecone.io'
-                        status:
-                          ready: true
-                          state: 'Ready'
-                        spec:
-                          pod:
-                            environment: 'us-west1-gcp'
-                            replicas: 2
-                            shards: 2
-                            pod_type: 'p1.x1'
-                            pods: 4
-                      - name: 'image-search'
-                        dimension: 200
-                        metric: 'dotproduct'
-                        host: 'image-search-a31f9c1.svc.us-east1-gcp.pinecone.io'
-                        status:
-                          ready: false
-                          state: 'Initializing'
-                        spec:
-                          serverless:
-                            cloud: 'gcp'
-                            region: 'us-east1'
+                    - name: 'semantic-search'
+                      dimension: 384
+                      metric: 'cosine'
+                      host: 'semantic-search-c01b5b5.svc.us-west1-gcp.pinecone.io'
+                      status:
+                        ready: true
+                        state: 'Ready'
+                      spec:
+                        pod:
+                          environment: 'us-west1-gcp'
+                          replicas: 2
+                          shards: 2
+                          pod_type: 'p1.x1'
+                          pods: 4
+                    - name: 'image-search'
+                      dimension: 200
+                      metric: 'dotproduct'
+                      host: 'image-search-a31f9c1.svc.us-east1-gcp.pinecone.io'
+                      status:
+                        ready: false
+                        state: 'Initializing'
+                      spec:
+                        serverless:
+                          cloud: 'gcp'
+                          region: 'us-east1'
                 one-index:
                   summary: 'A list containing one serverless index'
                   value:
                     indexes:
-                      - name: 'movie-embeddings'
-                        dimension: 1536
-                        metric: 'cosine'
-                        host: 'movie-embeddings-c01b5b5.svc.us-east1-gcp.pinecone.io'
-                        status:
-                          ready: false
-                          state: 'Initializing'
-                        spec:
-                          serverless:
-                            cloud: 'gcp'
-                            region: 'us-east1'
+                    - name: 'movie-embeddings'
+                      dimension: 1536
+                      metric: 'cosine'
+                      host: 'movie-embeddings-c01b5b5.svc.us-east1-gcp.pinecone.io'
+                      status:
+                        ready: false
+                        state: 'Initializing'
+                      spec:
+                        serverless:
+                          cloud: 'gcp'
+                          region: 'us-east1'
                 no-indexes:
                   summary: 'No indexes created yet'
                   value:
@@ -225,8 +224,7 @@ paths:
         '401':
           $ref: '#/components/responses/401Unauthorized'
       tags:
-        - Manage Serverless Indexes
-        - Manage Pod Indexes
+      - Manage Indexes
     post:
       operationId: create_index
       description: >-
@@ -266,9 +264,9 @@ paths:
                       pods: 1
                       metadata_config:
                         indexed:
-                          - 'genre'
-                          - 'title'
-                          - 'imdb_rating'
+                        - 'genre'
+                        - 'title'
+                        - 'imdb_rating'
                       source_collection: 'movie-embeddings'
       responses:
         '201':
@@ -281,6 +279,8 @@ paths:
           $ref: '#/components/responses/400BadRequest'
         '401':
           $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404ServerlessSpecNotFound'
         '422':
           $ref: '#/components/responses/422UnprocessableEntity'
         '429':
@@ -294,23 +294,22 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
       tags:
-        - Manage Serverless Indexes
-        - Manage Pod Indexes
+      - Manage Indexes
     servers:
-      - url: 'https://api.pinecone.io'
+    - url: 'https://api.pinecone.io'
 
   '/indexes/{index_name}':
     get:
       operationId: describe_index
       description: Get a description of an index.
       parameters:
-        - name: index_name
-          required: true
-          in: path
-          description: The name of the index to be described
-          example: 'test-index'
-          schema:
-            type: string
+      - name: index_name
+        required: true
+        in: path
+        description: The name of the index to be described
+        example: 'test-index'
+        schema:
+          type: string
       responses:
         '200':
           description: Configuration information and deployment status of the index
@@ -351,9 +350,9 @@ paths:
                         pods: 1
                         metadata_config:
                           indexed:
-                            - 'genre'
-                            - 'title'
-                            - 'imdb_rating'
+                          - 'genre'
+                          - 'title'
+                          - 'imdb_rating'
           links:
             UpsertVector:
               operationId: upsert
@@ -386,19 +385,18 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
       tags:
-        - Manage Serverless Indexes
-        - Manage Pod Indexes
+      - Manage Indexes
     delete:
       operationId: delete_index
       description: This operation deletes an existing index.
       parameters:
-        - name: index_name
-          required: true
-          in: path
-          schema:
-            type: string
-          example: 'test-index'
-          description: The name of the index to delete
+      - name: index_name
+        required: true
+        in: path
+        schema:
+          type: string
+        example: 'test-index'
+        description: The name of the index to delete
       responses:
         '202':
           description: The request to delete the index has been accepted.
@@ -409,21 +407,20 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
       tags:
-        - Manage Serverless Indexes
-        - Manage Pod Indexes
+      - Manage Indexes
     patch:
       operationId: configure_index
       description: >-
         This operation specifies the pod type and number of replicas for an
         index.
       parameters:
-        - name: index_name
-          required: true
-          in: path
-          example: 'test-index'
-          schema:
-            type: string
-          description: The name of the index to configure
+      - name: index_name
+        required: true
+        in: path
+        example: 'test-index'
+        schema:
+          type: string
+        description: The name of the index to configure
       requestBody:
         description: The desired pod type and replica configuration for the index.
         required: true
@@ -475,9 +472,9 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
       tags:
-        - Manage Pod Indexes
+      - Manage Indexes
     servers:
-      - url: 'https://api.pinecone.io'
+    - url: 'https://api.pinecone.io'
 components:
   schemas:
     # Data Models
@@ -487,12 +484,12 @@ components:
         The IndexModel describes the configuration and deployment status of a
         Pinecone index.
       required:
-        - name
-        - dimension
-        - metric
-        - status
-        - spec
-        - host
+      - name
+      - dimension
+      - metric
+      - status
+      - spec
+      - host
       properties:
         name:
           $ref: '#/components/schemas/IndexName'
@@ -518,14 +515,14 @@ components:
               pods: 1
               metadata_config:
                 indexed:
-                  - 'genre'
-                  - 'title'
-                  - 'imdb_rating'
+                - 'genre'
+                - 'title'
+                - 'imdb_rating'
         status:
           type: object
           required:
-            - ready
-            - state
+          - ready
+          - state
           example:
             ready: true
             state: 'ScalingUpPodSize'
@@ -535,14 +532,14 @@ components:
             state:
               type: string
               enum:
-                - Initializing
-                - InitializationFailed
-                - ScalingUp
-                - ScalingDown
-                - ScalingUpPodSize
-                - ScalingDownPodSize
-                - Terminating
-                - Ready
+              - Initializing
+              - InitializationFailed
+              - ScalingUp
+              - ScalingDown
+              - ScalingUpPodSize
+              - ScalingDownPodSize
+              - Terminating
+              - Ready
 
     CollectionModel:
       type: object
@@ -550,11 +547,8 @@ components:
         The CollectionModel describes the configuration and status of a
         Pinecone collection.
       required:
-        - name
-        - size
-        - status
-        - dimension
-        - record_count
+      - name
+      - status
       properties:
         name:
           type: string
@@ -568,9 +562,9 @@ components:
           type: string
           description: The status of the collection.
           enum:
-            - Initializing
-            - Ready
-            - Terminating
+          - Initializing
+          - Ready
+          - Terminating
           example: Initializing
         dimension:
           type: integer
@@ -579,7 +573,7 @@ components:
           minimum: 1
           maximum: 2000
           format: int32
-        record_count:
+        vector_count:
           type: integer
           example: 120000
           format: int32
@@ -597,9 +591,9 @@ components:
         The distance metric to be used for similarity search. You can use
         'euclidean', 'cosine', or 'dotproduct'.
       enum:
-        - cosine
-        - euclidean
-        - dotproduct
+      - cosine
+      - euclidean
+      - dotproduct
     IndexName:
       type: string
       description: >-
@@ -625,11 +619,11 @@ components:
       type: object
       description: Configuration needed to deploy a pod index
       required:
-        - environment
-        - pods
-        - replicas
-        - shards
-        - pod_type
+      - environment
+      - pods
+      - replicas
+      - shards
+      - pod_type
       example:
         environment: 'us-east1-gcp'
         replicas: 1
@@ -638,9 +632,9 @@ components:
         pods: 1
         metadata_config:
           indexed:
-            - 'genre'
-            - 'title'
-            - 'imdb_rating'
+          - 'genre'
+          - 'title'
+          - 'imdb_rating'
         source_collection: 'movie-embeddings'
       properties:
         environment:
@@ -678,9 +672,9 @@ components:
                 type: string
           example:
             indexed:
-              - 'genre'
-              - 'title'
-              - 'imdb_rating'
+            - 'genre'
+            - 'title'
+            - 'imdb_rating'
         source_collection:
           type: string
           description: >-
@@ -727,16 +721,16 @@ components:
     ServerlessSpec:
       type: object
       required:
-        - cloud
-        - region
+      - cloud
+      - region
       description: Configuration needed to deploy a serverless index
       properties:
         cloud:
           type: string
           enum:
-            - gcp
-            - aws
-            - azure
+          - gcp
+          - aws
+          - azure
           description: The public cloud where you would like your index hosted
           example: gcp
         region:
@@ -750,27 +744,27 @@ components:
       type: string
       description: Regions available with the AWS cloud provider
       enum:
-        - us-east-1
-        - us-west-1
-        - us-west-2
+      - us-east-1
+      - us-west-1
+      - us-west-2
     GcpRegions:
       type: string
       description: Regions available with the GCP cloud provider
       enum:
-        - us-west1
-        - us-west2
-        - eu-west4
-        - northamerica-northeast1
-        - asia-northeast1
-        - asia-southeast1C
+      - us-west1
+      - us-west2
+      - eu-west4
+      - northamerica-northeast1
+      - asia-northeast1
+      - asia-southeast1C
 
     # Shape of error responses
     ErrorResponse:
       type: object
       description: The response shape used for all error responses
       required:
-        - status
-        - error
+      - status
+      - error
       properties:
         status:
           type: integer
@@ -780,30 +774,30 @@ components:
           type: object
           description: Detailed information about the error that occurred
           required:
-            - code
-            - message
+          - code
+          - message
           properties:
             code:
               type: string
               enum:
-                - QUOTA_EXCEEDED
-                - BAD_PARAMS
-                - CANCELLED
-                - UNKNOWN
-                - INVALID_ARGUMENT
-                - DEADLINE_EXCEEDED
-                - NOT_FOUND
-                - ALREADY_EXISTS
-                - PERMISSION_DENIED
-                - UNAUTHENTICATED
-                - RESOURCE_EXHAUSTED
-                - FAILED_PRECONDITION
-                - ABORTED
-                - OUT_OF_RANGE
-                - UNIMPLEMENTED
-                - INTERNAL
-                - UNAVAILABLE
-                - DATA_LOSS
+              - QUOTA_EXCEEDED
+              - BAD_PARAMS
+              - CANCELLED
+              - UNKNOWN
+              - INVALID_ARGUMENT
+              - DEADLINE_EXCEEDED
+              - NOT_FOUND
+              - ALREADY_EXISTS
+              - PERMISSION_DENIED
+              - UNAUTHENTICATED
+              - RESOURCE_EXHAUSTED
+              - FAILED_PRECONDITION
+              - ABORTED
+              - OUT_OF_RANGE
+              - UNIMPLEMENTED
+              - INTERNAL
+              - UNAVAILABLE
+              - DATA_LOSS
             message:
               type: string
               example: Index name must contain only lowercase alphanumeric characters or hyphens, and must not begin or end with a hyphen.
@@ -845,10 +839,10 @@ components:
       description: >-
         The configuration needed to create a Pinecone index.
       required:
-        - name
-        - dimension
-        - metric
-        - spec
+      - name
+      - dimension
+      - metric
+      - spec
       properties:
         name:
           $ref: '#/components/schemas/IndexName'
@@ -866,15 +860,15 @@ components:
             pod:
               $ref: '#/components/schemas/PodSpec'
           oneOf:
-            - required: [serverless]
-            - required: [pod]
+          - required: [serverless]
+          - required: [pod]
     CreateCollectionRequest:
       type: object
       description: >-
         The configuration needed to create a Pinecone collection.
       required:
-        - name
-        - source
+      - name
+      - source
       properties:
         name:
           type: string
@@ -931,6 +925,20 @@ components:
                 error:
                   code: 'UNAUTHENTICATED'
                   message: 'Invalid API key.'
+    '404ServerlessSpecNotFound':
+      description: Unknown cloud or region when creating a serverless index
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            serverless-spec-cloud-not-found:
+              summary: 'Cannot create serverless index with invalid spec'
+              value:
+                status: 404
+                error:
+                  code: 'NOT_FOUND'
+                  message: 'Resource cloud: aws region: us-west1 not found'
     '404IndexNotFound':
       description: Index not found
       content:
@@ -1024,7 +1032,7 @@ components:
       in: header
 
 security:
-  - ApiKeyAuth: []
+- ApiKeyAuth: []
 externalDocs:
   description: More Pinecone.io API docs
   url: 'https://www.pinecone.io/docs'

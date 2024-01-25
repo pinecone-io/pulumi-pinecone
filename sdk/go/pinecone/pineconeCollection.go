@@ -21,12 +21,12 @@ type PineconeCollection struct {
 	Environment pulumi.StringOutput `pulumi:"environment"`
 	// The name of the collection to be created.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// The number of records stored in the collection.
-	RecordCount pulumi.IntOutput `pulumi:"recordCount"`
 	// The size of the collection in bytes.
 	Size pulumi.IntOutput `pulumi:"size"`
 	// The name of the index to be used as the source for the collection.
 	Source pulumi.StringOutput `pulumi:"source"`
+	// The number of records stored in the collection.
+	VectorCount pulumi.IntOutput `pulumi:"vectorCount"`
 }
 
 // NewPineconeCollection registers a new resource with the given unique name, arguments, and options.
@@ -191,11 +191,6 @@ func (o PineconeCollectionOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *PineconeCollection) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// The number of records stored in the collection.
-func (o PineconeCollectionOutput) RecordCount() pulumi.IntOutput {
-	return o.ApplyT(func(v *PineconeCollection) pulumi.IntOutput { return v.RecordCount }).(pulumi.IntOutput)
-}
-
 // The size of the collection in bytes.
 func (o PineconeCollectionOutput) Size() pulumi.IntOutput {
 	return o.ApplyT(func(v *PineconeCollection) pulumi.IntOutput { return v.Size }).(pulumi.IntOutput)
@@ -204,6 +199,11 @@ func (o PineconeCollectionOutput) Size() pulumi.IntOutput {
 // The name of the index to be used as the source for the collection.
 func (o PineconeCollectionOutput) Source() pulumi.StringOutput {
 	return o.ApplyT(func(v *PineconeCollection) pulumi.StringOutput { return v.Source }).(pulumi.StringOutput)
+}
+
+// The number of records stored in the collection.
+func (o PineconeCollectionOutput) VectorCount() pulumi.IntOutput {
+	return o.ApplyT(func(v *PineconeCollection) pulumi.IntOutput { return v.VectorCount }).(pulumi.IntOutput)
 }
 
 type PineconeCollectionArrayOutput struct{ *pulumi.OutputState }
