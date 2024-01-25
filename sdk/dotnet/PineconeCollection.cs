@@ -32,12 +32,6 @@ namespace PineconeDatabase.Pinecone
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// The number of records stored in the collection.
-        /// </summary>
-        [Output("recordCount")]
-        public Output<int> RecordCount { get; private set; } = null!;
-
-        /// <summary>
         /// The size of the collection in bytes.
         /// </summary>
         [Output("size")]
@@ -48,6 +42,12 @@ namespace PineconeDatabase.Pinecone
         /// </summary>
         [Output("source")]
         public Output<string> Source { get; private set; } = null!;
+
+        /// <summary>
+        /// The number of records stored in the collection.
+        /// </summary>
+        [Output("vectorCount")]
+        public Output<int> VectorCount { get; private set; } = null!;
 
 
         /// <summary>

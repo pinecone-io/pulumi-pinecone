@@ -106,8 +106,8 @@ class PineconeCollection(pulumi.CustomResource):
             __props__.__dict__["source"] = source
             __props__.__dict__["dimension"] = None
             __props__.__dict__["environment"] = None
-            __props__.__dict__["record_count"] = None
             __props__.__dict__["size"] = None
+            __props__.__dict__["vector_count"] = None
         super(PineconeCollection, __self__).__init__(
             'pinecone:index:PineconeCollection',
             resource_name,
@@ -133,9 +133,9 @@ class PineconeCollection(pulumi.CustomResource):
         __props__.__dict__["dimension"] = None
         __props__.__dict__["environment"] = None
         __props__.__dict__["name"] = None
-        __props__.__dict__["record_count"] = None
         __props__.__dict__["size"] = None
         __props__.__dict__["source"] = None
+        __props__.__dict__["vector_count"] = None
         return PineconeCollection(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -163,14 +163,6 @@ class PineconeCollection(pulumi.CustomResource):
         return pulumi.get(self, "name")
 
     @property
-    @pulumi.getter(name="recordCount")
-    def record_count(self) -> pulumi.Output[int]:
-        """
-        The number of records stored in the collection.
-        """
-        return pulumi.get(self, "record_count")
-
-    @property
     @pulumi.getter
     def size(self) -> pulumi.Output[int]:
         """
@@ -185,4 +177,12 @@ class PineconeCollection(pulumi.CustomResource):
         The name of the index to be used as the source for the collection.
         """
         return pulumi.get(self, "source")
+
+    @property
+    @pulumi.getter(name="vectorCount")
+    def vector_count(self) -> pulumi.Output[int]:
+        """
+        The number of records stored in the collection.
+        """
+        return pulumi.get(self, "vector_count")
 

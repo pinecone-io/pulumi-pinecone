@@ -39,10 +39,6 @@ export interface LookupPineconeCollectionResult {
      */
     readonly name: string;
     /**
-     * The number of records stored in the collection.
-     */
-    readonly recordCount: number;
-    /**
      * The size of the collection in bytes.
      */
     readonly size: number;
@@ -50,6 +46,10 @@ export interface LookupPineconeCollectionResult {
      * The name of the index to be used as the source for the collection.
      */
     readonly source: string;
+    /**
+     * The number of records stored in the collection.
+     */
+    readonly vectorCount: number;
 }
 /**
  * The result of a get operation on a Pinecone collection.

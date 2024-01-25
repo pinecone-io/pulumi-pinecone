@@ -21,7 +21,7 @@ class LookupPineconeCollectionResult:
     """
     The result of a get operation on a Pinecone collection.
     """
-    def __init__(__self__, dimension=None, environment=None, name=None, record_count=None, size=None, source=None):
+    def __init__(__self__, dimension=None, environment=None, name=None, size=None, source=None, vector_count=None):
         if dimension and not isinstance(dimension, int):
             raise TypeError("Expected argument 'dimension' to be a int")
         pulumi.set(__self__, "dimension", dimension)
@@ -31,15 +31,15 @@ class LookupPineconeCollectionResult:
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
-        if record_count and not isinstance(record_count, int):
-            raise TypeError("Expected argument 'record_count' to be a int")
-        pulumi.set(__self__, "record_count", record_count)
         if size and not isinstance(size, int):
             raise TypeError("Expected argument 'size' to be a int")
         pulumi.set(__self__, "size", size)
         if source and not isinstance(source, str):
             raise TypeError("Expected argument 'source' to be a str")
         pulumi.set(__self__, "source", source)
+        if vector_count and not isinstance(vector_count, int):
+            raise TypeError("Expected argument 'vector_count' to be a int")
+        pulumi.set(__self__, "vector_count", vector_count)
 
     @property
     @pulumi.getter
@@ -66,14 +66,6 @@ class LookupPineconeCollectionResult:
         return pulumi.get(self, "name")
 
     @property
-    @pulumi.getter(name="recordCount")
-    def record_count(self) -> int:
-        """
-        The number of records stored in the collection.
-        """
-        return pulumi.get(self, "record_count")
-
-    @property
     @pulumi.getter
     def size(self) -> int:
         """
@@ -89,6 +81,14 @@ class LookupPineconeCollectionResult:
         """
         return pulumi.get(self, "source")
 
+    @property
+    @pulumi.getter(name="vectorCount")
+    def vector_count(self) -> int:
+        """
+        The number of records stored in the collection.
+        """
+        return pulumi.get(self, "vector_count")
+
 
 class AwaitableLookupPineconeCollectionResult(LookupPineconeCollectionResult):
     # pylint: disable=using-constant-test
@@ -99,9 +99,9 @@ class AwaitableLookupPineconeCollectionResult(LookupPineconeCollectionResult):
             dimension=self.dimension,
             environment=self.environment,
             name=self.name,
-            record_count=self.record_count,
             size=self.size,
-            source=self.source)
+            source=self.source,
+            vector_count=self.vector_count)
 
 
 def lookup_pinecone_collection(name: Optional[str] = None,
@@ -121,9 +121,9 @@ def lookup_pinecone_collection(name: Optional[str] = None,
         dimension=pulumi.get(__ret__, 'dimension'),
         environment=pulumi.get(__ret__, 'environment'),
         name=pulumi.get(__ret__, 'name'),
-        record_count=pulumi.get(__ret__, 'record_count'),
         size=pulumi.get(__ret__, 'size'),
-        source=pulumi.get(__ret__, 'source'))
+        source=pulumi.get(__ret__, 'source'),
+        vector_count=pulumi.get(__ret__, 'vector_count'))
 
 
 @_utilities.lift_output_func(lookup_pinecone_collection)

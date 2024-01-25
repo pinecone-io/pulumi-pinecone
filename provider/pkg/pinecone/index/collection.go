@@ -75,7 +75,7 @@ func (*PineconeCollection) Create(ctx p.Context, name string, args PineconeColle
 		},
 		CollectionDimension:   resp.JSON201.Dimension,
 		CollectionSize:        resp.JSON201.Size,
-		CollectionRecordCount: resp.JSON201.RecordCount,
+		CollectionVectorCount: resp.JSON201.VectorCount,
 		CollectionEnvironment: resp.JSON201.Environment,
 	}, nil
 }
@@ -126,7 +126,7 @@ func (*PineconeCollection) Read(ctx p.Context, id string, args PineconeCollectio
 	state.CollectionName = resp.JSON200.Name
 	state.CollectionDimension = resp.JSON200.Dimension
 	state.CollectionSize = resp.JSON200.Size
-	state.CollectionRecordCount = resp.JSON200.RecordCount
+	state.CollectionVectorCount = resp.JSON200.VectorCount
 	state.CollectionEnvironment = resp.JSON200.Environment
 
 	return id, args, state, nil
@@ -134,15 +134,15 @@ func (*PineconeCollection) Read(ctx p.Context, id string, args PineconeCollectio
 
 type PineconeCollectionState struct {
 	PineconeCollectionArgs
-	CollectionSize        int64   `pulumi:"size"`
-	CollectionDimension   int32   `pulumi:"dimension"`
-	CollectionRecordCount int32   `pulumi:"recordCount"`
+	CollectionSize        *int64  `pulumi:"size"`
+	CollectionDimension   *int32  `pulumi:"dimension"`
+	CollectionVectorCount *int32  `pulumi:"vectorCount"`
 	CollectionEnvironment *string `pulumi:"environment"`
 }
 
 func (pcs *PineconeCollectionState) Annotate(a infer.Annotator) {
 	a.Describe(&pcs.CollectionSize, "The size of the collection in bytes.")
 	a.Describe(&pcs.CollectionDimension, "The dimension of the vectors stored in each record held in the collection.")
-	a.Describe(&pcs.CollectionRecordCount, "The number of records stored in the collection.")
+	a.Describe(&pcs.CollectionVectorCount, "The number of records stored in the collection.")
 	a.Describe(&pcs.CollectionEnvironment, "The environment where the collection is hosted.")
 }

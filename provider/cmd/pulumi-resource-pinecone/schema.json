@@ -40,10 +40,6 @@
                         "description": "The name of the collection to be created.",
                         "type": "string"
                     },
-                    "recordCount": {
-                        "description": "The number of records stored in the collection.",
-                        "type": "integer"
-                    },
                     "size": {
                         "description": "The size of the collection in bytes.",
                         "type": "integer"
@@ -51,6 +47,10 @@
                     "source": {
                         "description": "The name of the index to be used as the source for the collection.",
                         "type": "string"
+                    },
+                    "vectorCount": {
+                        "description": "The number of records stored in the collection.",
+                        "type": "integer"
                     }
                 },
                 "required": [
@@ -58,7 +58,7 @@
                     "source",
                     "size",
                     "dimension",
-                    "recordCount",
+                    "vectorCount",
                     "environment"
                 ],
                 "type": "object"
@@ -192,10 +192,6 @@
                     "description": "The name of the collection to be created.",
                     "type": "string"
                 },
-                "recordCount": {
-                    "description": "The number of records stored in the collection.",
-                    "type": "integer"
-                },
                 "size": {
                     "description": "The size of the collection in bytes.",
                     "type": "integer"
@@ -203,6 +199,10 @@
                 "source": {
                     "description": "The name of the index to be used as the source for the collection.",
                     "type": "string"
+                },
+                "vectorCount": {
+                    "description": "The number of records stored in the collection.",
+                    "type": "integer"
                 }
             },
             "required": [
@@ -210,7 +210,7 @@
                 "source",
                 "size",
                 "dimension",
-                "recordCount",
+                "vectorCount",
                 "environment"
             ],
             "requiredInputs": [
