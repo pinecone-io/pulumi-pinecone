@@ -7,7 +7,7 @@ require (
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/pulumi/pulumi-go-provider v0.14.0
 	github.com/pulumi/pulumi-go-provider/integration v0.10.0
-	github.com/pulumi/pulumi/sdk/v3 v3.102.0
+	github.com/pulumi/pulumi/sdk/v3 v3.105.0
 )
 
 require (
