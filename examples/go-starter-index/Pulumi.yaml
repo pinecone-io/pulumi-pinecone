@@ -1,0 +1,6 @@
+name: go-starter-index
+runtime: go
+plugins:
+  providers:
+    - name: pinecone
+      path: ../../bin

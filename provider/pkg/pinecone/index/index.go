@@ -235,6 +235,14 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 		}
 	}
 
+	if response.JSON201 == nil {
+		errorMessage, err2 := utils.PrintErrorMessageFromResponse(response.Body)
+		if err2 != nil {
+			return "", PineconeIndexState{}, err2
+		}
+		return "", PineconeIndexState{}, fmt.Errorf("failed to create Pinecone index: %s with error: %s", args.IndexName, *errorMessage)
+	}
+
 	return args.IndexName, PineconeIndexState{
 		PineconeIndexArgs{
 			IndexName:      args.IndexName,
