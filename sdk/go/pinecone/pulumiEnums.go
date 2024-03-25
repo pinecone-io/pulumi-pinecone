@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 type IndexMetric string
@@ -178,12 +177,6 @@ func (in *indexMetricPtr) ToIndexMetricPtrOutputWithContext(ctx context.Context)
 	return pulumi.ToOutputWithContext(ctx, in).(IndexMetricPtrOutput)
 }
 
-func (in *indexMetricPtr) ToOutput(ctx context.Context) pulumix.Output[*IndexMetric] {
-	return pulumix.Output[*IndexMetric]{
-		OutputState: in.ToIndexMetricPtrOutputWithContext(ctx).OutputState,
-	}
-}
-
 type ServerlessSpecCloud string
 
 const (
@@ -349,12 +342,6 @@ func (in *serverlessSpecCloudPtr) ToServerlessSpecCloudPtrOutput() ServerlessSpe
 
 func (in *serverlessSpecCloudPtr) ToServerlessSpecCloudPtrOutputWithContext(ctx context.Context) ServerlessSpecCloudPtrOutput {
 	return pulumi.ToOutputWithContext(ctx, in).(ServerlessSpecCloudPtrOutput)
-}
-
-func (in *serverlessSpecCloudPtr) ToOutput(ctx context.Context) pulumix.Output[*ServerlessSpecCloud] {
-	return pulumix.Output[*ServerlessSpecCloud]{
-		OutputState: in.ToServerlessSpecCloudPtrOutputWithContext(ctx).OutputState,
-	}
 }
 
 func init() {
