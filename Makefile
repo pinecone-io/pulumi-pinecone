@@ -118,7 +118,6 @@ down::
 devcontainer::
 	git submodule update --init --recursive .devcontainer
 	git submodule update --remote --merge .devcontainer
-	cp -f .devcontainer/devcontainer.json .devcontainer.json
 
 .PHONY: build
 
