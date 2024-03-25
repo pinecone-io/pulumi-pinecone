@@ -2,6 +2,7 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"net/http"
@@ -22,6 +23,23 @@ func ValidateIndexName(name string) error {
 type CustomTransport struct {
 	Transport http.RoundTripper
 	APIKey    string
+}
+
+type ErrorResponse struct {
+	Error struct {
+		Code    string `json:"code"`
+		Message string `json:"message"`
+	} `json:"error"`
+	Status int `json:"status"`
+}
+
+func PrintErrorMessageFromResponse(response []byte) (*string, error) {
+	jsonError := ErrorResponse{}
+	err := json.Unmarshal(response, &jsonError)
+	if err != nil {
+		return nil, err
+	}
+	return &jsonError.Error.Message, nil
 }
 
 func (c *CustomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
