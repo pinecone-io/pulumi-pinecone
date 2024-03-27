@@ -1,15 +1,19 @@
 import pulumi
-import pulumi_pinecone as pinecone
+import pinecone_pulumi as pinecone
 
-my_pinecone_index = pinecone.PineconeIndex("myPineconeIndex",
-    name="example-index",
-    metric=pinecone.IndexMetric.COSINE,
+pinecone_index = pinecone.PineconeIndex(
+    "my-index",
+    name="my-index",
     spec=pinecone.PineconeSpecArgs(
-        serverless=pinecone.PineconeServerlessSpecArgs(
-            cloud=pinecone.ServerlessSpecCloud.AWS,
-            region="us-west-2",
+        pod=pinecone.PineconePodSpecArgs(
+            environment="gcp-starter",
+            pod_type="starter",
+            replicas=1,
         ),
-    ))
+    ),
+    metric="cosine",
+    dimension=1536,
+) 
 pulumi.export("output", {
-    "value": my_pinecone_index.host,
+    "value": pinecone_index.host,
 })
