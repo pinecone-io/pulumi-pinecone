@@ -40,7 +40,7 @@ func (*LookupPineconeIndex) Call(ctx p.Context, args LookupPineconeIndexArgs) (L
 			IndexMetric:    IndexMetric(resp.JSON200.Metric),
 			IndexDimension: resp.JSON200.Dimension,
 			IndexSpec: PineconeSpec{
-				Serverless: PineconeServerlessSpec{
+				Serverless: &PineconeServerlessSpec{
 					Cloud:  ServerlessSpecCloud(resp.JSON200.Spec.Serverless.Cloud),
 					Region: resp.JSON200.Spec.Serverless.Region,
 				},

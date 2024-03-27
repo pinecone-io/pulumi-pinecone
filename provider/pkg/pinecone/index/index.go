@@ -45,8 +45,8 @@ type PineconePodSpec struct {
 }
 
 type PineconeSpec struct {
-	Serverless PineconeServerlessSpec `pulumi:"serverless,optional,omitempty"`
-	Pod        PineconePodSpec        `pulumi:"pod,optional,omitempty"`
+	Serverless *PineconeServerlessSpec `pulumi:"serverless,optional,omitempty"`
+	Pod        *PineconePodSpec        `pulumi:"pod,optional,omitempty"`
 }
 
 // PineconeIndexArgs describes the configuration options available for creating or managing a Pinecone index.
@@ -178,7 +178,7 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 
 	var spec client.CreateIndexRequest_Spec
 
-	if args.IndexSpec.Serverless != (PineconeServerlessSpec{}) {
+	if args.IndexSpec.Serverless != nil {
 		ctx.Logf(diag.Debug, "Creating Pinecone serverless index: %s", args.IndexName)
 		spec = client.CreateIndexRequest_Spec{
 			Serverless: &client.ServerlessSpec{
@@ -186,7 +186,7 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 				Region: args.IndexSpec.Serverless.Region,
 			},
 		}
-	} else if args.IndexSpec.Pod != (PineconePodSpec{}) {
+	} else if args.IndexSpec.Pod != nil {
 		ctx.Logf(diag.Debug, "Creating Pinecone pod-based index: %s", args.IndexName)
 		spec = client.CreateIndexRequest_Spec{
 			Pod: &client.PodSpec{
