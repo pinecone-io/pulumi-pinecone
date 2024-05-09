@@ -44,6 +44,7 @@ func PrintErrorMessageFromResponse(response []byte) (*string, error) {
 
 func (c *CustomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add("Api-Key", c.APIKey)
+	req.Header.Add("User-Agent", "source_tag=pulumi-pinecone")
 	return c.Transport.RoundTrip(req)
 }
 
