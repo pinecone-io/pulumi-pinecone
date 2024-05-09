@@ -1,15 +1,15 @@
 package index
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
-	p "github.com/pulumi/pulumi-go-provider"
+	goprovider "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 )
 
 type PineconeCollection struct{}
@@ -24,11 +24,11 @@ func (pc *PineconeCollectionArgs) Annotate(a infer.Annotator) {
 	a.Describe(&pc.CollectionSource, "The name of the index to be used as the source for the collection.")
 }
 
-func (*PineconeCollection) Create(ctx p.Context, name string, args PineconeCollectionArgs, preview bool) (string, PineconeCollectionState, error) {
+func (*PineconeCollection) Create(ctx context.Context, name string, args PineconeCollectionArgs, preview bool) (string, PineconeCollectionState, error) {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 
 	if preview {
-		ctx.Logf(diag.Debug, "Creating Pinecone collection %s", args.CollectionName)
+		goprovider.GetLogger(ctx).Debugf("Creating Pinecone collection %s", args.CollectionName)
 		return "", PineconeCollectionState{
 			PineconeCollectionArgs: PineconeCollectionArgs{
 				CollectionName:   args.CollectionName,
@@ -47,16 +47,16 @@ func (*PineconeCollection) Create(ctx p.Context, name string, args PineconeColle
 	if err != nil {
 		return "", PineconeCollectionState{}, fmt.Errorf("failed to create Pinecone client: %w", err)
 	}
-	ctx.Logf(diag.Debug, "Creating Pinecone collection %s", args.CollectionName)
+	goprovider.GetLogger(ctx).Debugf("Creating Pinecone collection %s", args.CollectionName)
 	resp, err := pineconeClient.CreateCollectionWithResponse(ctx, client.CreateCollectionJSONRequestBody{
 		Name:   args.CollectionName,
 		Source: args.CollectionSource,
 	})
 	if err != nil {
-		ctx.Logf(diag.Debug, "Failed to create Pinecone collection %s with http status code %d", args.CollectionName, resp.StatusCode())
+		goprovider.GetLogger(ctx).Debugf("Failed to create Pinecone collection %s with http status code %d", args.CollectionName, resp.StatusCode())
 		return "", PineconeCollectionState{}, fmt.Errorf("failed to create Pinecone collection: %w", err)
 	}
-	ctx.Logf(diag.Debug, "Pinecone collection creaation responese: %s", string(resp.Body))
+	goprovider.GetLogger(ctx).Debugf("Pinecone collection creaation responese: %s", string(resp.Body))
 
 	ready := false
 	for !ready {
@@ -80,7 +80,7 @@ func (*PineconeCollection) Create(ctx p.Context, name string, args PineconeColle
 	}, nil
 }
 
-func (*PineconeCollection) Delete(ctx p.Context, id string, args PineconeCollectionArgs) error {
+func (*PineconeCollection) Delete(ctx context.Context, id string, args PineconeCollectionArgs) error {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 	httpClient := &http.Client{
 		Transport: &utils.CustomTransport{
@@ -94,14 +94,14 @@ func (*PineconeCollection) Delete(ctx p.Context, id string, args PineconeCollect
 	}
 	response, err := pineconeClient.DeleteCollectionWithResponse(ctx, args.CollectionName)
 	if err != nil {
-		ctx.Logf(diag.Error, "Failed to delete Pinecone collection: %s with http status code: %d", args.CollectionName, response.StatusCode())
+		goprovider.GetLogger(ctx).Errorf("Failed to delete Pinecone collection: %s with http status code: %d", args.CollectionName, response.StatusCode())
 		return fmt.Errorf("failed to delete Pinecone collection: %w", err)
 	}
-	ctx.Logf(diag.Debug, "Successfully deleted Pinecone collection: %s", args.CollectionName)
+	goprovider.GetLogger(ctx).Debugf("Successfully deleted Pinecone collection: %s", args.CollectionName)
 	return nil
 }
 
-func (*PineconeCollection) Read(ctx p.Context, id string, args PineconeCollectionArgs, state PineconeCollectionState) (canonicalID string, normalizedInputs PineconeCollectionArgs, normalizedState PineconeCollectionState, err error) {
+func (*PineconeCollection) Read(ctx context.Context, id string, args PineconeCollectionArgs, state PineconeCollectionState) (canonicalID string, normalizedInputs PineconeCollectionArgs, normalizedState PineconeCollectionState, err error) {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 	httpClient := &http.Client{
 		Transport: &utils.CustomTransport{
@@ -117,7 +117,7 @@ func (*PineconeCollection) Read(ctx p.Context, id string, args PineconeCollectio
 	resp, err := pineconeClient.DescribeCollectionWithResponse(ctx, args.CollectionName)
 	if err != nil {
 		if resp.JSON404 != nil {
-			ctx.Logf(diag.Debug, "Pinecone collection '%s' not found", args.CollectionName)
+			goprovider.GetLogger(ctx).Debugf("Pinecone collection '%s' not found", args.CollectionName)
 			return id, args, state, nil
 		}
 		return id, args, state, fmt.Errorf("error getting Pinecone collection details '%s': %w", args.CollectionName, err)
