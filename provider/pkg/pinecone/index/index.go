@@ -7,9 +7,8 @@ import (
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
-	p "github.com/pulumi/pulumi-go-provider"
+	goprovider "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"net/http"
 )
 
@@ -40,7 +39,7 @@ type PineconePodSpec struct {
 	Shards           PodSpecShards   `pulumi:"shards,optional,omitempty"`
 	PodType          PodSpecPodType  `pulumi:"podType"`
 	Pods             int             `pulumi:"pods,optional,omitempty"`
-	MetaDataConfig   MetaDataConfig  `pulumi:"metaDataConfig,optional"`
+	MetaDataConfig   *MetaDataConfig `pulumi:"metaDataConfig,optional"`
 	SourceCollection *string         `pulumi:"sourceCollection,optional"`
 }
 
@@ -139,7 +138,7 @@ func (pim *MetaDataConfig) Annotate(a infer.Annotator) {
 		" property to specify an array of metadata fields which should be indexed.")
 }
 
-func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs, preview bool) (string, PineconeIndexState, error) {
+func (*PineconeIndex) Create(ctx context.Context, name string, args PineconeIndexArgs, preview bool) (string, PineconeIndexState, error) {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 	if err := utils.ValidateIndexName(args.IndexName); err != nil {
 		return "", PineconeIndexState{}, fmt.Errorf("invalid index name: %w", err)
@@ -149,10 +148,10 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 	if indexDimension == 0 {
 		indexDimension = utils.IndexDimensionDefault
 	}
-	ctx.Logf(diag.Debug, "Pinecone index dimension: %d", indexDimension)
+	goprovider.GetLogger(ctx).Debugf("Pinecone index dimension: %d", indexDimension)
 
 	if preview {
-		ctx.Logf(diag.Debug, "Previewing Pinecone index creation: %s", args.IndexName)
+		goprovider.GetLogger(ctx).Debugf("Previewing Pinecone index creation: %s", args.IndexName)
 		return args.IndexName, PineconeIndexState{
 			PineconeIndexArgs: PineconeIndexArgs{
 				IndexName:      args.IndexName,
@@ -174,12 +173,12 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 		return "", PineconeIndexState{}, fmt.Errorf("failed to create Pinecone client: %w", err)
 	}
 
-	ctx.Logf(diag.Debug, "Creating Pinecone index: %s", args.IndexName)
+	goprovider.GetLogger(ctx).Debugf("Creating Pinecone index: %s", args.IndexName)
 
 	var spec client.CreateIndexRequest_Spec
 
 	if args.IndexSpec.Serverless != nil {
-		ctx.Logf(diag.Debug, "Creating Pinecone serverless index: %s", args.IndexName)
+		goprovider.GetLogger(ctx).Debugf("Creating Pinecone serverless index: %s", args.IndexName)
 		spec = client.CreateIndexRequest_Spec{
 			Serverless: &client.ServerlessSpec{
 				Cloud:  client.ServerlessSpecCloud(args.IndexSpec.Serverless.Cloud),
@@ -187,7 +186,7 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 			},
 		}
 	} else if args.IndexSpec.Pod != nil {
-		ctx.Logf(diag.Debug, "Creating Pinecone pod-based index: %s", args.IndexName)
+		goprovider.GetLogger(ctx).Debugf("Creating Pinecone pod-based index: %s", args.IndexName)
 		spec = client.CreateIndexRequest_Spec{
 			Pod: &client.PodSpec{
 				Environment: args.IndexSpec.Pod.Environment,
@@ -212,22 +211,22 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 		Spec:      spec,
 	})
 	if err != nil {
-		ctx.Logf(diag.Error, "Failed to create Pinecone index: %s with http status code: %d", args.IndexName, response.StatusCode())
-		ctx.Logf(diag.Error, "Please run the Pulumi command with the `-d` flag to see the full error message")
+		goprovider.GetLogger(ctx).Errorf("Failed to create Pinecone index: %s with http status code: %d", args.IndexName, response.StatusCode())
+		goprovider.GetLogger(ctx).Errorf("Please run the Pulumi command with the `-d` flag to see the full error message")
 		return "", PineconeIndexState{}, fmt.Errorf("failed to create Pinecone index: %w", err)
 	}
-	ctx.Logf(diag.Debug, "Pinecone index creation response: %s", string(response.Body))
+	goprovider.GetLogger(ctx).Debugf("Pinecone index creation response: %s", string(response.Body))
 
 	ready := false
 	for !ready {
-		ctx.Logf(diag.Debug, "Waiting for Pinecone index: %s to be ready", args.IndexName)
+		goprovider.GetLogger(ctx).Debugf("Waiting for Pinecone index: %s to be ready", args.IndexName)
 		response, err := pineconeClient.DescribeIndexWithResponse(context.Background(), args.IndexName)
 		if err != nil {
-			ctx.Logf(diag.Error, "Failed to get Pinecone index: %s with http error code: %d", args.IndexName, response.StatusCode())
+			goprovider.GetLogger(ctx).Errorf("Failed to get Pinecone index: %s with http error code: %d", args.IndexName, response.StatusCode())
 			return "", PineconeIndexState{}, fmt.Errorf("failed to get Pinecone index: %w", err)
 		}
 		if response.StatusCode() != http.StatusOK {
-			ctx.Logf(diag.Error, "Failed to get Pinecone index: %s with http error code: %d", args.IndexName, response.StatusCode())
+			goprovider.GetLogger(ctx).Errorf("Failed to get Pinecone index: %s with http error code: %d", args.IndexName, response.StatusCode())
 			return "", PineconeIndexState{}, fmt.Errorf("failed to get Pinecone index: %s", args.IndexName)
 		}
 		if response.JSON200.Status.Ready {
@@ -254,7 +253,7 @@ func (*PineconeIndex) Create(ctx p.Context, name string, args PineconeIndexArgs,
 	}, nil
 }
 
-func (pi *PineconeIndex) Delete(ctx p.Context, id string, state PineconeIndexState) error {
+func (pi *PineconeIndex) Delete(ctx context.Context, id string, state PineconeIndexState) error {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 	httpClient := &http.Client{
 		Transport: &utils.CustomTransport{
@@ -269,14 +268,14 @@ func (pi *PineconeIndex) Delete(ctx p.Context, id string, state PineconeIndexSta
 
 	response, err := pineconeClient.DeleteIndexWithResponse(context.Background(), state.IndexName)
 	if err != nil {
-		ctx.Logf(diag.Error, "Failed to delete Pinecone index: %s with http error code: %d", state.IndexName, response.StatusCode())
+		goprovider.GetLogger(ctx).Errorf("Failed to delete Pinecone index: %s with http error code: %d", state.IndexName, response.StatusCode())
 		return fmt.Errorf("error deleting Pinecone index '%s': %w", state.IndexName, err)
 	}
-	ctx.Logf(diag.Debug, "Successfully deleted Pinecone index: %s", state.IndexName)
+	goprovider.GetLogger(ctx).Debugf("Successfully deleted Pinecone index: %s", state.IndexName)
 	return nil
 }
 
-func (pi *PineconeIndex) Read(ctx p.Context, id string, args PineconeIndexArgs, state PineconeIndexState) (canonicalID string, normalizedInputs PineconeIndexArgs, normalizedState PineconeIndexState, err error) {
+func (pi *PineconeIndex) Read(ctx context.Context, id string, args PineconeIndexArgs, state PineconeIndexState) (canonicalID string, normalizedInputs PineconeIndexArgs, normalizedState PineconeIndexState, err error) {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 	httpClient := &http.Client{
 		Transport: &utils.CustomTransport{
@@ -292,7 +291,7 @@ func (pi *PineconeIndex) Read(ctx p.Context, id string, args PineconeIndexArgs, 
 	indexDetails, err := pineconeClient.DescribeIndexWithResponse(context.Background(), state.IndexName)
 	if err != nil {
 		if indexDetails.JSON404 != nil {
-			ctx.Logf(diag.Debug, "Pinecone index '%s' not found", state.IndexName)
+			goprovider.GetLogger(ctx).Debugf("Pinecone index '%s' not found", state.IndexName)
 			return id, args, state, nil
 		}
 		return id, args, state, fmt.Errorf("error getting Pinecone index details '%s': %w", state.IndexName, err)

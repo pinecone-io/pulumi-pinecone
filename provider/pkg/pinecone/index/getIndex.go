@@ -1,19 +1,19 @@
 package index
 
 import (
+	"context"
 	"fmt"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
-	p "github.com/pulumi/pulumi-go-provider"
+	goprovider "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 	"net/http"
 )
 
 type LookupPineconeIndex struct{}
 
-func (*LookupPineconeIndex) Call(ctx p.Context, args LookupPineconeIndexArgs) (LookupPineconeIndexResult, error) {
+func (*LookupPineconeIndex) Call(ctx context.Context, args LookupPineconeIndexArgs) (LookupPineconeIndexResult, error) {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 	httpClient := &http.Client{
 		Transport: &utils.CustomTransport{
@@ -26,9 +26,9 @@ func (*LookupPineconeIndex) Call(ctx p.Context, args LookupPineconeIndexArgs) (L
 		return LookupPineconeIndexResult{}, err
 	}
 	resp, err := pineconeClient.DescribeIndexWithResponse(ctx, args.IndexName)
-	ctx.Logf(diag.Debug, "DescribeIndexWithResponse: %v", resp.Status())
+	goprovider.GetLogger(ctx).Debugf("DescribeIndexWithResponse: %v", resp.Status())
 	if err != nil {
-		ctx.Logf(diag.Error, "DescribeIndexWithResponse: %v", resp.Status())
+		goprovider.GetLogger(ctx).Errorf("DescribeIndexWithResponse: %v", resp.Status())
 		return LookupPineconeIndexResult{}, err
 	}
 	if resp.StatusCode() != http.StatusOK {

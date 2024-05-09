@@ -1,15 +1,15 @@
 package index
 
 import (
+	"context"
 	"fmt"
+	goprovider "github.com/pulumi/pulumi-go-provider"
 	"net/http"
 
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/client"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/config"
 	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/pinecone/utils"
-	p "github.com/pulumi/pulumi-go-provider"
 	"github.com/pulumi/pulumi-go-provider/infer"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/diag"
 )
 
 type LookupPineconeCollection struct{}
@@ -18,7 +18,7 @@ func (g *LookupPineconeCollection) Annotate(a infer.Annotator) {
 	a.Describe(&g, "The result of a get operation on a Pinecone collection.")
 }
 
-func (*LookupPineconeCollection) Call(ctx p.Context, args LookupPineconeCollectionArgs) (LookupPineconeCollectionResult, error) {
+func (*LookupPineconeCollection) Call(ctx context.Context, args LookupPineconeCollectionArgs) (LookupPineconeCollectionResult, error) {
 	pineconeConfig := infer.GetConfig[config.PineconeProviderConfig](ctx)
 	httpClient := &http.Client{
 		Transport: &utils.CustomTransport{
@@ -31,9 +31,9 @@ func (*LookupPineconeCollection) Call(ctx p.Context, args LookupPineconeCollecti
 		return LookupPineconeCollectionResult{}, err
 	}
 	resp, err := pineconeClient.DescribeCollectionWithResponse(ctx, args.CollectionName)
-	ctx.Logf(diag.Debug, "DescribeCollectionWithResponse: %v", resp.Status())
+	goprovider.GetLogger(ctx).Debugf("DescribeCollectionWithResponse: %v", resp.Status())
 	if err != nil {
-		ctx.Logf(diag.Error, "DescribeCollectionWithResponse: %v", resp.Status())
+		goprovider.GetLogger(ctx).Errorf("DescribeCollectionWithResponse: %v", resp.Status())
 		return LookupPineconeCollectionResult{}, err
 	}
 	if resp.StatusCode() != http.StatusOK {
