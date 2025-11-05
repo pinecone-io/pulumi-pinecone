@@ -98,7 +98,7 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/actions@d7ceb0215da5a14ec84f50b703365ddf0194a9c8 # tag=v6.6.0
         with:
-          pulumi-version: 3.185.0
+          pulumi-version: 3.205.0
       - name: Setup Node
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # tag=v6.0.0
         with:
