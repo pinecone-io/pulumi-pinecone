@@ -6,7 +6,7 @@
 **/.idea
 **/.ionide
 .pulumi
-Pulumi.*.yaml
+**/Pulumi.*.yaml
 yarn.lock
 ci-scripts
 /nuget/
