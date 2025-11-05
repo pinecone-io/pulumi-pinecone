@@ -6,6 +6,7 @@ import builtins as _builtins
 from . import _utilities
 import typing
 # Export this package's modules as members:
+from .api_key import *
 from .collection import *
 from .get import *
 from .get_collection import *
@@ -26,6 +27,14 @@ else:
 _utilities.register(
     resource_modules="""
 [
+ {
+  "pkg": "pinecone",
+  "mod": "index/apiKey",
+  "fqn": "pinecone_pulumi",
+  "classes": {
+   "pinecone:index/apiKey:ApiKey": "ApiKey"
+  }
+ },
  {
   "pkg": "pinecone",
   "mod": "index/collection",

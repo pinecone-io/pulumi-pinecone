@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone/internal"
+	"github.com/pinecone-io/pulumi-pinecone/sdk/v2/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -20,6 +20,10 @@ type Provider struct {
 
 	// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
 	ApiKey pulumi.StringPtrOutput `pulumi:"apiKey"`
+	// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+	ClientId pulumi.StringPtrOutput `pulumi:"clientId"`
+	// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+	ClientSecret pulumi.StringPtrOutput `pulumi:"clientSecret"`
 }
 
 // NewProvider registers a new resource with the given unique name, arguments, and options.
@@ -34,11 +38,29 @@ func NewProvider(ctx *pulumi.Context,
 			args.ApiKey = pulumi.StringPtr(d.(string))
 		}
 	}
+	if args.ClientId == nil {
+		if d := internal.GetEnvOrDefault(nil, nil, "PINECONE_CLIENT_ID"); d != nil {
+			args.ClientId = pulumi.StringPtr(d.(string))
+		}
+	}
+	if args.ClientSecret == nil {
+		if d := internal.GetEnvOrDefault(nil, nil, "PINECONE_CLIENT_SECRET"); d != nil {
+			args.ClientSecret = pulumi.StringPtr(d.(string))
+		}
+	}
 	if args.ApiKey != nil {
 		args.ApiKey = pulumi.ToSecret(args.ApiKey).(pulumi.StringPtrInput)
 	}
+	if args.ClientId != nil {
+		args.ClientId = pulumi.ToSecret(args.ClientId).(pulumi.StringPtrInput)
+	}
+	if args.ClientSecret != nil {
+		args.ClientSecret = pulumi.ToSecret(args.ClientSecret).(pulumi.StringPtrInput)
+	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"apiKey",
+		"clientId",
+		"clientSecret",
 	})
 	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -53,12 +75,20 @@ func NewProvider(ctx *pulumi.Context,
 type providerArgs struct {
 	// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
 	ApiKey *string `pulumi:"apiKey"`
+	// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+	ClientId *string `pulumi:"clientId"`
+	// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+	ClientSecret *string `pulumi:"clientSecret"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
 	// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
 	ApiKey pulumi.StringPtrInput
+	// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+	ClientId pulumi.StringPtrInput
+	// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+	ClientSecret pulumi.StringPtrInput
 }
 
 func (ProviderArgs) ElementType() reflect.Type {
@@ -124,6 +154,16 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 // Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
 func (o ProviderOutput) ApiKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ApiKey }).(pulumi.StringPtrOutput)
+}
+
+// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+func (o ProviderOutput) ClientId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ClientId }).(pulumi.StringPtrOutput)
+}
+
+// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+func (o ProviderOutput) ClientSecret() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ClientSecret }).(pulumi.StringPtrOutput)
 }
 
 func init() {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone"
+	"github.com/pinecone-io/pulumi-pinecone/sdk/v2/go/pinecone"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

@@ -42,5 +42,25 @@ namespace PineconeDatabase.Pinecone
             set => _apiKey.Set(value);
         }
 
+        private static readonly __Value<string?> _clientId = new __Value<string?>(() => __config.Get("clientId") ?? Utilities.GetEnv("PINECONE_CLIENT_ID"));
+        /// <summary>
+        /// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        /// </summary>
+        public static string? ClientId
+        {
+            get => _clientId.Get();
+            set => _clientId.Set(value);
+        }
+
+        private static readonly __Value<string?> _clientSecret = new __Value<string?>(() => __config.Get("clientSecret") ?? Utilities.GetEnv("PINECONE_CLIENT_SECRET"));
+        /// <summary>
+        /// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+        /// </summary>
+        public static string? ClientSecret
+        {
+            get => _clientSecret.Get();
+            set => _clientSecret.Set(value);
+        }
+
     }
 }

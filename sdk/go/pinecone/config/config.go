@@ -4,7 +4,7 @@
 package config
 
 import (
-	"github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone/internal"
+	"github.com/pinecone-io/pulumi-pinecone/sdk/v2/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
@@ -19,6 +19,32 @@ func GetApiKey(ctx *pulumi.Context) string {
 	}
 	var value string
 	if d := internal.GetEnvOrDefault(nil, nil, "PINECONE_API_KEY"); d != nil {
+		value = d.(string)
+	}
+	return value
+}
+
+// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+func GetClientId(ctx *pulumi.Context) string {
+	v, err := config.Try(ctx, "pinecone:clientId")
+	if err == nil {
+		return v
+	}
+	var value string
+	if d := internal.GetEnvOrDefault(nil, nil, "PINECONE_CLIENT_ID"); d != nil {
+		value = d.(string)
+	}
+	return value
+}
+
+// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+func GetClientSecret(ctx *pulumi.Context) string {
+	v, err := config.Try(ctx, "pinecone:clientSecret")
+	if err == nil {
+		return v
+	}
+	var value string
+	if d := internal.GetEnvOrDefault(nil, nil, "PINECONE_CLIENT_SECRET"); d != nil {
 		value = d.(string)
 	}
 	return value

@@ -15,7 +15,7 @@
 package main
 
 import (
-	pinecone "github.com/pinecone-io/pulumi-pinecone/provider"
+	pinecone "github.com/pinecone-io/pulumi-pinecone/provider/v2"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfgen"
 )
 

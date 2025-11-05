@@ -1,4 +1,4 @@
-module github.com/pinecone-io/pulumi-pinecone/sdk
+module github.com/pinecone-io/pulumi-pinecone/sdk/v2
 
 go 1.23.11
 

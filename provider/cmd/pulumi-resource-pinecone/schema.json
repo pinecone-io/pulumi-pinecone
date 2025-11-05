@@ -26,7 +26,7 @@
             "rootNamespace": "PineconeDatabase"
         },
         "go": {
-            "importBasePath": "github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone",
+            "importBasePath": "github.com/pinecone-io/pulumi-pinecone/sdk/v2/go/pinecone",
             "generateResourceContainerTypes": true,
             "generateExtraInputTypes": true
         },
@@ -62,6 +62,26 @@
                 "defaultInfo": {
                     "environment": [
                         "PINECONE_API_KEY"
+                    ]
+                },
+                "secret": true
+            },
+            "clientId": {
+                "type": "string",
+                "description": "Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.",
+                "defaultInfo": {
+                    "environment": [
+                        "PINECONE_CLIENT_ID"
+                    ]
+                },
+                "secret": true
+            },
+            "clientSecret": {
+                "type": "string",
+                "description": "Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.",
+                "defaultInfo": {
+                    "environment": [
+                        "PINECONE_CLIENT_SECRET"
                     ]
                 },
                 "secret": true
@@ -758,6 +778,16 @@
                 "type": "string",
                 "description": "Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.",
                 "secret": true
+            },
+            "clientId": {
+                "type": "string",
+                "description": "Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.",
+                "secret": true
+            },
+            "clientSecret": {
+                "type": "string",
+                "description": "Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.",
+                "secret": true
             }
         },
         "inputProperties": {
@@ -770,6 +800,26 @@
                     ]
                 },
                 "secret": true
+            },
+            "clientId": {
+                "type": "string",
+                "description": "Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.",
+                "defaultInfo": {
+                    "environment": [
+                        "PINECONE_CLIENT_ID"
+                    ]
+                },
+                "secret": true
+            },
+            "clientSecret": {
+                "type": "string",
+                "description": "Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.",
+                "defaultInfo": {
+                    "environment": [
+                        "PINECONE_CLIENT_SECRET"
+                    ]
+                },
+                "secret": true
             }
         },
         "methods": {
@@ -777,6 +827,79 @@
         }
     },
     "resources": {
+        "pinecone:index/apiKey:ApiKey": {
+            "description": "The \u003cspan pulumi-lang-nodejs=\"`pinecone.ApiKey`\" pulumi-lang-dotnet=\"`pinecone.ApiKey`\" pulumi-lang-go=\"`ApiKey`\" pulumi-lang-python=\"`ApiKey`\" pulumi-lang-yaml=\"`pinecone.ApiKey`\" pulumi-lang-java=\"`pinecone.ApiKey`\"\u003e`pinecone.ApiKey`\u003c/span\u003e resource lets you create and manage API keys in Pinecone. Learn more about API keys in the [docs](https://docs.pinecone.io/guides/authentication/api-keys).\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pinecone from \"@pulumi/pinecone\";\n\n// Create API key with default roles (ProjectEditor)\nconst example = new pinecone.ApiKey(\"example\", {\n    name: \"example-api-key\",\n    projectId: \"your-project-id\",\n});\n// Create API key with custom roles\nconst customRoles = new pinecone.ApiKey(\"custom_roles\", {\n    name: \"custom-roles-api-key\",\n    projectId: \"your-project-id\",\n    roles: [\n        \"ProjectViewer\",\n        \"DataPlaneViewer\",\n    ],\n});\n// Create an API key that can be updated later\nconst updatable = new pinecone.ApiKey(\"updatable\", {\n    name: \"example-updatable-key\",\n    projectId: \"your-project-id\",\n    roles: [\"ProjectEditor\"],\n});\nexport const apiKeyRoles = example.roles;\n```\n```python\nimport pulumi\nimport pulumi_pinecone as pinecone\n\n# Create API key with default roles (ProjectEditor)\nexample = pinecone.ApiKey(\"example\",\n    name=\"example-api-key\",\n    project_id=\"your-project-id\")\n# Create API key with custom roles\ncustom_roles = pinecone.ApiKey(\"custom_roles\",\n    name=\"custom-roles-api-key\",\n    project_id=\"your-project-id\",\n    roles=[\n        \"ProjectViewer\",\n        \"DataPlaneViewer\",\n    ])\n# Create an API key that can be updated later\nupdatable = pinecone.ApiKey(\"updatable\",\n    name=\"example-updatable-key\",\n    project_id=\"your-project-id\",\n    roles=[\"ProjectEditor\"])\npulumi.export(\"apiKeyRoles\", example.roles)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Pinecone = Pulumi.Pinecone;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    // Create API key with default roles (ProjectEditor)\n    var example = new Pinecone.ApiKey(\"example\", new()\n    {\n        Name = \"example-api-key\",\n        ProjectId = \"your-project-id\",\n    });\n\n    // Create API key with custom roles\n    var customRoles = new Pinecone.ApiKey(\"custom_roles\", new()\n    {\n        Name = \"custom-roles-api-key\",\n        ProjectId = \"your-project-id\",\n        Roles = new[]\n        {\n            \"ProjectViewer\",\n            \"DataPlaneViewer\",\n        },\n    });\n\n    // Create an API key that can be updated later\n    var updatable = new Pinecone.ApiKey(\"updatable\", new()\n    {\n        Name = \"example-updatable-key\",\n        ProjectId = \"your-project-id\",\n        Roles = new[]\n        {\n            \"ProjectEditor\",\n        },\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"apiKeyRoles\"] = example.Roles,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/pinecone/v2/pinecone\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t// Create API key with default roles (ProjectEditor)\n\t\texample, err := pinecone.NewApiKey(ctx, \"example\", \u0026pinecone.ApiKeyArgs{\n\t\t\tName:      pulumi.String(\"example-api-key\"),\n\t\t\tProjectId: pulumi.String(\"your-project-id\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// Create API key with custom roles\n\t\t_, err = pinecone.NewApiKey(ctx, \"custom_roles\", \u0026pinecone.ApiKeyArgs{\n\t\t\tName:      pulumi.String(\"custom-roles-api-key\"),\n\t\t\tProjectId: pulumi.String(\"your-project-id\"),\n\t\t\tRoles: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"ProjectViewer\"),\n\t\t\t\tpulumi.String(\"DataPlaneViewer\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// Create an API key that can be updated later\n\t\t_, err = pinecone.NewApiKey(ctx, \"updatable\", \u0026pinecone.ApiKeyArgs{\n\t\t\tName:      pulumi.String(\"example-updatable-key\"),\n\t\t\tProjectId: pulumi.String(\"your-project-id\"),\n\t\t\tRoles: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"ProjectEditor\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"apiKeyRoles\", example.Roles)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.pinecone.ApiKey;\nimport com.pulumi.pinecone.ApiKeyArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        // Create API key with default roles (ProjectEditor)\n        var example = new ApiKey(\"example\", ApiKeyArgs.builder()\n            .name(\"example-api-key\")\n            .projectId(\"your-project-id\")\n            .build());\n\n        // Create API key with custom roles\n        var customRoles = new ApiKey(\"customRoles\", ApiKeyArgs.builder()\n            .name(\"custom-roles-api-key\")\n            .projectId(\"your-project-id\")\n            .roles(            \n                \"ProjectViewer\",\n                \"DataPlaneViewer\")\n            .build());\n\n        // Create an API key that can be updated later\n        var updatable = new ApiKey(\"updatable\", ApiKeyArgs.builder()\n            .name(\"example-updatable-key\")\n            .projectId(\"your-project-id\")\n            .roles(\"ProjectEditor\")\n            .build());\n\n        ctx.export(\"apiKeyRoles\", example.roles());\n    }\n}\n```\n```yaml\nresources:\n  # Create API key with default roles (ProjectEditor)\n  example:\n    type: pinecone:ApiKey\n    properties:\n      name: example-api-key\n      projectId: your-project-id\n  # Create API key with custom roles\n  customRoles:\n    type: pinecone:ApiKey\n    name: custom_roles\n    properties:\n      name: custom-roles-api-key\n      projectId: your-project-id\n      roles:\n        - ProjectViewer\n        - DataPlaneViewer\n  # Create an API key that can be updated later\n  updatable:\n    type: pinecone:ApiKey\n    properties:\n      name: example-updatable-key\n      projectId: your-project-id\n      roles:\n        - ProjectEditor\noutputs:\n  # Example of how to update the API key\n  # resource \"pinecone_api_key\" \"updatable\" {\n  #   name  = \"updated-name\"\n  #   roles = [\"ProjectViewer\", \"DataPlaneViewer\"]\n  # }\n  apiKeyRoles: ${example.roles}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "description": "The generated API key value.\n",
+                    "secret": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the API key to be created. Must be 1-80 characters long.\n"
+                },
+                "projectId": {
+                    "type": "string",
+                    "description": "The project ID where the API key will be created. Required for creation, optional for updates.\n"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The roles assigned to the API key. Valid values are: ProjectEditor, ProjectViewer, ControlPlaneEditor, ControlPlaneViewer, DataPlaneEditor, DataPlaneViewer. Defaults to [\"ProjectEditor\"].\n"
+                }
+            },
+            "required": [
+                "key",
+                "name",
+                "roles"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the API key to be created. Must be 1-80 characters long.\n"
+                },
+                "projectId": {
+                    "type": "string",
+                    "description": "The project ID where the API key will be created. Required for creation, optional for updates.\n"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The roles assigned to the API key. Valid values are: ProjectEditor, ProjectViewer, ControlPlaneEditor, ControlPlaneViewer, DataPlaneEditor, DataPlaneViewer. Defaults to [\"ProjectEditor\"].\n"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ApiKey resources.\n",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "The generated API key value.\n",
+                        "secret": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the API key to be created. Must be 1-80 characters long.\n"
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "The project ID where the API key will be created. Required for creation, optional for updates.\n"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The roles assigned to the API key. Valid values are: ProjectEditor, ProjectViewer, ControlPlaneEditor, ControlPlaneViewer, DataPlaneEditor, DataPlaneViewer. Defaults to [\"ProjectEditor\"].\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "pinecone:index/collection:Collection": {
             "description": "The \u003cspan pulumi-lang-nodejs=\"`pinecone.Collection`\" pulumi-lang-dotnet=\"`pinecone.Collection`\" pulumi-lang-go=\"`Collection`\" pulumi-lang-python=\"`Collection`\" pulumi-lang-yaml=\"`pinecone.Collection`\" pulumi-lang-java=\"`pinecone.Collection`\"\u003e`pinecone.Collection`\u003c/span\u003e resource lets you create and manage collections in Pinecone. Learn more about collections in the docs.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pinecone from \"@pulumi/pinecone\";\n\nconst test = new pinecone.Index(\"test\", {\n    name: \"tftestindex\",\n    dimension: 10,\n    spec: {\n        pod: {\n            environment: \"us-west4-gcp\",\n            podType: \"s1.x1\",\n        },\n    },\n});\nconst testCollection = new pinecone.Collection(\"test\", {\n    name: \"tftestcollection\",\n    source: test.name,\n});\n```\n```python\nimport pulumi\nimport pulumi_pinecone as pinecone\n\ntest = pinecone.Index(\"test\",\n    name=\"tftestindex\",\n    dimension=10,\n    spec={\n        \"pod\": {\n            \"environment\": \"us-west4-gcp\",\n            \"pod_type\": \"s1.x1\",\n        },\n    })\ntest_collection = pinecone.Collection(\"test\",\n    name=\"tftestcollection\",\n    source=test.name)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Pinecone = Pulumi.Pinecone;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var test = new Pinecone.Index(\"test\", new()\n    {\n        Name = \"tftestindex\",\n        Dimension = 10,\n        Spec = new Pinecone.Inputs.IndexSpecArgs\n        {\n            Pod = new Pinecone.Inputs.IndexSpecPodArgs\n            {\n                Environment = \"us-west4-gcp\",\n                PodType = \"s1.x1\",\n            },\n        },\n    });\n\n    var testCollection = new Pinecone.Collection(\"test\", new()\n    {\n        Name = \"tftestcollection\",\n        Source = test.Name,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/pinecone/v2/pinecone\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\ttest, err := pinecone.NewIndex(ctx, \"test\", \u0026pinecone.IndexArgs{\n\t\t\tName:      pulumi.String(\"tftestindex\"),\n\t\t\tDimension: pulumi.Float64(10),\n\t\t\tSpec: \u0026pinecone.IndexSpecArgs{\n\t\t\t\tPod: \u0026pinecone.IndexSpecPodArgs{\n\t\t\t\t\tEnvironment: pulumi.String(\"us-west4-gcp\"),\n\t\t\t\t\tPodType:     pulumi.String(\"s1.x1\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = pinecone.NewCollection(ctx, \"test\", \u0026pinecone.CollectionArgs{\n\t\t\tName:   pulumi.String(\"tftestcollection\"),\n\t\t\tSource: test.Name,\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.pinecone.Index;\nimport com.pulumi.pinecone.IndexArgs;\nimport com.pulumi.pinecone.inputs.IndexSpecArgs;\nimport com.pulumi.pinecone.inputs.IndexSpecPodArgs;\nimport com.pulumi.pinecone.Collection;\nimport com.pulumi.pinecone.CollectionArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var test = new Index(\"test\", IndexArgs.builder()\n            .name(\"tftestindex\")\n            .dimension(10.0)\n            .spec(IndexSpecArgs.builder()\n                .pod(IndexSpecPodArgs.builder()\n                    .environment(\"us-west4-gcp\")\n                    .podType(\"s1.x1\")\n                    .build())\n                .build())\n            .build());\n\n        var testCollection = new Collection(\"testCollection\", CollectionArgs.builder()\n            .name(\"tftestcollection\")\n            .source(test.name())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  test:\n    type: pinecone:Index\n    properties:\n      name: tftestindex\n      dimension: 10\n      spec:\n        pod:\n          environment: us-west4-gcp\n          podType: s1.x1\n  testCollection:\n    type: pinecone:Collection\n    name: test\n    properties:\n      name: tftestcollection\n      source: ${test.name}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {

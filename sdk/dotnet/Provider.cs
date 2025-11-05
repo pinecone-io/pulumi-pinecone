@@ -25,6 +25,18 @@ namespace PineconeDatabase.Pinecone
         [Output("apiKey")]
         public Output<string?> ApiKey { get; private set; } = null!;
 
+        /// <summary>
+        /// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        /// </summary>
+        [Output("clientId")]
+        public Output<string?> ClientId { get; private set; } = null!;
+
+        /// <summary>
+        /// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+        /// </summary>
+        [Output("clientSecret")]
+        public Output<string?> ClientSecret { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a Provider resource with the given unique name, arguments, and options.
@@ -47,6 +59,8 @@ namespace PineconeDatabase.Pinecone
                 AdditionalSecretOutputs =
                 {
                     "apiKey",
+                    "clientId",
+                    "clientSecret",
                 },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
@@ -80,9 +94,43 @@ namespace PineconeDatabase.Pinecone
             }
         }
 
+        [Input("clientId")]
+        private Input<string>? _clientId;
+
+        /// <summary>
+        /// Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        /// </summary>
+        public Input<string>? ClientId
+        {
+            get => _clientId;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _clientId = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        [Input("clientSecret")]
+        private Input<string>? _clientSecret;
+
+        /// <summary>
+        /// Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+        /// </summary>
+        public Input<string>? ClientSecret
+        {
+            get => _clientSecret;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _clientSecret = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
         public ProviderArgs()
         {
             ApiKey = Utilities.GetEnv("PINECONE_API_KEY");
+            ClientId = Utilities.GetEnv("PINECONE_CLIENT_ID");
+            ClientSecret = Utilities.GetEnv("PINECONE_CLIENT_SECRET");
         }
         public static new ProviderArgs Empty => new ProviderArgs();
     }

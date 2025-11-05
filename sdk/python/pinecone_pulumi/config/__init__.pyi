@@ -19,3 +19,13 @@ apiKey: Optional[str]
 Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
 """
 
+clientId: Optional[str]
+"""
+Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+"""
+
+clientSecret: Optional[str]
+"""
+Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+"""
+

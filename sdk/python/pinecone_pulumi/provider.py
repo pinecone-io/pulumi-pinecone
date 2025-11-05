@@ -19,15 +19,27 @@ __all__ = ['ProviderArgs', 'Provider']
 @pulumi.input_type
 class ProviderArgs:
     def __init__(__self__, *,
-                 api_key: Optional[pulumi.Input[_builtins.str]] = None):
+                 api_key: Optional[pulumi.Input[_builtins.str]] = None,
+                 client_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 client_secret: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a Provider resource.
         :param pulumi.Input[_builtins.str] api_key: Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
+        :param pulumi.Input[_builtins.str] client_id: Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        :param pulumi.Input[_builtins.str] client_secret: Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
         """
         if api_key is None:
             api_key = _utilities.get_env('PINECONE_API_KEY')
         if api_key is not None:
             pulumi.set(__self__, "api_key", api_key)
+        if client_id is None:
+            client_id = _utilities.get_env('PINECONE_CLIENT_ID')
+        if client_id is not None:
+            pulumi.set(__self__, "client_id", client_id)
+        if client_secret is None:
+            client_secret = _utilities.get_env('PINECONE_CLIENT_SECRET')
+        if client_secret is not None:
+            pulumi.set(__self__, "client_secret", client_secret)
 
     @_builtins.property
     @pulumi.getter(name="apiKey")
@@ -41,6 +53,30 @@ class ProviderArgs:
     def api_key(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "api_key", value)
 
+    @_builtins.property
+    @pulumi.getter(name="clientId")
+    def client_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        """
+        return pulumi.get(self, "client_id")
+
+    @client_id.setter
+    def client_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "client_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="clientSecret")
+    def client_secret(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+        """
+        return pulumi.get(self, "client_secret")
+
+    @client_secret.setter
+    def client_secret(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "client_secret", value)
+
 
 @pulumi.type_token("pulumi:providers:pinecone")
 class Provider(pulumi.ProviderResource):
@@ -49,6 +85,8 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
+                 client_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 client_secret: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         """
         The provider type for the pinecone package. By default, resources use package-wide configuration
@@ -59,6 +97,8 @@ class Provider(pulumi.ProviderResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] api_key: Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
+        :param pulumi.Input[_builtins.str] client_id: Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        :param pulumi.Input[_builtins.str] client_secret: Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
         """
         ...
     @overload
@@ -88,6 +128,8 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
+                 client_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 client_secret: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -100,7 +142,13 @@ class Provider(pulumi.ProviderResource):
             if api_key is None:
                 api_key = _utilities.get_env('PINECONE_API_KEY')
             __props__.__dict__["api_key"] = None if api_key is None else pulumi.Output.secret(api_key)
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["apiKey"])
+            if client_id is None:
+                client_id = _utilities.get_env('PINECONE_CLIENT_ID')
+            __props__.__dict__["client_id"] = None if client_id is None else pulumi.Output.secret(client_id)
+            if client_secret is None:
+                client_secret = _utilities.get_env('PINECONE_CLIENT_SECRET')
+            __props__.__dict__["client_secret"] = None if client_secret is None else pulumi.Output.secret(client_secret)
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["apiKey", "clientId", "clientSecret"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(Provider, __self__).__init__(
             'pinecone',
@@ -115,6 +163,22 @@ class Provider(pulumi.ProviderResource):
         Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
         """
         return pulumi.get(self, "api_key")
+
+    @_builtins.property
+    @pulumi.getter(name="clientId")
+    def client_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        """
+        return pulumi.get(self, "client_id")
+
+    @_builtins.property
+    @pulumi.getter(name="clientSecret")
+    def client_secret(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+        """
+        return pulumi.get(self, "client_secret")
 
     @pulumi.output_type
     class TerraformConfigResult:

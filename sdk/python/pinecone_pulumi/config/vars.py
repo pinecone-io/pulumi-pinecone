@@ -27,3 +27,17 @@ class _ExportableConfig(types.ModuleType):
         """
         return __config__.get('apiKey') or _utilities.get_env('PINECONE_API_KEY')
 
+    @_builtins.property
+    def client_id(self) -> Optional[str]:
+        """
+        Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+        """
+        return __config__.get('clientId') or _utilities.get_env('PINECONE_CLIENT_ID')
+
+    @_builtins.property
+    def client_secret(self) -> Optional[str]:
+        """
+        Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+        """
+        return __config__.get('clientSecret') or _utilities.get_env('PINECONE_CLIENT_SECRET')
+

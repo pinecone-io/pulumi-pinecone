@@ -1,6 +1,14 @@
 {
     "auto-aliasing": {
         "resources": {
+            "pinecone_api_key": {
+                "current": "pinecone:index/apiKey:ApiKey",
+                "fields": {
+                    "roles": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
             "pinecone_collection": {
                 "current": "pinecone:index/collection:Collection"
             },
