@@ -3,6 +3,7 @@
         "resources": {
             "pinecone_api_key": {
                 "current": "pinecone:index/apiKey:ApiKey",
+                "majorVersion": 2,
                 "fields": {
                     "roles": {
                         "maxItemsOne": false
@@ -10,10 +11,12 @@
                 }
             },
             "pinecone_collection": {
-                "current": "pinecone:index/collection:Collection"
+                "current": "pinecone:index/collection:Collection",
+                "majorVersion": 2
             },
             "pinecone_index": {
                 "current": "pinecone:index/index:Index",
+                "majorVersion": 2,
                 "fields": {
                     "spec": {
                         "fields": {
@@ -35,10 +38,12 @@
         },
         "datasources": {
             "pinecone_collection": {
-                "current": "pinecone:index/getCollection:getCollection"
+                "current": "pinecone:index/getCollection:getCollection",
+                "majorVersion": 2
             },
             "pinecone_collections": {
                 "current": "pinecone:index/getCollections:getCollections",
+                "majorVersion": 2,
                 "fields": {
                     "collections": {
                         "maxItemsOne": false
@@ -47,6 +52,7 @@
             },
             "pinecone_index": {
                 "current": "pinecone:index/get:get",
+                "majorVersion": 2,
                 "fields": {
                     "spec": {
                         "fields": {
@@ -67,6 +73,7 @@
             },
             "pinecone_indexes": {
                 "current": "pinecone:index/getEs:getEs",
+                "majorVersion": 2,
                 "fields": {
                     "indexes": {
                         "maxItemsOne": false,
