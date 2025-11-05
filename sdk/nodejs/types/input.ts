@@ -4,64 +4,331 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 
-export interface MetaDataConfigArgs {
+export interface CollectionTimeouts {
     /**
-     *  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
      */
-    indexed?: pulumi.Input<pulumi.Input<string>[]>;
+    create?: pulumi.Input<string>;
+    /**
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+     */
+    delete?: pulumi.Input<string>;
 }
 
-export interface PineconePodSpecArgs {
+export interface GetEmbed {
+    /**
+     * The dimension of the embedding model, specifying the size of the output vector.
+     */
+    dimension?: number;
+    /**
+     * Identifies the name of the text field from your document model that will be embedded.
+     */
+    fieldMap?: {[key: string]: string};
+    /**
+     * The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+     */
+    metric?: string;
+    /**
+     * the name of the embedding model to use for the index.
+     */
+    model?: string;
+    /**
+     * The read parameters for the embedding model.
+     */
+    readParameters?: {[key: string]: string};
+    /**
+     * The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+     */
+    vectorType?: string;
+    /**
+     * The write parameters for the embedding model.
+     */
+    writeParameters?: {[key: string]: string};
+}
+
+export interface GetEmbedArgs {
+    /**
+     * The dimension of the embedding model, specifying the size of the output vector.
+     */
+    dimension?: pulumi.Input<number>;
+    /**
+     * Identifies the name of the text field from your document model that will be embedded.
+     */
+    fieldMap?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+     */
+    metric?: pulumi.Input<string>;
+    /**
+     * the name of the embedding model to use for the index.
+     */
+    model?: pulumi.Input<string>;
+    /**
+     * The read parameters for the embedding model.
+     */
+    readParameters?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+     */
+    vectorType?: pulumi.Input<string>;
+    /**
+     * The write parameters for the embedding model.
+     */
+    writeParameters?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
+export interface GetSpec {
+    /**
+     * Configuration needed to deploy a pod-based index.
+     */
+    pod?: inputs.GetSpecPod;
+    /**
+     * Configuration needed to deploy a serverless index.
+     */
+    serverless?: inputs.GetSpecServerless;
+}
+
+export interface GetSpecArgs {
+    /**
+     * Configuration needed to deploy a pod-based index.
+     */
+    pod?: pulumi.Input<inputs.GetSpecPodArgs>;
+    /**
+     * Configuration needed to deploy a serverless index.
+     */
+    serverless?: pulumi.Input<inputs.GetSpecServerlessArgs>;
+}
+
+export interface GetSpecPod {
     /**
      * The environment where the index is hosted.
      */
-    environment: pulumi.Input<string>;
+    environment?: string;
     /**
-     * Configuration for the behavior of Pinecone's internal metadata index.
+     * Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
      */
-    metaDataConfig?: pulumi.Input<inputs.MetaDataConfigArgs>;
+    metadataConfig?: inputs.GetSpecPodMetadataConfig;
     /**
-     * The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+     * The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
      */
-    podType: pulumi.Input<string>;
+    podType?: string;
     /**
-     * The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+     * The number of pods to be used in the index. This should be equal to shards x replicas.'
+     */
+    pods?: number;
+    /**
+     * The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+     */
+    replicas?: number;
+    /**
+     * The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+     */
+    shards?: number;
+    /**
+     * The name of the collection to create an index from.
+     */
+    sourceCollection?: string;
+}
+
+export interface GetSpecPodArgs {
+    /**
+     * The environment where the index is hosted.
+     */
+    environment?: pulumi.Input<string>;
+    /**
+     * Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+     */
+    metadataConfig?: pulumi.Input<inputs.GetSpecPodMetadataConfigArgs>;
+    /**
+     * The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+     */
+    podType?: pulumi.Input<string>;
+    /**
+     * The number of pods to be used in the index. This should be equal to shards x replicas.'
      */
     pods?: pulumi.Input<number>;
     /**
      * The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
      */
-    replicas: pulumi.Input<number>;
+    replicas?: pulumi.Input<number>;
     /**
      * The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
      */
     shards?: pulumi.Input<number>;
     /**
-     * The name of the collection to be used as the source for the index.
+     * The name of the collection to create an index from.
      */
     sourceCollection?: pulumi.Input<string>;
 }
 
-export interface PineconeServerlessSpecArgs {
+export interface GetSpecPodMetadataConfig {
     /**
-     * The public cloud where you would like your index hosted.
+     * The indexed fields.
      */
-    cloud: pulumi.Input<enums.ServerlessSpecCloud>;
+    indexeds?: string[];
+}
+
+export interface GetSpecPodMetadataConfigArgs {
     /**
-     * The region where you would like your index to be created. Different cloud providers have different regions available.
+     * The indexed fields.
+     */
+    indexeds?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetSpecServerless {
+    /**
+     * Ready.
+     */
+    cloud?: string;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    region?: string;
+}
+
+export interface GetSpecServerlessArgs {
+    /**
+     * Ready.
+     */
+    cloud?: pulumi.Input<string>;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    region?: pulumi.Input<string>;
+}
+
+export interface GetStatus {
+    /**
+     * Ready.
+     */
+    ready?: boolean;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    state?: string;
+}
+
+export interface GetStatusArgs {
+    /**
+     * Ready.
+     */
+    ready?: pulumi.Input<boolean>;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    state?: pulumi.Input<string>;
+}
+
+export interface IndexEmbed {
+    /**
+     * The dimension of the embedding model, specifying the size of the output vector.
+     */
+    dimension?: pulumi.Input<number>;
+    /**
+     * Identifies the name of the text field from your document model that will be embedded.
+     */
+    fieldMap?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+     */
+    metric?: pulumi.Input<string>;
+    /**
+     * the name of the embedding model to use for the index.
+     */
+    model?: pulumi.Input<string>;
+    /**
+     * The read parameters for the embedding model.
+     */
+    readParameters?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+     */
+    vectorType?: pulumi.Input<string>;
+    /**
+     * The write parameters for the embedding model.
+     */
+    writeParameters?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
+export interface IndexSpec {
+    /**
+     * Configuration needed to deploy a pod-based index.
+     */
+    pod?: pulumi.Input<inputs.IndexSpecPod>;
+    /**
+     * Configuration needed to deploy a serverless index.
+     */
+    serverless?: pulumi.Input<inputs.IndexSpecServerless>;
+}
+
+export interface IndexSpecPod {
+    /**
+     * The environment where the index is hosted.
+     */
+    environment: pulumi.Input<string>;
+    /**
+     * Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+     */
+    metadataConfig?: pulumi.Input<inputs.IndexSpecPodMetadataConfig>;
+    /**
+     * The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+     */
+    podType: pulumi.Input<string>;
+    /**
+     * The number of pods to be used in the index. This should be equal to shards x replicas.'
+     */
+    pods?: pulumi.Input<number>;
+    /**
+     * The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+     */
+    replicas?: pulumi.Input<number>;
+    /**
+     * The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+     */
+    shards?: pulumi.Input<number>;
+    /**
+     * The name of the collection to create an index from.
+     */
+    sourceCollection?: pulumi.Input<string>;
+}
+
+export interface IndexSpecPodMetadataConfig {
+    /**
+     * The indexed fields.
+     */
+    indexeds: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface IndexSpecServerless {
+    /**
+     * The public cloud where you would like your index hosted. [gcp|aws|azure]
+     */
+    cloud: pulumi.Input<string>;
+    /**
+     * The region where you would like your index to be created.
      */
     region: pulumi.Input<string>;
 }
 
-export interface PineconeSpecArgs {
+export interface IndexStatus {
     /**
-     * Configuration needed to deploy a pod index.
+     * Ready.
      */
-    pod?: pulumi.Input<inputs.PineconePodSpecArgs>;
+    ready?: pulumi.Input<boolean>;
     /**
-     * Configuration needed to deploy a serverless index.
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
      */
-    serverless?: pulumi.Input<inputs.PineconeServerlessSpecArgs>;
+    state?: pulumi.Input<string>;
+}
+
+export interface IndexTimeouts {
+    /**
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+     */
+    create?: pulumi.Input<string>;
+    /**
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+     */
+    delete?: pulumi.Input<string>;
 }

@@ -5,34 +5,39 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { LookupPineconeCollectionArgs, LookupPineconeCollectionResult, LookupPineconeCollectionOutputArgs } from "./lookupPineconeCollection";
-export const lookupPineconeCollection: typeof import("./lookupPineconeCollection").lookupPineconeCollection = null as any;
-export const lookupPineconeCollectionOutput: typeof import("./lookupPineconeCollection").lookupPineconeCollectionOutput = null as any;
-utilities.lazyLoad(exports, ["lookupPineconeCollection","lookupPineconeCollectionOutput"], () => require("./lookupPineconeCollection"));
+export { CollectionArgs, CollectionState } from "./collection";
+export type Collection = import("./collection").Collection;
+export const Collection: typeof import("./collection").Collection = null as any;
+utilities.lazyLoad(exports, ["Collection"], () => require("./collection"));
 
-export { LookupPineconeIndexArgs, LookupPineconeIndexResult, LookupPineconeIndexOutputArgs } from "./lookupPineconeIndex";
-export const lookupPineconeIndex: typeof import("./lookupPineconeIndex").lookupPineconeIndex = null as any;
-export const lookupPineconeIndexOutput: typeof import("./lookupPineconeIndex").lookupPineconeIndexOutput = null as any;
-utilities.lazyLoad(exports, ["lookupPineconeIndex","lookupPineconeIndexOutput"], () => require("./lookupPineconeIndex"));
+export { GetArgs, GetResult, GetOutputArgs } from "./get";
+export const get: typeof import("./get").get = null as any;
+export const getOutput: typeof import("./get").getOutput = null as any;
+utilities.lazyLoad(exports, ["get","getOutput"], () => require("./get"));
 
-export { PineconeCollectionArgs } from "./pineconeCollection";
-export type PineconeCollection = import("./pineconeCollection").PineconeCollection;
-export const PineconeCollection: typeof import("./pineconeCollection").PineconeCollection = null as any;
-utilities.lazyLoad(exports, ["PineconeCollection"], () => require("./pineconeCollection"));
+export { GetCollectionArgs, GetCollectionResult, GetCollectionOutputArgs } from "./getCollection";
+export const getCollection: typeof import("./getCollection").getCollection = null as any;
+export const getCollectionOutput: typeof import("./getCollection").getCollectionOutput = null as any;
+utilities.lazyLoad(exports, ["getCollection","getCollectionOutput"], () => require("./getCollection"));
 
-export { PineconeIndexArgs } from "./pineconeIndex";
-export type PineconeIndex = import("./pineconeIndex").PineconeIndex;
-export const PineconeIndex: typeof import("./pineconeIndex").PineconeIndex = null as any;
-utilities.lazyLoad(exports, ["PineconeIndex"], () => require("./pineconeIndex"));
+export { GetCollectionsResult } from "./getCollections";
+export const getCollections: typeof import("./getCollections").getCollections = null as any;
+export const getCollectionsOutput: typeof import("./getCollections").getCollectionsOutput = null as any;
+utilities.lazyLoad(exports, ["getCollections","getCollectionsOutput"], () => require("./getCollections"));
 
-export { ProviderArgs } from "./provider";
-export type Provider = import("./provider").Provider;
-export const Provider: typeof import("./provider").Provider = null as any;
-utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
+export { GetEsResult } from "./getEs";
+export const getEs: typeof import("./getEs").getEs = null as any;
+export const getEsOutput: typeof import("./getEs").getEsOutput = null as any;
+utilities.lazyLoad(exports, ["getEs","getEsOutput"], () => require("./getEs"));
 
+export { IndexArgs, IndexState } from "./index_";
+export type Index = import("./index_").Index;
+export const Index: typeof import("./index_").Index = null as any;
+utilities.lazyLoad(exports, ["Index"], () => require("./index_"));
 
-// Export enums:
-export * from "./types/enums";
+export * from "./provider";
+import { Provider } from "./provider";
+
 
 // Export sub-modules:
 import * as config from "./config";
@@ -47,16 +52,17 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "pinecone:index:PineconeCollection":
-                return new PineconeCollection(name, <any>undefined, { urn })
-            case "pinecone:index:PineconeIndex":
-                return new PineconeIndex(name, <any>undefined, { urn })
+            case "pinecone:index/collection:Collection":
+                return new Collection(name, <any>undefined, { urn })
+            case "pinecone:index/index:Index":
+                return new Index(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     },
 };
-pulumi.runtime.registerResourceModule("pinecone", "index", _module)
+pulumi.runtime.registerResourceModule("pinecone", "index/collection", _module)
+pulumi.runtime.registerResourceModule("pinecone", "index/index", _module)
 pulumi.runtime.registerResourcePackage("pinecone", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {

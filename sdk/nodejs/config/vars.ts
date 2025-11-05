@@ -8,12 +8,12 @@ declare var exports: any;
 const __config = new pulumi.Config("pinecone");
 
 /**
- * The API token for Pinecone.
+ * Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
  */
-export declare const APIKey: string | undefined;
-Object.defineProperty(exports, "APIKey", {
+export declare const apiKey: string | undefined;
+Object.defineProperty(exports, "apiKey", {
     get() {
-        return __config.get("APIKey");
+        return __config.get("apiKey") ?? utilities.getEnv("PINECONE_API_KEY");
     },
     enumerable: true,
 });

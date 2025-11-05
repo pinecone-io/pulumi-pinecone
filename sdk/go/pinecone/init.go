@@ -21,10 +21,10 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
-	case "pinecone:index:PineconeCollection":
-		r = &PineconeCollection{}
-	case "pinecone:index:PineconeIndex":
-		r = &PineconeIndex{}
+	case "pinecone:index/collection:Collection":
+		r = &Collection{}
+	case "pinecone:index/index:Index":
+		r = &Index{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}
@@ -58,7 +58,12 @@ func init() {
 	}
 	pulumi.RegisterResourceModule(
 		"pinecone",
-		"index",
+		"index/collection",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"pinecone",
+		"index/index",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(

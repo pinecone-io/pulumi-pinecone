@@ -1,0 +1,90 @@
+{
+    "auto-aliasing": {
+        "resources": {
+            "pinecone_collection": {
+                "current": "pinecone:index/collection:Collection"
+            },
+            "pinecone_index": {
+                "current": "pinecone:index/index:Index",
+                "fields": {
+                    "spec": {
+                        "fields": {
+                            "pod": {
+                                "fields": {
+                                    "metadata_config": {
+                                        "fields": {
+                                            "indexed": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "datasources": {
+            "pinecone_collection": {
+                "current": "pinecone:index/getCollection:getCollection"
+            },
+            "pinecone_collections": {
+                "current": "pinecone:index/getCollections:getCollections",
+                "fields": {
+                    "collections": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "pinecone_index": {
+                "current": "pinecone:index/get:get",
+                "fields": {
+                    "spec": {
+                        "fields": {
+                            "pod": {
+                                "fields": {
+                                    "metadata_config": {
+                                        "fields": {
+                                            "indexed": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "pinecone_indexes": {
+                "current": "pinecone:index/getEs:getEs",
+                "fields": {
+                    "indexes": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "spec": {
+                                    "fields": {
+                                        "pod": {
+                                            "fields": {
+                                                "metadata_config": {
+                                                    "fields": {
+                                                        "indexed": {
+                                                            "maxItemsOne": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "auto-settings": {}
+}

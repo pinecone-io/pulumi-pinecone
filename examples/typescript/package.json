@@ -1,0 +1,11 @@
+{
+	"name": "pinecone-yaml",
+	"devDependencies": {
+		"@types/node": "^18"
+	},
+	"dependencies": {
+		"typescript": "^4.0.0",
+		"@pulumi/pulumi": "^3.0.0",
+		"@pinecone-database/pulumi": "0.4.3+dirty"
+	}
+}

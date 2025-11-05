@@ -1,6 +1,7 @@
 {
     "name": "@pinecone-database/pulumi",
     "version": "${VERSION}",
+    "description": "A Pulumi package for creating and managing Pinecone resources.",
     "keywords": [
         "pulumi",
         "pinecone",
@@ -17,7 +18,8 @@
         "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {
-        "@types/node": "^14",
+        "@types/mime": "^2.0.0",
+        "@types/node": "^10.0.0",
         "typescript": "^4.3.5"
     },
     "pulumi": {

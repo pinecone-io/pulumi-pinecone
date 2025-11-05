@@ -4,32 +4,178 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 
-export interface MetaDataConfig {
+export interface CollectionTimeouts {
     /**
-     *  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
      */
-    indexed?: string[];
+    create?: string;
+    /**
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+     */
+    delete?: string;
 }
 
-export interface PineconePodSpec {
+export interface GetCollectionsCollection {
+    /**
+     * The dimension of the vectors stored in each record held in the collection.
+     */
+    dimension: number;
+    /**
+     * The environment where the collection is hosted.
+     */
+    environment: string;
+    /**
+     * The name of the collection.
+     */
+    name: string;
+    /**
+     * The size of the collection in bytes.
+     */
+    size: number;
+    /**
+     * The status of the collection.
+     */
+    status: string;
+    /**
+     * The number of records stored in the collection.
+     */
+    vectorCount: number;
+}
+
+export interface GetEmbed {
+    /**
+     * The dimension of the embedding model, specifying the size of the output vector.
+     */
+    dimension: number;
+    /**
+     * Identifies the name of the text field from your document model that will be embedded.
+     */
+    fieldMap: {[key: string]: string};
+    /**
+     * The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+     */
+    metric: string;
+    /**
+     * the name of the embedding model to use for the index.
+     */
+    model: string;
+    /**
+     * The read parameters for the embedding model.
+     */
+    readParameters: {[key: string]: string};
+    /**
+     * The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+     */
+    vectorType: string;
+    /**
+     * The write parameters for the embedding model.
+     */
+    writeParameters: {[key: string]: string};
+}
+
+export interface GetEsIndex {
+    /**
+     * Index deletion protection configuration
+     */
+    deletionProtection: string;
+    /**
+     * Index dimension
+     */
+    dimension: number;
+    /**
+     * Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.
+     */
+    embed: outputs.GetEsIndexEmbed;
+    /**
+     * The URL address where the index is hosted.
+     */
+    host: string;
+    /**
+     * Index metric
+     */
+    metric: string;
+    /**
+     * Index name
+     */
+    name: string;
+    /**
+     * Spec
+     */
+    spec: outputs.GetEsIndexSpec;
+    /**
+     * Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadataConfig is present, only specified metadata fields are indexed. To specify metadata fields to index, provide an array of the following form: [exampleMetadataField]
+     */
+    status: outputs.GetEsIndexStatus;
+    /**
+     * Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, '', or '-'. Values must be alphanumeric, ';', '@', '', '-', '.', '+', or ' '. To unset a key, set the value to be an empty string.
+     */
+    tags: {[key: string]: string};
+    /**
+     * Index vector type
+     */
+    vectorType: string;
+}
+
+export interface GetEsIndexEmbed {
+    /**
+     * The dimension of the embedding model, specifying the size of the output vector.
+     */
+    dimension: number;
+    /**
+     * Identifies the name of the text field from your document model that will be embedded.
+     */
+    fieldMap: {[key: string]: string};
+    /**
+     * The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+     */
+    metric: string;
+    /**
+     * the name of the embedding model to use for the index.
+     */
+    model: string;
+    /**
+     * The read parameters for the embedding model.
+     */
+    readParameters: {[key: string]: string};
+    /**
+     * The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+     */
+    vectorType: string;
+    /**
+     * The write parameters for the embedding model.
+     */
+    writeParameters: {[key: string]: string};
+}
+
+export interface GetEsIndexSpec {
+    /**
+     * Configuration needed to deploy a pod-based index.
+     */
+    pod: outputs.GetEsIndexSpecPod;
+    /**
+     * Configuration needed to deploy a serverless index.
+     */
+    serverless: outputs.GetEsIndexSpecServerless;
+}
+
+export interface GetEsIndexSpecPod {
     /**
      * The environment where the index is hosted.
      */
     environment: string;
     /**
-     * Configuration for the behavior of Pinecone's internal metadata index.
+     * Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
      */
-    metaDataConfig?: outputs.MetaDataConfig;
+    metadataConfig: outputs.GetEsIndexSpecPodMetadataConfig;
     /**
-     * The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
+     * The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
      */
     podType: string;
     /**
-     * The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
+     * The number of pods to be used in the index. This should be equal to shards x replicas.'
      */
-    pods?: number;
+    pods: number;
     /**
      * The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
      */
@@ -37,32 +183,223 @@ export interface PineconePodSpec {
     /**
      * The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
      */
-    shards?: number;
+    shards: number;
     /**
-     * The name of the collection to be used as the source for the index.
+     * The name of the collection to create an index from.
      */
-    sourceCollection?: string;
+    sourceCollection: string;
 }
 
-export interface PineconeServerlessSpec {
+export interface GetEsIndexSpecPodMetadataConfig {
     /**
-     * The public cloud where you would like your index hosted.
+     * The indexed fields.
      */
-    cloud: enums.ServerlessSpecCloud;
+    indexeds: string[];
+}
+
+export interface GetEsIndexSpecServerless {
     /**
-     * The region where you would like your index to be created. Different cloud providers have different regions available.
+     * Ready.
+     */
+    cloud: string;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
      */
     region: string;
 }
 
-export interface PineconeSpec {
+export interface GetEsIndexStatus {
     /**
-     * Configuration needed to deploy a pod index.
+     * Ready.
      */
-    pod?: outputs.PineconePodSpec;
+    ready: boolean;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    state: string;
+}
+
+export interface GetSpec {
+    /**
+     * Configuration needed to deploy a pod-based index.
+     */
+    pod: outputs.GetSpecPod;
     /**
      * Configuration needed to deploy a serverless index.
      */
-    serverless?: outputs.PineconeServerlessSpec;
+    serverless: outputs.GetSpecServerless;
+}
+
+export interface GetSpecPod {
+    /**
+     * The environment where the index is hosted.
+     */
+    environment: string;
+    /**
+     * Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+     */
+    metadataConfig: outputs.GetSpecPodMetadataConfig;
+    /**
+     * The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+     */
+    podType: string;
+    /**
+     * The number of pods to be used in the index. This should be equal to shards x replicas.'
+     */
+    pods: number;
+    /**
+     * The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+     */
+    replicas: number;
+    /**
+     * The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+     */
+    shards: number;
+    /**
+     * The name of the collection to create an index from.
+     */
+    sourceCollection: string;
+}
+
+export interface GetSpecPodMetadataConfig {
+    /**
+     * The indexed fields.
+     */
+    indexeds: string[];
+}
+
+export interface GetSpecServerless {
+    /**
+     * Ready.
+     */
+    cloud: string;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    region: string;
+}
+
+export interface GetStatus {
+    /**
+     * Ready.
+     */
+    ready: boolean;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    state: string;
+}
+
+export interface IndexEmbed {
+    /**
+     * The dimension of the embedding model, specifying the size of the output vector.
+     */
+    dimension: number;
+    /**
+     * Identifies the name of the text field from your document model that will be embedded.
+     */
+    fieldMap: {[key: string]: string};
+    /**
+     * The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+     */
+    metric: string;
+    /**
+     * the name of the embedding model to use for the index.
+     */
+    model: string;
+    /**
+     * The read parameters for the embedding model.
+     */
+    readParameters: {[key: string]: string};
+    /**
+     * The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+     */
+    vectorType: string;
+    /**
+     * The write parameters for the embedding model.
+     */
+    writeParameters: {[key: string]: string};
+}
+
+export interface IndexSpec {
+    /**
+     * Configuration needed to deploy a pod-based index.
+     */
+    pod?: outputs.IndexSpecPod;
+    /**
+     * Configuration needed to deploy a serverless index.
+     */
+    serverless?: outputs.IndexSpecServerless;
+}
+
+export interface IndexSpecPod {
+    /**
+     * The environment where the index is hosted.
+     */
+    environment: string;
+    /**
+     * Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+     */
+    metadataConfig: outputs.IndexSpecPodMetadataConfig;
+    /**
+     * The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+     */
+    podType: string;
+    /**
+     * The number of pods to be used in the index. This should be equal to shards x replicas.'
+     */
+    pods: number;
+    /**
+     * The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+     */
+    replicas: number;
+    /**
+     * The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+     */
+    shards: number;
+    /**
+     * The name of the collection to create an index from.
+     */
+    sourceCollection?: string;
+}
+
+export interface IndexSpecPodMetadataConfig {
+    /**
+     * The indexed fields.
+     */
+    indexeds: string[];
+}
+
+export interface IndexSpecServerless {
+    /**
+     * The public cloud where you would like your index hosted. [gcp|aws|azure]
+     */
+    cloud: string;
+    /**
+     * The region where you would like your index to be created.
+     */
+    region: string;
+}
+
+export interface IndexStatus {
+    /**
+     * Ready.
+     */
+    ready: boolean;
+    /**
+     * Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+     */
+    state: string;
+}
+
+export interface IndexTimeouts {
+    /**
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+     */
+    create?: string;
+    /**
+     * Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+     */
+    delete?: string;
 }
 
