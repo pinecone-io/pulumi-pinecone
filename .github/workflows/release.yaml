@@ -1,0 +1,160 @@
+name: release
+on:
+  push:
+    tags:
+      - v*.*.*
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NUGET_PUBLISH_KEY: ${{ secrets.NUGET_PUBLISH_KEY }}
+  NUGET_FEED_URL: https://api.nuget.org/v3/index.json
+  PROVIDER: stackit
+  PULUMI_GO_DEP_ROOT: ${{ github.workspace }}/..
+  PULUMI_LOCAL_NUGET: ${{ github.workspace }}/nuget
+  PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+  PYPI_USERNAME: "__token__"
+  PUBLISH_PYPI: true
+  PUBLISH_NPM: true
+  PUBLISH_NUGET: true
+jobs:
+  publish_binary:
+    name: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+      - name: Unshallow clone for tags
+        run: git fetch --prune --unshallow --tags
+      - name: Setup mise
+        uses: jdx/mise-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          # only saving the cache in the prerequisites job
+          cache_save: false
+      - name: Install Go
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
+        with:
+          go-version: ${{matrix.goversion}}
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Set PreRelease Version
+        run: echo "GORELEASER_CURRENT_TAG=v$(pulumictl get version --language generic)" >> $GITHUB_ENV
+      - uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
+      - uses: anchore/sbom-action/download-syft@8e94d75ddd33f69f691467e42275782e4bfefe84 # v0.20.9
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # tag=v6.4.0
+        with:
+          args: -p 3 release --clean
+          version: '~> v2'
+      - name: Create tag
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # tag=v8.0.0
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/sdk/${{ github.ref_name }}',
+              sha: context.sha
+            })
+    strategy:
+      fail-fast: true
+      matrix:
+        goversion:
+          - 1.22.x
+  publish_sdk:
+    name: Publish SDKs
+    runs-on: ubuntu-latest
+    needs: publish_binary
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+      - name: Unshallow clone for tags
+        run: git fetch --prune --unshallow --tags
+      - name: Setup mise
+        uses: jdx/mise-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          # only saving the cache in the prerequisites job
+          cache_save: false
+      - name: Install Go
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
+        with:
+          go-version: ${{ matrix.goversion }}
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@d7ceb0215da5a14ec84f50b703365ddf0194a9c8 # tag=v6.6.0
+        with:
+          pulumi-version: 3.185.0
+      - name: Setup Node
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # tag=v6.0.0
+        with:
+          node-version: ${{matrix.nodeversion}}
+          registry-url: ${{env.NPM_REGISTRY_URL}}
+      - name: Setup DotNet
+        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # tag=v2.1.0
+        with:
+          dotnet-version: ${{matrix.dotnetverson}}
+      - name: Setup Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # tag=v6.0.0
+        with:
+          python-version: ${{matrix.pythonversion}}
+      - name: Build SDK
+        run: make build_${{ matrix.language }}
+      - name: Check worktree clean
+        run: |
+          git update-index -q --refresh
+          if ! git diff-files --quiet; then
+              >&2 echo "error: working tree is not clean, aborting!"
+              git status
+              git diff
+              exit 1
+          fi
+      - if: ${{ matrix.language == 'python' && env.PUBLISH_PYPI == 'true' }}
+        name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # tag=v1.13.0
+        with:
+          user: ${{ env.PYPI_USERNAME }}
+          password: ${{ env.PYPI_PASSWORD }}
+          packages_dir: ${{github.workspace}}/sdk/python/bin/dist
+      - if: ${{ matrix.language == 'nodejs' && env.PUBLISH_NPM == 'true' }}
+        uses: JS-DevTools/npm-publish@7f8fe47b3bea1be0c3aec2b717c5ec1f3e03410b # tag=v4.1.1
+        with:
+          access: "public"
+          token: ${{ env.NPM_TOKEN }}
+          package: ${{github.workspace}}/sdk/nodejs/bin/package.json
+          provenance: true
+      - if: ${{ matrix.language == 'dotnet' && env.PUBLISH_NUGET == 'true' }}
+        name: publish nuget package
+        run: |
+          dotnet nuget push ${{github.workspace}}/sdk/dotnet/bin/Debug/*.nupkg -s ${{ env.NUGET_FEED_URL }} -k ${{ env.NUGET_PUBLISH_KEY }}
+          echo "done publishing packages"
+    strategy:
+      fail-fast: true
+      matrix:
+        dotnetversion:
+          - 3.1.301
+        goversion:
+          - 1.22.x
+        language:
+          - nodejs
+          - python
+          - dotnet
+          - go
+        nodeversion:
+          - 20.x
+        pythonversion:
+          - "3.9"

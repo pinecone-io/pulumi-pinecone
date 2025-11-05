@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>pinecone-io</Authors>
     <Company>pinecone-io</Company>
-    <Description>A Pulumi native provider for Pinecone</Description>
+    <Description>A Pulumi package for creating and managing Pinecone resources.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://www.pinecone.io</PackageProjectUrl>
     <RepositoryUrl>https://github.com/pinecone-io/pulumi-pinecone</RepositoryUrl>

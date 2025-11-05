@@ -4,6 +4,12 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
+/**
+ * The provider type for the pinecone package. By default, resources use package-wide configuration
+ * settings, however an explicit `Provider` instance may be created and passed during resource
+ * construction to achieve fine-grained programmatic control over provider settings. See the
+ * [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
+ */
 export class Provider extends pulumi.ProviderResource {
     /** @internal */
     public static readonly __pulumiType = 'pinecone';
@@ -20,9 +26,9 @@ export class Provider extends pulumi.ProviderResource {
     }
 
     /**
-     * The API token for Pinecone.
+     * Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
      */
-    public readonly APIKey!: pulumi.Output<string | undefined>;
+    declare public readonly apiKey: pulumi.Output<string | undefined>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -35,12 +41,21 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
-            resourceInputs["APIKey"] = args?.APIKey ? pulumi.secret(args.APIKey) : undefined;
+            resourceInputs["apiKey"] = (args?.apiKey ? pulumi.secret(args.apiKey) : undefined) ?? utilities.getEnv("PINECONE_API_KEY");
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["APIKey"] };
+        const secretOpts = { additionalSecretOutputs: ["apiKey"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
+    }
+
+    /**
+     * This function returns a Terraform config object with terraform-namecased keys,to be used with the Terraform Module Provider.
+     */
+    terraformConfig(): pulumi.Output<Provider.TerraformConfigResult> {
+        return pulumi.runtime.call("pulumi:providers:pinecone/terraformConfig", {
+            "__self__": this,
+        }, this);
     }
 }
 
@@ -49,7 +64,17 @@ export class Provider extends pulumi.ProviderResource {
  */
 export interface ProviderArgs {
     /**
-     * The API token for Pinecone.
+     * Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
      */
-    APIKey?: pulumi.Input<string>;
+    apiKey?: pulumi.Input<string>;
+}
+
+export namespace Provider {
+    /**
+     * The results of the Provider.terraformConfig method.
+     */
+    export interface TerraformConfigResult {
+        readonly result: {[key: string]: any};
+    }
+
 }

@@ -11,11 +11,15 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+// The provider type for the pinecone package. By default, resources use package-wide configuration
+// settings, however an explicit `Provider` instance may be created and passed during resource
+// construction to achieve fine-grained programmatic control over provider settings. See the
+// [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
 type Provider struct {
 	pulumi.ProviderResourceState
 
-	// The API token for Pinecone.
-	APIKey pulumi.StringPtrOutput `pulumi:"APIKey"`
+	// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
+	ApiKey pulumi.StringPtrOutput `pulumi:"apiKey"`
 }
 
 // NewProvider registers a new resource with the given unique name, arguments, and options.
@@ -25,11 +29,16 @@ func NewProvider(ctx *pulumi.Context,
 		args = &ProviderArgs{}
 	}
 
-	if args.APIKey != nil {
-		args.APIKey = pulumi.ToSecret(args.APIKey).(pulumi.StringPtrInput)
+	if args.ApiKey == nil {
+		if d := internal.GetEnvOrDefault(nil, nil, "PINECONE_API_KEY"); d != nil {
+			args.ApiKey = pulumi.StringPtr(d.(string))
+		}
+	}
+	if args.ApiKey != nil {
+		args.ApiKey = pulumi.ToSecret(args.ApiKey).(pulumi.StringPtrInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
-		"APIKey",
+		"apiKey",
 	})
 	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -42,18 +51,41 @@ func NewProvider(ctx *pulumi.Context,
 }
 
 type providerArgs struct {
-	// The API token for Pinecone.
-	APIKey *string `pulumi:"APIKey"`
+	// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
+	ApiKey *string `pulumi:"apiKey"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
-	// The API token for Pinecone.
-	APIKey pulumi.StringPtrInput
+	// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
+	ApiKey pulumi.StringPtrInput
 }
 
 func (ProviderArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*providerArgs)(nil)).Elem()
+}
+
+// This function returns a Terraform config object with terraform-namecased keys,to be used with the Terraform Module Provider.
+func (r *Provider) TerraformConfig(ctx *pulumi.Context) (ProviderTerraformConfigResultOutput, error) {
+	out, err := ctx.Call("pulumi:providers:pinecone/terraformConfig", nil, ProviderTerraformConfigResultOutput{}, r)
+	if err != nil {
+		return ProviderTerraformConfigResultOutput{}, err
+	}
+	return out.(ProviderTerraformConfigResultOutput), nil
+}
+
+type ProviderTerraformConfigResult struct {
+	Result map[string]interface{} `pulumi:"result"`
+}
+
+type ProviderTerraformConfigResultOutput struct{ *pulumi.OutputState }
+
+func (ProviderTerraformConfigResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ProviderTerraformConfigResult)(nil)).Elem()
+}
+
+func (o ProviderTerraformConfigResultOutput) Result() pulumi.MapOutput {
+	return o.ApplyT(func(v ProviderTerraformConfigResult) map[string]interface{} { return v.Result }).(pulumi.MapOutput)
 }
 
 type ProviderInput interface {
@@ -89,12 +121,13 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 	return o
 }
 
-// The API token for Pinecone.
-func (o ProviderOutput) APIKey() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.APIKey }).(pulumi.StringPtrOutput)
+// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
+func (o ProviderOutput) ApiKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ApiKey }).(pulumi.StringPtrOutput)
 }
 
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ProviderInput)(nil)).Elem(), &Provider{})
 	pulumi.RegisterOutputType(ProviderOutput{})
+	pulumi.RegisterOutputType(ProviderTerraformConfigResultOutput{})
 }

@@ -1,10 +1,11 @@
+version: 2
 archives:
   - id: archive
     name_template: '{{ .Binary }}-{{ .Tag }}-{{ .Os }}-{{ .Arch }}'
 
 before:
   hooks:
-    - make provider
+    - make tfgen
 builds:
   - binary: pulumi-resource-pinecone
     dir: provider
@@ -49,7 +50,7 @@ release:
   prerelease: auto
 
 snapshot:
-  name_template: '{{ .Tag }}-SNAPSHOT'
+  version_template: '{{ .Tag }}-SNAPSHOT'
 
 changelog:
   sort: asc

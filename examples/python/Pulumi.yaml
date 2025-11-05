@@ -1,6 +1,2 @@
-name: pinecone-python
+name: pinecone-yaml
 runtime: python
-plugins:
-  providers:
-    - name: pinecone
-      path: ../../bin

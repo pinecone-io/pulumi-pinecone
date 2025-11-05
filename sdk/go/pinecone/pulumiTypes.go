@@ -13,327 +13,753 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
-type MetaDataConfig struct {
-	//  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
-	Indexed []string `pulumi:"indexed"`
+type CollectionTimeouts struct {
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Create *string `pulumi:"create"`
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Delete *string `pulumi:"delete"`
 }
 
-// MetaDataConfigInput is an input type that accepts MetaDataConfigArgs and MetaDataConfigOutput values.
-// You can construct a concrete instance of `MetaDataConfigInput` via:
+// CollectionTimeoutsInput is an input type that accepts CollectionTimeoutsArgs and CollectionTimeoutsOutput values.
+// You can construct a concrete instance of `CollectionTimeoutsInput` via:
 //
-//	MetaDataConfigArgs{...}
-type MetaDataConfigInput interface {
+//	CollectionTimeoutsArgs{...}
+type CollectionTimeoutsInput interface {
 	pulumi.Input
 
-	ToMetaDataConfigOutput() MetaDataConfigOutput
-	ToMetaDataConfigOutputWithContext(context.Context) MetaDataConfigOutput
+	ToCollectionTimeoutsOutput() CollectionTimeoutsOutput
+	ToCollectionTimeoutsOutputWithContext(context.Context) CollectionTimeoutsOutput
 }
 
-type MetaDataConfigArgs struct {
-	//  Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
-	Indexed pulumi.StringArrayInput `pulumi:"indexed"`
+type CollectionTimeoutsArgs struct {
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Create pulumi.StringPtrInput `pulumi:"create"`
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Delete pulumi.StringPtrInput `pulumi:"delete"`
 }
 
-func (MetaDataConfigArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*MetaDataConfig)(nil)).Elem()
+func (CollectionTimeoutsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CollectionTimeouts)(nil)).Elem()
 }
 
-func (i MetaDataConfigArgs) ToMetaDataConfigOutput() MetaDataConfigOutput {
-	return i.ToMetaDataConfigOutputWithContext(context.Background())
+func (i CollectionTimeoutsArgs) ToCollectionTimeoutsOutput() CollectionTimeoutsOutput {
+	return i.ToCollectionTimeoutsOutputWithContext(context.Background())
 }
 
-func (i MetaDataConfigArgs) ToMetaDataConfigOutputWithContext(ctx context.Context) MetaDataConfigOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MetaDataConfigOutput)
+func (i CollectionTimeoutsArgs) ToCollectionTimeoutsOutputWithContext(ctx context.Context) CollectionTimeoutsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CollectionTimeoutsOutput)
 }
 
-func (i MetaDataConfigArgs) ToMetaDataConfigPtrOutput() MetaDataConfigPtrOutput {
-	return i.ToMetaDataConfigPtrOutputWithContext(context.Background())
+func (i CollectionTimeoutsArgs) ToCollectionTimeoutsPtrOutput() CollectionTimeoutsPtrOutput {
+	return i.ToCollectionTimeoutsPtrOutputWithContext(context.Background())
 }
 
-func (i MetaDataConfigArgs) ToMetaDataConfigPtrOutputWithContext(ctx context.Context) MetaDataConfigPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MetaDataConfigOutput).ToMetaDataConfigPtrOutputWithContext(ctx)
+func (i CollectionTimeoutsArgs) ToCollectionTimeoutsPtrOutputWithContext(ctx context.Context) CollectionTimeoutsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CollectionTimeoutsOutput).ToCollectionTimeoutsPtrOutputWithContext(ctx)
 }
 
-// MetaDataConfigPtrInput is an input type that accepts MetaDataConfigArgs, MetaDataConfigPtr and MetaDataConfigPtrOutput values.
-// You can construct a concrete instance of `MetaDataConfigPtrInput` via:
+// CollectionTimeoutsPtrInput is an input type that accepts CollectionTimeoutsArgs, CollectionTimeoutsPtr and CollectionTimeoutsPtrOutput values.
+// You can construct a concrete instance of `CollectionTimeoutsPtrInput` via:
 //
-//	        MetaDataConfigArgs{...}
+//	        CollectionTimeoutsArgs{...}
 //
 //	or:
 //
 //	        nil
-type MetaDataConfigPtrInput interface {
+type CollectionTimeoutsPtrInput interface {
 	pulumi.Input
 
-	ToMetaDataConfigPtrOutput() MetaDataConfigPtrOutput
-	ToMetaDataConfigPtrOutputWithContext(context.Context) MetaDataConfigPtrOutput
+	ToCollectionTimeoutsPtrOutput() CollectionTimeoutsPtrOutput
+	ToCollectionTimeoutsPtrOutputWithContext(context.Context) CollectionTimeoutsPtrOutput
 }
 
-type metaDataConfigPtrType MetaDataConfigArgs
+type collectionTimeoutsPtrType CollectionTimeoutsArgs
 
-func MetaDataConfigPtr(v *MetaDataConfigArgs) MetaDataConfigPtrInput {
-	return (*metaDataConfigPtrType)(v)
+func CollectionTimeoutsPtr(v *CollectionTimeoutsArgs) CollectionTimeoutsPtrInput {
+	return (*collectionTimeoutsPtrType)(v)
 }
 
-func (*metaDataConfigPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**MetaDataConfig)(nil)).Elem()
+func (*collectionTimeoutsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CollectionTimeouts)(nil)).Elem()
 }
 
-func (i *metaDataConfigPtrType) ToMetaDataConfigPtrOutput() MetaDataConfigPtrOutput {
-	return i.ToMetaDataConfigPtrOutputWithContext(context.Background())
+func (i *collectionTimeoutsPtrType) ToCollectionTimeoutsPtrOutput() CollectionTimeoutsPtrOutput {
+	return i.ToCollectionTimeoutsPtrOutputWithContext(context.Background())
 }
 
-func (i *metaDataConfigPtrType) ToMetaDataConfigPtrOutputWithContext(ctx context.Context) MetaDataConfigPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MetaDataConfigPtrOutput)
+func (i *collectionTimeoutsPtrType) ToCollectionTimeoutsPtrOutputWithContext(ctx context.Context) CollectionTimeoutsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CollectionTimeoutsPtrOutput)
 }
 
-type MetaDataConfigOutput struct{ *pulumi.OutputState }
+type CollectionTimeoutsOutput struct{ *pulumi.OutputState }
 
-func (MetaDataConfigOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*MetaDataConfig)(nil)).Elem()
+func (CollectionTimeoutsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CollectionTimeouts)(nil)).Elem()
 }
 
-func (o MetaDataConfigOutput) ToMetaDataConfigOutput() MetaDataConfigOutput {
+func (o CollectionTimeoutsOutput) ToCollectionTimeoutsOutput() CollectionTimeoutsOutput {
 	return o
 }
 
-func (o MetaDataConfigOutput) ToMetaDataConfigOutputWithContext(ctx context.Context) MetaDataConfigOutput {
+func (o CollectionTimeoutsOutput) ToCollectionTimeoutsOutputWithContext(ctx context.Context) CollectionTimeoutsOutput {
 	return o
 }
 
-func (o MetaDataConfigOutput) ToMetaDataConfigPtrOutput() MetaDataConfigPtrOutput {
-	return o.ToMetaDataConfigPtrOutputWithContext(context.Background())
+func (o CollectionTimeoutsOutput) ToCollectionTimeoutsPtrOutput() CollectionTimeoutsPtrOutput {
+	return o.ToCollectionTimeoutsPtrOutputWithContext(context.Background())
 }
 
-func (o MetaDataConfigOutput) ToMetaDataConfigPtrOutputWithContext(ctx context.Context) MetaDataConfigPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v MetaDataConfig) *MetaDataConfig {
+func (o CollectionTimeoutsOutput) ToCollectionTimeoutsPtrOutputWithContext(ctx context.Context) CollectionTimeoutsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CollectionTimeouts) *CollectionTimeouts {
 		return &v
-	}).(MetaDataConfigPtrOutput)
+	}).(CollectionTimeoutsPtrOutput)
 }
 
-// Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
-func (o MetaDataConfigOutput) Indexed() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v MetaDataConfig) []string { return v.Indexed }).(pulumi.StringArrayOutput)
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o CollectionTimeoutsOutput) Create() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CollectionTimeouts) *string { return v.Create }).(pulumi.StringPtrOutput)
 }
 
-type MetaDataConfigPtrOutput struct{ *pulumi.OutputState }
-
-func (MetaDataConfigPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**MetaDataConfig)(nil)).Elem()
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o CollectionTimeoutsOutput) Delete() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CollectionTimeouts) *string { return v.Delete }).(pulumi.StringPtrOutput)
 }
 
-func (o MetaDataConfigPtrOutput) ToMetaDataConfigPtrOutput() MetaDataConfigPtrOutput {
+type CollectionTimeoutsPtrOutput struct{ *pulumi.OutputState }
+
+func (CollectionTimeoutsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CollectionTimeouts)(nil)).Elem()
+}
+
+func (o CollectionTimeoutsPtrOutput) ToCollectionTimeoutsPtrOutput() CollectionTimeoutsPtrOutput {
 	return o
 }
 
-func (o MetaDataConfigPtrOutput) ToMetaDataConfigPtrOutputWithContext(ctx context.Context) MetaDataConfigPtrOutput {
+func (o CollectionTimeoutsPtrOutput) ToCollectionTimeoutsPtrOutputWithContext(ctx context.Context) CollectionTimeoutsPtrOutput {
 	return o
 }
 
-func (o MetaDataConfigPtrOutput) Elem() MetaDataConfigOutput {
-	return o.ApplyT(func(v *MetaDataConfig) MetaDataConfig {
+func (o CollectionTimeoutsPtrOutput) Elem() CollectionTimeoutsOutput {
+	return o.ApplyT(func(v *CollectionTimeouts) CollectionTimeouts {
 		if v != nil {
 			return *v
 		}
-		var ret MetaDataConfig
+		var ret CollectionTimeouts
 		return ret
-	}).(MetaDataConfigOutput)
+	}).(CollectionTimeoutsOutput)
 }
 
-// Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.
-func (o MetaDataConfigPtrOutput) Indexed() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *MetaDataConfig) []string {
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o CollectionTimeoutsPtrOutput) Create() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CollectionTimeouts) *string {
 		if v == nil {
 			return nil
 		}
-		return v.Indexed
-	}).(pulumi.StringArrayOutput)
+		return v.Create
+	}).(pulumi.StringPtrOutput)
 }
 
-type PineconePodSpec struct {
-	// The environment where the index is hosted.
-	Environment string `pulumi:"environment"`
-	// Configuration for the behavior of Pinecone's internal metadata index.
-	MetaDataConfig *MetaDataConfig `pulumi:"metaDataConfig"`
-	// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
-	PodType string `pulumi:"podType"`
-	// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
-	Pods *int `pulumi:"pods"`
-	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
-	Replicas int `pulumi:"replicas"`
-	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
-	Shards *int `pulumi:"shards"`
-	// The name of the collection to be used as the source for the index.
-	SourceCollection *string `pulumi:"sourceCollection"`
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o CollectionTimeoutsPtrOutput) Delete() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CollectionTimeouts) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Delete
+	}).(pulumi.StringPtrOutput)
 }
 
-// PineconePodSpecInput is an input type that accepts PineconePodSpecArgs and PineconePodSpecOutput values.
-// You can construct a concrete instance of `PineconePodSpecInput` via:
+type IndexEmbed struct {
+	// The dimension of the embedding model, specifying the size of the output vector.
+	Dimension *int `pulumi:"dimension"`
+	// Identifies the name of the text field from your document model that will be embedded.
+	FieldMap map[string]string `pulumi:"fieldMap"`
+	// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+	Metric *string `pulumi:"metric"`
+	// the name of the embedding model to use for the index.
+	Model *string `pulumi:"model"`
+	// The read parameters for the embedding model.
+	ReadParameters map[string]string `pulumi:"readParameters"`
+	// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+	VectorType *string `pulumi:"vectorType"`
+	// The write parameters for the embedding model.
+	WriteParameters map[string]string `pulumi:"writeParameters"`
+}
+
+// IndexEmbedInput is an input type that accepts IndexEmbedArgs and IndexEmbedOutput values.
+// You can construct a concrete instance of `IndexEmbedInput` via:
 //
-//	PineconePodSpecArgs{...}
-type PineconePodSpecInput interface {
+//	IndexEmbedArgs{...}
+type IndexEmbedInput interface {
 	pulumi.Input
 
-	ToPineconePodSpecOutput() PineconePodSpecOutput
-	ToPineconePodSpecOutputWithContext(context.Context) PineconePodSpecOutput
+	ToIndexEmbedOutput() IndexEmbedOutput
+	ToIndexEmbedOutputWithContext(context.Context) IndexEmbedOutput
 }
 
-type PineconePodSpecArgs struct {
-	// The environment where the index is hosted.
-	Environment pulumi.StringInput `pulumi:"environment"`
-	// Configuration for the behavior of Pinecone's internal metadata index.
-	MetaDataConfig MetaDataConfigPtrInput `pulumi:"metaDataConfig"`
-	// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
-	PodType pulumi.StringInput `pulumi:"podType"`
-	// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
-	Pods pulumi.IntPtrInput `pulumi:"pods"`
-	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
-	Replicas pulumi.IntInput `pulumi:"replicas"`
-	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
-	Shards pulumi.IntPtrInput `pulumi:"shards"`
-	// The name of the collection to be used as the source for the index.
-	SourceCollection pulumi.StringPtrInput `pulumi:"sourceCollection"`
+type IndexEmbedArgs struct {
+	// The dimension of the embedding model, specifying the size of the output vector.
+	Dimension pulumi.IntPtrInput `pulumi:"dimension"`
+	// Identifies the name of the text field from your document model that will be embedded.
+	FieldMap pulumi.StringMapInput `pulumi:"fieldMap"`
+	// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+	Metric pulumi.StringPtrInput `pulumi:"metric"`
+	// the name of the embedding model to use for the index.
+	Model pulumi.StringPtrInput `pulumi:"model"`
+	// The read parameters for the embedding model.
+	ReadParameters pulumi.StringMapInput `pulumi:"readParameters"`
+	// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+	VectorType pulumi.StringPtrInput `pulumi:"vectorType"`
+	// The write parameters for the embedding model.
+	WriteParameters pulumi.StringMapInput `pulumi:"writeParameters"`
 }
 
-func (PineconePodSpecArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*PineconePodSpec)(nil)).Elem()
+func (IndexEmbedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexEmbed)(nil)).Elem()
 }
 
-func (i PineconePodSpecArgs) ToPineconePodSpecOutput() PineconePodSpecOutput {
-	return i.ToPineconePodSpecOutputWithContext(context.Background())
+func (i IndexEmbedArgs) ToIndexEmbedOutput() IndexEmbedOutput {
+	return i.ToIndexEmbedOutputWithContext(context.Background())
 }
 
-func (i PineconePodSpecArgs) ToPineconePodSpecOutputWithContext(ctx context.Context) PineconePodSpecOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PineconePodSpecOutput)
+func (i IndexEmbedArgs) ToIndexEmbedOutputWithContext(ctx context.Context) IndexEmbedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexEmbedOutput)
 }
 
-func (i PineconePodSpecArgs) ToPineconePodSpecPtrOutput() PineconePodSpecPtrOutput {
-	return i.ToPineconePodSpecPtrOutputWithContext(context.Background())
+func (i IndexEmbedArgs) ToIndexEmbedPtrOutput() IndexEmbedPtrOutput {
+	return i.ToIndexEmbedPtrOutputWithContext(context.Background())
 }
 
-func (i PineconePodSpecArgs) ToPineconePodSpecPtrOutputWithContext(ctx context.Context) PineconePodSpecPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PineconePodSpecOutput).ToPineconePodSpecPtrOutputWithContext(ctx)
+func (i IndexEmbedArgs) ToIndexEmbedPtrOutputWithContext(ctx context.Context) IndexEmbedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexEmbedOutput).ToIndexEmbedPtrOutputWithContext(ctx)
 }
 
-// PineconePodSpecPtrInput is an input type that accepts PineconePodSpecArgs, PineconePodSpecPtr and PineconePodSpecPtrOutput values.
-// You can construct a concrete instance of `PineconePodSpecPtrInput` via:
+// IndexEmbedPtrInput is an input type that accepts IndexEmbedArgs, IndexEmbedPtr and IndexEmbedPtrOutput values.
+// You can construct a concrete instance of `IndexEmbedPtrInput` via:
 //
-//	        PineconePodSpecArgs{...}
+//	        IndexEmbedArgs{...}
 //
 //	or:
 //
 //	        nil
-type PineconePodSpecPtrInput interface {
+type IndexEmbedPtrInput interface {
 	pulumi.Input
 
-	ToPineconePodSpecPtrOutput() PineconePodSpecPtrOutput
-	ToPineconePodSpecPtrOutputWithContext(context.Context) PineconePodSpecPtrOutput
+	ToIndexEmbedPtrOutput() IndexEmbedPtrOutput
+	ToIndexEmbedPtrOutputWithContext(context.Context) IndexEmbedPtrOutput
 }
 
-type pineconePodSpecPtrType PineconePodSpecArgs
+type indexEmbedPtrType IndexEmbedArgs
 
-func PineconePodSpecPtr(v *PineconePodSpecArgs) PineconePodSpecPtrInput {
-	return (*pineconePodSpecPtrType)(v)
+func IndexEmbedPtr(v *IndexEmbedArgs) IndexEmbedPtrInput {
+	return (*indexEmbedPtrType)(v)
 }
 
-func (*pineconePodSpecPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**PineconePodSpec)(nil)).Elem()
+func (*indexEmbedPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexEmbed)(nil)).Elem()
 }
 
-func (i *pineconePodSpecPtrType) ToPineconePodSpecPtrOutput() PineconePodSpecPtrOutput {
-	return i.ToPineconePodSpecPtrOutputWithContext(context.Background())
+func (i *indexEmbedPtrType) ToIndexEmbedPtrOutput() IndexEmbedPtrOutput {
+	return i.ToIndexEmbedPtrOutputWithContext(context.Background())
 }
 
-func (i *pineconePodSpecPtrType) ToPineconePodSpecPtrOutputWithContext(ctx context.Context) PineconePodSpecPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PineconePodSpecPtrOutput)
+func (i *indexEmbedPtrType) ToIndexEmbedPtrOutputWithContext(ctx context.Context) IndexEmbedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexEmbedPtrOutput)
 }
 
-type PineconePodSpecOutput struct{ *pulumi.OutputState }
+type IndexEmbedOutput struct{ *pulumi.OutputState }
 
-func (PineconePodSpecOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*PineconePodSpec)(nil)).Elem()
+func (IndexEmbedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexEmbed)(nil)).Elem()
 }
 
-func (o PineconePodSpecOutput) ToPineconePodSpecOutput() PineconePodSpecOutput {
+func (o IndexEmbedOutput) ToIndexEmbedOutput() IndexEmbedOutput {
 	return o
 }
 
-func (o PineconePodSpecOutput) ToPineconePodSpecOutputWithContext(ctx context.Context) PineconePodSpecOutput {
+func (o IndexEmbedOutput) ToIndexEmbedOutputWithContext(ctx context.Context) IndexEmbedOutput {
 	return o
 }
 
-func (o PineconePodSpecOutput) ToPineconePodSpecPtrOutput() PineconePodSpecPtrOutput {
-	return o.ToPineconePodSpecPtrOutputWithContext(context.Background())
+func (o IndexEmbedOutput) ToIndexEmbedPtrOutput() IndexEmbedPtrOutput {
+	return o.ToIndexEmbedPtrOutputWithContext(context.Background())
 }
 
-func (o PineconePodSpecOutput) ToPineconePodSpecPtrOutputWithContext(ctx context.Context) PineconePodSpecPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v PineconePodSpec) *PineconePodSpec {
+func (o IndexEmbedOutput) ToIndexEmbedPtrOutputWithContext(ctx context.Context) IndexEmbedPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v IndexEmbed) *IndexEmbed {
 		return &v
-	}).(PineconePodSpecPtrOutput)
+	}).(IndexEmbedPtrOutput)
 }
 
-// The environment where the index is hosted.
-func (o PineconePodSpecOutput) Environment() pulumi.StringOutput {
-	return o.ApplyT(func(v PineconePodSpec) string { return v.Environment }).(pulumi.StringOutput)
+// The dimension of the embedding model, specifying the size of the output vector.
+func (o IndexEmbedOutput) Dimension() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v IndexEmbed) *int { return v.Dimension }).(pulumi.IntPtrOutput)
 }
 
-// Configuration for the behavior of Pinecone's internal metadata index.
-func (o PineconePodSpecOutput) MetaDataConfig() MetaDataConfigPtrOutput {
-	return o.ApplyT(func(v PineconePodSpec) *MetaDataConfig { return v.MetaDataConfig }).(MetaDataConfigPtrOutput)
+// Identifies the name of the text field from your document model that will be embedded.
+func (o IndexEmbedOutput) FieldMap() pulumi.StringMapOutput {
+	return o.ApplyT(func(v IndexEmbed) map[string]string { return v.FieldMap }).(pulumi.StringMapOutput)
 }
 
-// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
-func (o PineconePodSpecOutput) PodType() pulumi.StringOutput {
-	return o.ApplyT(func(v PineconePodSpec) string { return v.PodType }).(pulumi.StringOutput)
+// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+func (o IndexEmbedOutput) Metric() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IndexEmbed) *string { return v.Metric }).(pulumi.StringPtrOutput)
 }
 
-// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
-func (o PineconePodSpecOutput) Pods() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v PineconePodSpec) *int { return v.Pods }).(pulumi.IntPtrOutput)
+// the name of the embedding model to use for the index.
+func (o IndexEmbedOutput) Model() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IndexEmbed) *string { return v.Model }).(pulumi.StringPtrOutput)
 }
 
-// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
-func (o PineconePodSpecOutput) Replicas() pulumi.IntOutput {
-	return o.ApplyT(func(v PineconePodSpec) int { return v.Replicas }).(pulumi.IntOutput)
+// The read parameters for the embedding model.
+func (o IndexEmbedOutput) ReadParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v IndexEmbed) map[string]string { return v.ReadParameters }).(pulumi.StringMapOutput)
 }
 
-// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
-func (o PineconePodSpecOutput) Shards() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v PineconePodSpec) *int { return v.Shards }).(pulumi.IntPtrOutput)
+// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+func (o IndexEmbedOutput) VectorType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IndexEmbed) *string { return v.VectorType }).(pulumi.StringPtrOutput)
 }
 
-// The name of the collection to be used as the source for the index.
-func (o PineconePodSpecOutput) SourceCollection() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v PineconePodSpec) *string { return v.SourceCollection }).(pulumi.StringPtrOutput)
+// The write parameters for the embedding model.
+func (o IndexEmbedOutput) WriteParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v IndexEmbed) map[string]string { return v.WriteParameters }).(pulumi.StringMapOutput)
 }
 
-type PineconePodSpecPtrOutput struct{ *pulumi.OutputState }
+type IndexEmbedPtrOutput struct{ *pulumi.OutputState }
 
-func (PineconePodSpecPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**PineconePodSpec)(nil)).Elem()
+func (IndexEmbedPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexEmbed)(nil)).Elem()
 }
 
-func (o PineconePodSpecPtrOutput) ToPineconePodSpecPtrOutput() PineconePodSpecPtrOutput {
+func (o IndexEmbedPtrOutput) ToIndexEmbedPtrOutput() IndexEmbedPtrOutput {
 	return o
 }
 
-func (o PineconePodSpecPtrOutput) ToPineconePodSpecPtrOutputWithContext(ctx context.Context) PineconePodSpecPtrOutput {
+func (o IndexEmbedPtrOutput) ToIndexEmbedPtrOutputWithContext(ctx context.Context) IndexEmbedPtrOutput {
 	return o
 }
 
-func (o PineconePodSpecPtrOutput) Elem() PineconePodSpecOutput {
-	return o.ApplyT(func(v *PineconePodSpec) PineconePodSpec {
+func (o IndexEmbedPtrOutput) Elem() IndexEmbedOutput {
+	return o.ApplyT(func(v *IndexEmbed) IndexEmbed {
 		if v != nil {
 			return *v
 		}
-		var ret PineconePodSpec
+		var ret IndexEmbed
 		return ret
-	}).(PineconePodSpecOutput)
+	}).(IndexEmbedOutput)
+}
+
+// The dimension of the embedding model, specifying the size of the output vector.
+func (o IndexEmbedPtrOutput) Dimension() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *IndexEmbed) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Dimension
+	}).(pulumi.IntPtrOutput)
+}
+
+// Identifies the name of the text field from your document model that will be embedded.
+func (o IndexEmbedPtrOutput) FieldMap() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *IndexEmbed) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.FieldMap
+	}).(pulumi.StringMapOutput)
+}
+
+// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+func (o IndexEmbedPtrOutput) Metric() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexEmbed) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Metric
+	}).(pulumi.StringPtrOutput)
+}
+
+// the name of the embedding model to use for the index.
+func (o IndexEmbedPtrOutput) Model() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexEmbed) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Model
+	}).(pulumi.StringPtrOutput)
+}
+
+// The read parameters for the embedding model.
+func (o IndexEmbedPtrOutput) ReadParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *IndexEmbed) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.ReadParameters
+	}).(pulumi.StringMapOutput)
+}
+
+// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+func (o IndexEmbedPtrOutput) VectorType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexEmbed) *string {
+		if v == nil {
+			return nil
+		}
+		return v.VectorType
+	}).(pulumi.StringPtrOutput)
+}
+
+// The write parameters for the embedding model.
+func (o IndexEmbedPtrOutput) WriteParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *IndexEmbed) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.WriteParameters
+	}).(pulumi.StringMapOutput)
+}
+
+type IndexSpec struct {
+	// Configuration needed to deploy a pod-based index.
+	Pod *IndexSpecPod `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
+	Serverless *IndexSpecServerless `pulumi:"serverless"`
+}
+
+// IndexSpecInput is an input type that accepts IndexSpecArgs and IndexSpecOutput values.
+// You can construct a concrete instance of `IndexSpecInput` via:
+//
+//	IndexSpecArgs{...}
+type IndexSpecInput interface {
+	pulumi.Input
+
+	ToIndexSpecOutput() IndexSpecOutput
+	ToIndexSpecOutputWithContext(context.Context) IndexSpecOutput
+}
+
+type IndexSpecArgs struct {
+	// Configuration needed to deploy a pod-based index.
+	Pod IndexSpecPodPtrInput `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
+	Serverless IndexSpecServerlessPtrInput `pulumi:"serverless"`
+}
+
+func (IndexSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpec)(nil)).Elem()
+}
+
+func (i IndexSpecArgs) ToIndexSpecOutput() IndexSpecOutput {
+	return i.ToIndexSpecOutputWithContext(context.Background())
+}
+
+func (i IndexSpecArgs) ToIndexSpecOutputWithContext(ctx context.Context) IndexSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecOutput)
+}
+
+func (i IndexSpecArgs) ToIndexSpecPtrOutput() IndexSpecPtrOutput {
+	return i.ToIndexSpecPtrOutputWithContext(context.Background())
+}
+
+func (i IndexSpecArgs) ToIndexSpecPtrOutputWithContext(ctx context.Context) IndexSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecOutput).ToIndexSpecPtrOutputWithContext(ctx)
+}
+
+// IndexSpecPtrInput is an input type that accepts IndexSpecArgs, IndexSpecPtr and IndexSpecPtrOutput values.
+// You can construct a concrete instance of `IndexSpecPtrInput` via:
+//
+//	        IndexSpecArgs{...}
+//
+//	or:
+//
+//	        nil
+type IndexSpecPtrInput interface {
+	pulumi.Input
+
+	ToIndexSpecPtrOutput() IndexSpecPtrOutput
+	ToIndexSpecPtrOutputWithContext(context.Context) IndexSpecPtrOutput
+}
+
+type indexSpecPtrType IndexSpecArgs
+
+func IndexSpecPtr(v *IndexSpecArgs) IndexSpecPtrInput {
+	return (*indexSpecPtrType)(v)
+}
+
+func (*indexSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpec)(nil)).Elem()
+}
+
+func (i *indexSpecPtrType) ToIndexSpecPtrOutput() IndexSpecPtrOutput {
+	return i.ToIndexSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *indexSpecPtrType) ToIndexSpecPtrOutputWithContext(ctx context.Context) IndexSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecPtrOutput)
+}
+
+type IndexSpecOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpec)(nil)).Elem()
+}
+
+func (o IndexSpecOutput) ToIndexSpecOutput() IndexSpecOutput {
+	return o
+}
+
+func (o IndexSpecOutput) ToIndexSpecOutputWithContext(ctx context.Context) IndexSpecOutput {
+	return o
+}
+
+func (o IndexSpecOutput) ToIndexSpecPtrOutput() IndexSpecPtrOutput {
+	return o.ToIndexSpecPtrOutputWithContext(context.Background())
+}
+
+func (o IndexSpecOutput) ToIndexSpecPtrOutputWithContext(ctx context.Context) IndexSpecPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v IndexSpec) *IndexSpec {
+		return &v
+	}).(IndexSpecPtrOutput)
+}
+
+// Configuration needed to deploy a pod-based index.
+func (o IndexSpecOutput) Pod() IndexSpecPodPtrOutput {
+	return o.ApplyT(func(v IndexSpec) *IndexSpecPod { return v.Pod }).(IndexSpecPodPtrOutput)
+}
+
+// Configuration needed to deploy a serverless index.
+func (o IndexSpecOutput) Serverless() IndexSpecServerlessPtrOutput {
+	return o.ApplyT(func(v IndexSpec) *IndexSpecServerless { return v.Serverless }).(IndexSpecServerlessPtrOutput)
+}
+
+type IndexSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpec)(nil)).Elem()
+}
+
+func (o IndexSpecPtrOutput) ToIndexSpecPtrOutput() IndexSpecPtrOutput {
+	return o
+}
+
+func (o IndexSpecPtrOutput) ToIndexSpecPtrOutputWithContext(ctx context.Context) IndexSpecPtrOutput {
+	return o
+}
+
+func (o IndexSpecPtrOutput) Elem() IndexSpecOutput {
+	return o.ApplyT(func(v *IndexSpec) IndexSpec {
+		if v != nil {
+			return *v
+		}
+		var ret IndexSpec
+		return ret
+	}).(IndexSpecOutput)
+}
+
+// Configuration needed to deploy a pod-based index.
+func (o IndexSpecPtrOutput) Pod() IndexSpecPodPtrOutput {
+	return o.ApplyT(func(v *IndexSpec) *IndexSpecPod {
+		if v == nil {
+			return nil
+		}
+		return v.Pod
+	}).(IndexSpecPodPtrOutput)
+}
+
+// Configuration needed to deploy a serverless index.
+func (o IndexSpecPtrOutput) Serverless() IndexSpecServerlessPtrOutput {
+	return o.ApplyT(func(v *IndexSpec) *IndexSpecServerless {
+		if v == nil {
+			return nil
+		}
+		return v.Serverless
+	}).(IndexSpecServerlessPtrOutput)
+}
+
+type IndexSpecPod struct {
+	// The environment where the index is hosted.
+	Environment string `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+	MetadataConfig *IndexSpecPodMetadataConfig `pulumi:"metadataConfig"`
+	// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+	PodType string `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to shards x replicas.'
+	Pods *int `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas *int `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards *int `pulumi:"shards"`
+	// The name of the collection to create an index from.
+	SourceCollection *string `pulumi:"sourceCollection"`
+}
+
+// IndexSpecPodInput is an input type that accepts IndexSpecPodArgs and IndexSpecPodOutput values.
+// You can construct a concrete instance of `IndexSpecPodInput` via:
+//
+//	IndexSpecPodArgs{...}
+type IndexSpecPodInput interface {
+	pulumi.Input
+
+	ToIndexSpecPodOutput() IndexSpecPodOutput
+	ToIndexSpecPodOutputWithContext(context.Context) IndexSpecPodOutput
+}
+
+type IndexSpecPodArgs struct {
+	// The environment where the index is hosted.
+	Environment pulumi.StringInput `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+	MetadataConfig IndexSpecPodMetadataConfigPtrInput `pulumi:"metadataConfig"`
+	// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+	PodType pulumi.StringInput `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to shards x replicas.'
+	Pods pulumi.IntPtrInput `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas pulumi.IntPtrInput `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards pulumi.IntPtrInput `pulumi:"shards"`
+	// The name of the collection to create an index from.
+	SourceCollection pulumi.StringPtrInput `pulumi:"sourceCollection"`
+}
+
+func (IndexSpecPodArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpecPod)(nil)).Elem()
+}
+
+func (i IndexSpecPodArgs) ToIndexSpecPodOutput() IndexSpecPodOutput {
+	return i.ToIndexSpecPodOutputWithContext(context.Background())
+}
+
+func (i IndexSpecPodArgs) ToIndexSpecPodOutputWithContext(ctx context.Context) IndexSpecPodOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecPodOutput)
+}
+
+func (i IndexSpecPodArgs) ToIndexSpecPodPtrOutput() IndexSpecPodPtrOutput {
+	return i.ToIndexSpecPodPtrOutputWithContext(context.Background())
+}
+
+func (i IndexSpecPodArgs) ToIndexSpecPodPtrOutputWithContext(ctx context.Context) IndexSpecPodPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecPodOutput).ToIndexSpecPodPtrOutputWithContext(ctx)
+}
+
+// IndexSpecPodPtrInput is an input type that accepts IndexSpecPodArgs, IndexSpecPodPtr and IndexSpecPodPtrOutput values.
+// You can construct a concrete instance of `IndexSpecPodPtrInput` via:
+//
+//	        IndexSpecPodArgs{...}
+//
+//	or:
+//
+//	        nil
+type IndexSpecPodPtrInput interface {
+	pulumi.Input
+
+	ToIndexSpecPodPtrOutput() IndexSpecPodPtrOutput
+	ToIndexSpecPodPtrOutputWithContext(context.Context) IndexSpecPodPtrOutput
+}
+
+type indexSpecPodPtrType IndexSpecPodArgs
+
+func IndexSpecPodPtr(v *IndexSpecPodArgs) IndexSpecPodPtrInput {
+	return (*indexSpecPodPtrType)(v)
+}
+
+func (*indexSpecPodPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpecPod)(nil)).Elem()
+}
+
+func (i *indexSpecPodPtrType) ToIndexSpecPodPtrOutput() IndexSpecPodPtrOutput {
+	return i.ToIndexSpecPodPtrOutputWithContext(context.Background())
+}
+
+func (i *indexSpecPodPtrType) ToIndexSpecPodPtrOutputWithContext(ctx context.Context) IndexSpecPodPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecPodPtrOutput)
+}
+
+type IndexSpecPodOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecPodOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpecPod)(nil)).Elem()
+}
+
+func (o IndexSpecPodOutput) ToIndexSpecPodOutput() IndexSpecPodOutput {
+	return o
+}
+
+func (o IndexSpecPodOutput) ToIndexSpecPodOutputWithContext(ctx context.Context) IndexSpecPodOutput {
+	return o
+}
+
+func (o IndexSpecPodOutput) ToIndexSpecPodPtrOutput() IndexSpecPodPtrOutput {
+	return o.ToIndexSpecPodPtrOutputWithContext(context.Background())
+}
+
+func (o IndexSpecPodOutput) ToIndexSpecPodPtrOutputWithContext(ctx context.Context) IndexSpecPodPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v IndexSpecPod) *IndexSpecPod {
+		return &v
+	}).(IndexSpecPodPtrOutput)
 }
 
 // The environment where the index is hosted.
-func (o PineconePodSpecPtrOutput) Environment() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *PineconePodSpec) *string {
+func (o IndexSpecPodOutput) Environment() pulumi.StringOutput {
+	return o.ApplyT(func(v IndexSpecPod) string { return v.Environment }).(pulumi.StringOutput)
+}
+
+// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+func (o IndexSpecPodOutput) MetadataConfig() IndexSpecPodMetadataConfigPtrOutput {
+	return o.ApplyT(func(v IndexSpecPod) *IndexSpecPodMetadataConfig { return v.MetadataConfig }).(IndexSpecPodMetadataConfigPtrOutput)
+}
+
+// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+func (o IndexSpecPodOutput) PodType() pulumi.StringOutput {
+	return o.ApplyT(func(v IndexSpecPod) string { return v.PodType }).(pulumi.StringOutput)
+}
+
+// The number of pods to be used in the index. This should be equal to shards x replicas.'
+func (o IndexSpecPodOutput) Pods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v IndexSpecPod) *int { return v.Pods }).(pulumi.IntPtrOutput)
+}
+
+// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+func (o IndexSpecPodOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v IndexSpecPod) *int { return v.Replicas }).(pulumi.IntPtrOutput)
+}
+
+// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+func (o IndexSpecPodOutput) Shards() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v IndexSpecPod) *int { return v.Shards }).(pulumi.IntPtrOutput)
+}
+
+// The name of the collection to create an index from.
+func (o IndexSpecPodOutput) SourceCollection() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IndexSpecPod) *string { return v.SourceCollection }).(pulumi.StringPtrOutput)
+}
+
+type IndexSpecPodPtrOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecPodPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpecPod)(nil)).Elem()
+}
+
+func (o IndexSpecPodPtrOutput) ToIndexSpecPodPtrOutput() IndexSpecPodPtrOutput {
+	return o
+}
+
+func (o IndexSpecPodPtrOutput) ToIndexSpecPodPtrOutputWithContext(ctx context.Context) IndexSpecPodPtrOutput {
+	return o
+}
+
+func (o IndexSpecPodPtrOutput) Elem() IndexSpecPodOutput {
+	return o.ApplyT(func(v *IndexSpecPod) IndexSpecPod {
+		if v != nil {
+			return *v
+		}
+		var ret IndexSpecPod
+		return ret
+	}).(IndexSpecPodOutput)
+}
+
+// The environment where the index is hosted.
+func (o IndexSpecPodPtrOutput) Environment() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexSpecPod) *string {
 		if v == nil {
 			return nil
 		}
@@ -341,19 +767,19 @@ func (o PineconePodSpecPtrOutput) Environment() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Configuration for the behavior of Pinecone's internal metadata index.
-func (o PineconePodSpecPtrOutput) MetaDataConfig() MetaDataConfigPtrOutput {
-	return o.ApplyT(func(v *PineconePodSpec) *MetaDataConfig {
+// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+func (o IndexSpecPodPtrOutput) MetadataConfig() IndexSpecPodMetadataConfigPtrOutput {
+	return o.ApplyT(func(v *IndexSpecPod) *IndexSpecPodMetadataConfig {
 		if v == nil {
 			return nil
 		}
-		return v.MetaDataConfig
-	}).(MetaDataConfigPtrOutput)
+		return v.MetadataConfig
+	}).(IndexSpecPodMetadataConfigPtrOutput)
 }
 
-// The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.
-func (o PineconePodSpecPtrOutput) PodType() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *PineconePodSpec) *string {
+// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+func (o IndexSpecPodPtrOutput) PodType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexSpecPod) *string {
 		if v == nil {
 			return nil
 		}
@@ -361,9 +787,9 @@ func (o PineconePodSpecPtrOutput) PodType() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// The number of pods to be used in the index. This should be equal to `shards` x `replicas`.
-func (o PineconePodSpecPtrOutput) Pods() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *PineconePodSpec) *int {
+// The number of pods to be used in the index. This should be equal to shards x replicas.'
+func (o IndexSpecPodPtrOutput) Pods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *IndexSpecPod) *int {
 		if v == nil {
 			return nil
 		}
@@ -372,8 +798,2038 @@ func (o PineconePodSpecPtrOutput) Pods() pulumi.IntPtrOutput {
 }
 
 // The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
-func (o PineconePodSpecPtrOutput) Replicas() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *PineconePodSpec) *int {
+func (o IndexSpecPodPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *IndexSpecPod) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Replicas
+	}).(pulumi.IntPtrOutput)
+}
+
+// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+func (o IndexSpecPodPtrOutput) Shards() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *IndexSpecPod) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Shards
+	}).(pulumi.IntPtrOutput)
+}
+
+// The name of the collection to create an index from.
+func (o IndexSpecPodPtrOutput) SourceCollection() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexSpecPod) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SourceCollection
+	}).(pulumi.StringPtrOutput)
+}
+
+type IndexSpecPodMetadataConfig struct {
+	// The indexed fields.
+	Indexeds []string `pulumi:"indexeds"`
+}
+
+// IndexSpecPodMetadataConfigInput is an input type that accepts IndexSpecPodMetadataConfigArgs and IndexSpecPodMetadataConfigOutput values.
+// You can construct a concrete instance of `IndexSpecPodMetadataConfigInput` via:
+//
+//	IndexSpecPodMetadataConfigArgs{...}
+type IndexSpecPodMetadataConfigInput interface {
+	pulumi.Input
+
+	ToIndexSpecPodMetadataConfigOutput() IndexSpecPodMetadataConfigOutput
+	ToIndexSpecPodMetadataConfigOutputWithContext(context.Context) IndexSpecPodMetadataConfigOutput
+}
+
+type IndexSpecPodMetadataConfigArgs struct {
+	// The indexed fields.
+	Indexeds pulumi.StringArrayInput `pulumi:"indexeds"`
+}
+
+func (IndexSpecPodMetadataConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpecPodMetadataConfig)(nil)).Elem()
+}
+
+func (i IndexSpecPodMetadataConfigArgs) ToIndexSpecPodMetadataConfigOutput() IndexSpecPodMetadataConfigOutput {
+	return i.ToIndexSpecPodMetadataConfigOutputWithContext(context.Background())
+}
+
+func (i IndexSpecPodMetadataConfigArgs) ToIndexSpecPodMetadataConfigOutputWithContext(ctx context.Context) IndexSpecPodMetadataConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecPodMetadataConfigOutput)
+}
+
+func (i IndexSpecPodMetadataConfigArgs) ToIndexSpecPodMetadataConfigPtrOutput() IndexSpecPodMetadataConfigPtrOutput {
+	return i.ToIndexSpecPodMetadataConfigPtrOutputWithContext(context.Background())
+}
+
+func (i IndexSpecPodMetadataConfigArgs) ToIndexSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) IndexSpecPodMetadataConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecPodMetadataConfigOutput).ToIndexSpecPodMetadataConfigPtrOutputWithContext(ctx)
+}
+
+// IndexSpecPodMetadataConfigPtrInput is an input type that accepts IndexSpecPodMetadataConfigArgs, IndexSpecPodMetadataConfigPtr and IndexSpecPodMetadataConfigPtrOutput values.
+// You can construct a concrete instance of `IndexSpecPodMetadataConfigPtrInput` via:
+//
+//	        IndexSpecPodMetadataConfigArgs{...}
+//
+//	or:
+//
+//	        nil
+type IndexSpecPodMetadataConfigPtrInput interface {
+	pulumi.Input
+
+	ToIndexSpecPodMetadataConfigPtrOutput() IndexSpecPodMetadataConfigPtrOutput
+	ToIndexSpecPodMetadataConfigPtrOutputWithContext(context.Context) IndexSpecPodMetadataConfigPtrOutput
+}
+
+type indexSpecPodMetadataConfigPtrType IndexSpecPodMetadataConfigArgs
+
+func IndexSpecPodMetadataConfigPtr(v *IndexSpecPodMetadataConfigArgs) IndexSpecPodMetadataConfigPtrInput {
+	return (*indexSpecPodMetadataConfigPtrType)(v)
+}
+
+func (*indexSpecPodMetadataConfigPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpecPodMetadataConfig)(nil)).Elem()
+}
+
+func (i *indexSpecPodMetadataConfigPtrType) ToIndexSpecPodMetadataConfigPtrOutput() IndexSpecPodMetadataConfigPtrOutput {
+	return i.ToIndexSpecPodMetadataConfigPtrOutputWithContext(context.Background())
+}
+
+func (i *indexSpecPodMetadataConfigPtrType) ToIndexSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) IndexSpecPodMetadataConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecPodMetadataConfigPtrOutput)
+}
+
+type IndexSpecPodMetadataConfigOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecPodMetadataConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpecPodMetadataConfig)(nil)).Elem()
+}
+
+func (o IndexSpecPodMetadataConfigOutput) ToIndexSpecPodMetadataConfigOutput() IndexSpecPodMetadataConfigOutput {
+	return o
+}
+
+func (o IndexSpecPodMetadataConfigOutput) ToIndexSpecPodMetadataConfigOutputWithContext(ctx context.Context) IndexSpecPodMetadataConfigOutput {
+	return o
+}
+
+func (o IndexSpecPodMetadataConfigOutput) ToIndexSpecPodMetadataConfigPtrOutput() IndexSpecPodMetadataConfigPtrOutput {
+	return o.ToIndexSpecPodMetadataConfigPtrOutputWithContext(context.Background())
+}
+
+func (o IndexSpecPodMetadataConfigOutput) ToIndexSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) IndexSpecPodMetadataConfigPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v IndexSpecPodMetadataConfig) *IndexSpecPodMetadataConfig {
+		return &v
+	}).(IndexSpecPodMetadataConfigPtrOutput)
+}
+
+// The indexed fields.
+func (o IndexSpecPodMetadataConfigOutput) Indexeds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v IndexSpecPodMetadataConfig) []string { return v.Indexeds }).(pulumi.StringArrayOutput)
+}
+
+type IndexSpecPodMetadataConfigPtrOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecPodMetadataConfigPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpecPodMetadataConfig)(nil)).Elem()
+}
+
+func (o IndexSpecPodMetadataConfigPtrOutput) ToIndexSpecPodMetadataConfigPtrOutput() IndexSpecPodMetadataConfigPtrOutput {
+	return o
+}
+
+func (o IndexSpecPodMetadataConfigPtrOutput) ToIndexSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) IndexSpecPodMetadataConfigPtrOutput {
+	return o
+}
+
+func (o IndexSpecPodMetadataConfigPtrOutput) Elem() IndexSpecPodMetadataConfigOutput {
+	return o.ApplyT(func(v *IndexSpecPodMetadataConfig) IndexSpecPodMetadataConfig {
+		if v != nil {
+			return *v
+		}
+		var ret IndexSpecPodMetadataConfig
+		return ret
+	}).(IndexSpecPodMetadataConfigOutput)
+}
+
+// The indexed fields.
+func (o IndexSpecPodMetadataConfigPtrOutput) Indexeds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *IndexSpecPodMetadataConfig) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Indexeds
+	}).(pulumi.StringArrayOutput)
+}
+
+type IndexSpecServerless struct {
+	// The public cloud where you would like your index hosted. [gcp|aws|azure]
+	Cloud string `pulumi:"cloud"`
+	// The region where you would like your index to be created.
+	Region string `pulumi:"region"`
+}
+
+// IndexSpecServerlessInput is an input type that accepts IndexSpecServerlessArgs and IndexSpecServerlessOutput values.
+// You can construct a concrete instance of `IndexSpecServerlessInput` via:
+//
+//	IndexSpecServerlessArgs{...}
+type IndexSpecServerlessInput interface {
+	pulumi.Input
+
+	ToIndexSpecServerlessOutput() IndexSpecServerlessOutput
+	ToIndexSpecServerlessOutputWithContext(context.Context) IndexSpecServerlessOutput
+}
+
+type IndexSpecServerlessArgs struct {
+	// The public cloud where you would like your index hosted. [gcp|aws|azure]
+	Cloud pulumi.StringInput `pulumi:"cloud"`
+	// The region where you would like your index to be created.
+	Region pulumi.StringInput `pulumi:"region"`
+}
+
+func (IndexSpecServerlessArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpecServerless)(nil)).Elem()
+}
+
+func (i IndexSpecServerlessArgs) ToIndexSpecServerlessOutput() IndexSpecServerlessOutput {
+	return i.ToIndexSpecServerlessOutputWithContext(context.Background())
+}
+
+func (i IndexSpecServerlessArgs) ToIndexSpecServerlessOutputWithContext(ctx context.Context) IndexSpecServerlessOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecServerlessOutput)
+}
+
+func (i IndexSpecServerlessArgs) ToIndexSpecServerlessPtrOutput() IndexSpecServerlessPtrOutput {
+	return i.ToIndexSpecServerlessPtrOutputWithContext(context.Background())
+}
+
+func (i IndexSpecServerlessArgs) ToIndexSpecServerlessPtrOutputWithContext(ctx context.Context) IndexSpecServerlessPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecServerlessOutput).ToIndexSpecServerlessPtrOutputWithContext(ctx)
+}
+
+// IndexSpecServerlessPtrInput is an input type that accepts IndexSpecServerlessArgs, IndexSpecServerlessPtr and IndexSpecServerlessPtrOutput values.
+// You can construct a concrete instance of `IndexSpecServerlessPtrInput` via:
+//
+//	        IndexSpecServerlessArgs{...}
+//
+//	or:
+//
+//	        nil
+type IndexSpecServerlessPtrInput interface {
+	pulumi.Input
+
+	ToIndexSpecServerlessPtrOutput() IndexSpecServerlessPtrOutput
+	ToIndexSpecServerlessPtrOutputWithContext(context.Context) IndexSpecServerlessPtrOutput
+}
+
+type indexSpecServerlessPtrType IndexSpecServerlessArgs
+
+func IndexSpecServerlessPtr(v *IndexSpecServerlessArgs) IndexSpecServerlessPtrInput {
+	return (*indexSpecServerlessPtrType)(v)
+}
+
+func (*indexSpecServerlessPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpecServerless)(nil)).Elem()
+}
+
+func (i *indexSpecServerlessPtrType) ToIndexSpecServerlessPtrOutput() IndexSpecServerlessPtrOutput {
+	return i.ToIndexSpecServerlessPtrOutputWithContext(context.Background())
+}
+
+func (i *indexSpecServerlessPtrType) ToIndexSpecServerlessPtrOutputWithContext(ctx context.Context) IndexSpecServerlessPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexSpecServerlessPtrOutput)
+}
+
+type IndexSpecServerlessOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecServerlessOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexSpecServerless)(nil)).Elem()
+}
+
+func (o IndexSpecServerlessOutput) ToIndexSpecServerlessOutput() IndexSpecServerlessOutput {
+	return o
+}
+
+func (o IndexSpecServerlessOutput) ToIndexSpecServerlessOutputWithContext(ctx context.Context) IndexSpecServerlessOutput {
+	return o
+}
+
+func (o IndexSpecServerlessOutput) ToIndexSpecServerlessPtrOutput() IndexSpecServerlessPtrOutput {
+	return o.ToIndexSpecServerlessPtrOutputWithContext(context.Background())
+}
+
+func (o IndexSpecServerlessOutput) ToIndexSpecServerlessPtrOutputWithContext(ctx context.Context) IndexSpecServerlessPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v IndexSpecServerless) *IndexSpecServerless {
+		return &v
+	}).(IndexSpecServerlessPtrOutput)
+}
+
+// The public cloud where you would like your index hosted. [gcp|aws|azure]
+func (o IndexSpecServerlessOutput) Cloud() pulumi.StringOutput {
+	return o.ApplyT(func(v IndexSpecServerless) string { return v.Cloud }).(pulumi.StringOutput)
+}
+
+// The region where you would like your index to be created.
+func (o IndexSpecServerlessOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v IndexSpecServerless) string { return v.Region }).(pulumi.StringOutput)
+}
+
+type IndexSpecServerlessPtrOutput struct{ *pulumi.OutputState }
+
+func (IndexSpecServerlessPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexSpecServerless)(nil)).Elem()
+}
+
+func (o IndexSpecServerlessPtrOutput) ToIndexSpecServerlessPtrOutput() IndexSpecServerlessPtrOutput {
+	return o
+}
+
+func (o IndexSpecServerlessPtrOutput) ToIndexSpecServerlessPtrOutputWithContext(ctx context.Context) IndexSpecServerlessPtrOutput {
+	return o
+}
+
+func (o IndexSpecServerlessPtrOutput) Elem() IndexSpecServerlessOutput {
+	return o.ApplyT(func(v *IndexSpecServerless) IndexSpecServerless {
+		if v != nil {
+			return *v
+		}
+		var ret IndexSpecServerless
+		return ret
+	}).(IndexSpecServerlessOutput)
+}
+
+// The public cloud where you would like your index hosted. [gcp|aws|azure]
+func (o IndexSpecServerlessPtrOutput) Cloud() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexSpecServerless) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Cloud
+	}).(pulumi.StringPtrOutput)
+}
+
+// The region where you would like your index to be created.
+func (o IndexSpecServerlessPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexSpecServerless) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Region
+	}).(pulumi.StringPtrOutput)
+}
+
+type IndexStatus struct {
+	// Ready.
+	Ready *bool `pulumi:"ready"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	State *string `pulumi:"state"`
+}
+
+// IndexStatusInput is an input type that accepts IndexStatusArgs and IndexStatusOutput values.
+// You can construct a concrete instance of `IndexStatusInput` via:
+//
+//	IndexStatusArgs{...}
+type IndexStatusInput interface {
+	pulumi.Input
+
+	ToIndexStatusOutput() IndexStatusOutput
+	ToIndexStatusOutputWithContext(context.Context) IndexStatusOutput
+}
+
+type IndexStatusArgs struct {
+	// Ready.
+	Ready pulumi.BoolPtrInput `pulumi:"ready"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	State pulumi.StringPtrInput `pulumi:"state"`
+}
+
+func (IndexStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexStatus)(nil)).Elem()
+}
+
+func (i IndexStatusArgs) ToIndexStatusOutput() IndexStatusOutput {
+	return i.ToIndexStatusOutputWithContext(context.Background())
+}
+
+func (i IndexStatusArgs) ToIndexStatusOutputWithContext(ctx context.Context) IndexStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexStatusOutput)
+}
+
+func (i IndexStatusArgs) ToIndexStatusPtrOutput() IndexStatusPtrOutput {
+	return i.ToIndexStatusPtrOutputWithContext(context.Background())
+}
+
+func (i IndexStatusArgs) ToIndexStatusPtrOutputWithContext(ctx context.Context) IndexStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexStatusOutput).ToIndexStatusPtrOutputWithContext(ctx)
+}
+
+// IndexStatusPtrInput is an input type that accepts IndexStatusArgs, IndexStatusPtr and IndexStatusPtrOutput values.
+// You can construct a concrete instance of `IndexStatusPtrInput` via:
+//
+//	        IndexStatusArgs{...}
+//
+//	or:
+//
+//	        nil
+type IndexStatusPtrInput interface {
+	pulumi.Input
+
+	ToIndexStatusPtrOutput() IndexStatusPtrOutput
+	ToIndexStatusPtrOutputWithContext(context.Context) IndexStatusPtrOutput
+}
+
+type indexStatusPtrType IndexStatusArgs
+
+func IndexStatusPtr(v *IndexStatusArgs) IndexStatusPtrInput {
+	return (*indexStatusPtrType)(v)
+}
+
+func (*indexStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexStatus)(nil)).Elem()
+}
+
+func (i *indexStatusPtrType) ToIndexStatusPtrOutput() IndexStatusPtrOutput {
+	return i.ToIndexStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *indexStatusPtrType) ToIndexStatusPtrOutputWithContext(ctx context.Context) IndexStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexStatusPtrOutput)
+}
+
+type IndexStatusOutput struct{ *pulumi.OutputState }
+
+func (IndexStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexStatus)(nil)).Elem()
+}
+
+func (o IndexStatusOutput) ToIndexStatusOutput() IndexStatusOutput {
+	return o
+}
+
+func (o IndexStatusOutput) ToIndexStatusOutputWithContext(ctx context.Context) IndexStatusOutput {
+	return o
+}
+
+func (o IndexStatusOutput) ToIndexStatusPtrOutput() IndexStatusPtrOutput {
+	return o.ToIndexStatusPtrOutputWithContext(context.Background())
+}
+
+func (o IndexStatusOutput) ToIndexStatusPtrOutputWithContext(ctx context.Context) IndexStatusPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v IndexStatus) *IndexStatus {
+		return &v
+	}).(IndexStatusPtrOutput)
+}
+
+// Ready.
+func (o IndexStatusOutput) Ready() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v IndexStatus) *bool { return v.Ready }).(pulumi.BoolPtrOutput)
+}
+
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o IndexStatusOutput) State() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IndexStatus) *string { return v.State }).(pulumi.StringPtrOutput)
+}
+
+type IndexStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (IndexStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexStatus)(nil)).Elem()
+}
+
+func (o IndexStatusPtrOutput) ToIndexStatusPtrOutput() IndexStatusPtrOutput {
+	return o
+}
+
+func (o IndexStatusPtrOutput) ToIndexStatusPtrOutputWithContext(ctx context.Context) IndexStatusPtrOutput {
+	return o
+}
+
+func (o IndexStatusPtrOutput) Elem() IndexStatusOutput {
+	return o.ApplyT(func(v *IndexStatus) IndexStatus {
+		if v != nil {
+			return *v
+		}
+		var ret IndexStatus
+		return ret
+	}).(IndexStatusOutput)
+}
+
+// Ready.
+func (o IndexStatusPtrOutput) Ready() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *IndexStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Ready
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o IndexStatusPtrOutput) State() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.State
+	}).(pulumi.StringPtrOutput)
+}
+
+type IndexTimeouts struct {
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Create *string `pulumi:"create"`
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Delete *string `pulumi:"delete"`
+}
+
+// IndexTimeoutsInput is an input type that accepts IndexTimeoutsArgs and IndexTimeoutsOutput values.
+// You can construct a concrete instance of `IndexTimeoutsInput` via:
+//
+//	IndexTimeoutsArgs{...}
+type IndexTimeoutsInput interface {
+	pulumi.Input
+
+	ToIndexTimeoutsOutput() IndexTimeoutsOutput
+	ToIndexTimeoutsOutputWithContext(context.Context) IndexTimeoutsOutput
+}
+
+type IndexTimeoutsArgs struct {
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Create pulumi.StringPtrInput `pulumi:"create"`
+	// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Delete pulumi.StringPtrInput `pulumi:"delete"`
+}
+
+func (IndexTimeoutsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexTimeouts)(nil)).Elem()
+}
+
+func (i IndexTimeoutsArgs) ToIndexTimeoutsOutput() IndexTimeoutsOutput {
+	return i.ToIndexTimeoutsOutputWithContext(context.Background())
+}
+
+func (i IndexTimeoutsArgs) ToIndexTimeoutsOutputWithContext(ctx context.Context) IndexTimeoutsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexTimeoutsOutput)
+}
+
+func (i IndexTimeoutsArgs) ToIndexTimeoutsPtrOutput() IndexTimeoutsPtrOutput {
+	return i.ToIndexTimeoutsPtrOutputWithContext(context.Background())
+}
+
+func (i IndexTimeoutsArgs) ToIndexTimeoutsPtrOutputWithContext(ctx context.Context) IndexTimeoutsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexTimeoutsOutput).ToIndexTimeoutsPtrOutputWithContext(ctx)
+}
+
+// IndexTimeoutsPtrInput is an input type that accepts IndexTimeoutsArgs, IndexTimeoutsPtr and IndexTimeoutsPtrOutput values.
+// You can construct a concrete instance of `IndexTimeoutsPtrInput` via:
+//
+//	        IndexTimeoutsArgs{...}
+//
+//	or:
+//
+//	        nil
+type IndexTimeoutsPtrInput interface {
+	pulumi.Input
+
+	ToIndexTimeoutsPtrOutput() IndexTimeoutsPtrOutput
+	ToIndexTimeoutsPtrOutputWithContext(context.Context) IndexTimeoutsPtrOutput
+}
+
+type indexTimeoutsPtrType IndexTimeoutsArgs
+
+func IndexTimeoutsPtr(v *IndexTimeoutsArgs) IndexTimeoutsPtrInput {
+	return (*indexTimeoutsPtrType)(v)
+}
+
+func (*indexTimeoutsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexTimeouts)(nil)).Elem()
+}
+
+func (i *indexTimeoutsPtrType) ToIndexTimeoutsPtrOutput() IndexTimeoutsPtrOutput {
+	return i.ToIndexTimeoutsPtrOutputWithContext(context.Background())
+}
+
+func (i *indexTimeoutsPtrType) ToIndexTimeoutsPtrOutputWithContext(ctx context.Context) IndexTimeoutsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IndexTimeoutsPtrOutput)
+}
+
+type IndexTimeoutsOutput struct{ *pulumi.OutputState }
+
+func (IndexTimeoutsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IndexTimeouts)(nil)).Elem()
+}
+
+func (o IndexTimeoutsOutput) ToIndexTimeoutsOutput() IndexTimeoutsOutput {
+	return o
+}
+
+func (o IndexTimeoutsOutput) ToIndexTimeoutsOutputWithContext(ctx context.Context) IndexTimeoutsOutput {
+	return o
+}
+
+func (o IndexTimeoutsOutput) ToIndexTimeoutsPtrOutput() IndexTimeoutsPtrOutput {
+	return o.ToIndexTimeoutsPtrOutputWithContext(context.Background())
+}
+
+func (o IndexTimeoutsOutput) ToIndexTimeoutsPtrOutputWithContext(ctx context.Context) IndexTimeoutsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v IndexTimeouts) *IndexTimeouts {
+		return &v
+	}).(IndexTimeoutsPtrOutput)
+}
+
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o IndexTimeoutsOutput) Create() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IndexTimeouts) *string { return v.Create }).(pulumi.StringPtrOutput)
+}
+
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o IndexTimeoutsOutput) Delete() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IndexTimeouts) *string { return v.Delete }).(pulumi.StringPtrOutput)
+}
+
+type IndexTimeoutsPtrOutput struct{ *pulumi.OutputState }
+
+func (IndexTimeoutsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**IndexTimeouts)(nil)).Elem()
+}
+
+func (o IndexTimeoutsPtrOutput) ToIndexTimeoutsPtrOutput() IndexTimeoutsPtrOutput {
+	return o
+}
+
+func (o IndexTimeoutsPtrOutput) ToIndexTimeoutsPtrOutputWithContext(ctx context.Context) IndexTimeoutsPtrOutput {
+	return o
+}
+
+func (o IndexTimeoutsPtrOutput) Elem() IndexTimeoutsOutput {
+	return o.ApplyT(func(v *IndexTimeouts) IndexTimeouts {
+		if v != nil {
+			return *v
+		}
+		var ret IndexTimeouts
+		return ret
+	}).(IndexTimeoutsOutput)
+}
+
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o IndexTimeoutsPtrOutput) Create() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexTimeouts) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Create
+	}).(pulumi.StringPtrOutput)
+}
+
+// Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+func (o IndexTimeoutsPtrOutput) Delete() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IndexTimeouts) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Delete
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetCollectionsCollection struct {
+	// The dimension of the vectors stored in each record held in the collection.
+	Dimension int `pulumi:"dimension"`
+	// The environment where the collection is hosted.
+	Environment string `pulumi:"environment"`
+	// The name of the collection.
+	Name string `pulumi:"name"`
+	// The size of the collection in bytes.
+	Size int `pulumi:"size"`
+	// The status of the collection.
+	Status string `pulumi:"status"`
+	// The number of records stored in the collection.
+	VectorCount int `pulumi:"vectorCount"`
+}
+
+// GetCollectionsCollectionInput is an input type that accepts GetCollectionsCollectionArgs and GetCollectionsCollectionOutput values.
+// You can construct a concrete instance of `GetCollectionsCollectionInput` via:
+//
+//	GetCollectionsCollectionArgs{...}
+type GetCollectionsCollectionInput interface {
+	pulumi.Input
+
+	ToGetCollectionsCollectionOutput() GetCollectionsCollectionOutput
+	ToGetCollectionsCollectionOutputWithContext(context.Context) GetCollectionsCollectionOutput
+}
+
+type GetCollectionsCollectionArgs struct {
+	// The dimension of the vectors stored in each record held in the collection.
+	Dimension pulumi.IntInput `pulumi:"dimension"`
+	// The environment where the collection is hosted.
+	Environment pulumi.StringInput `pulumi:"environment"`
+	// The name of the collection.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The size of the collection in bytes.
+	Size pulumi.IntInput `pulumi:"size"`
+	// The status of the collection.
+	Status pulumi.StringInput `pulumi:"status"`
+	// The number of records stored in the collection.
+	VectorCount pulumi.IntInput `pulumi:"vectorCount"`
+}
+
+func (GetCollectionsCollectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCollectionsCollection)(nil)).Elem()
+}
+
+func (i GetCollectionsCollectionArgs) ToGetCollectionsCollectionOutput() GetCollectionsCollectionOutput {
+	return i.ToGetCollectionsCollectionOutputWithContext(context.Background())
+}
+
+func (i GetCollectionsCollectionArgs) ToGetCollectionsCollectionOutputWithContext(ctx context.Context) GetCollectionsCollectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetCollectionsCollectionOutput)
+}
+
+// GetCollectionsCollectionArrayInput is an input type that accepts GetCollectionsCollectionArray and GetCollectionsCollectionArrayOutput values.
+// You can construct a concrete instance of `GetCollectionsCollectionArrayInput` via:
+//
+//	GetCollectionsCollectionArray{ GetCollectionsCollectionArgs{...} }
+type GetCollectionsCollectionArrayInput interface {
+	pulumi.Input
+
+	ToGetCollectionsCollectionArrayOutput() GetCollectionsCollectionArrayOutput
+	ToGetCollectionsCollectionArrayOutputWithContext(context.Context) GetCollectionsCollectionArrayOutput
+}
+
+type GetCollectionsCollectionArray []GetCollectionsCollectionInput
+
+func (GetCollectionsCollectionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetCollectionsCollection)(nil)).Elem()
+}
+
+func (i GetCollectionsCollectionArray) ToGetCollectionsCollectionArrayOutput() GetCollectionsCollectionArrayOutput {
+	return i.ToGetCollectionsCollectionArrayOutputWithContext(context.Background())
+}
+
+func (i GetCollectionsCollectionArray) ToGetCollectionsCollectionArrayOutputWithContext(ctx context.Context) GetCollectionsCollectionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetCollectionsCollectionArrayOutput)
+}
+
+type GetCollectionsCollectionOutput struct{ *pulumi.OutputState }
+
+func (GetCollectionsCollectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCollectionsCollection)(nil)).Elem()
+}
+
+func (o GetCollectionsCollectionOutput) ToGetCollectionsCollectionOutput() GetCollectionsCollectionOutput {
+	return o
+}
+
+func (o GetCollectionsCollectionOutput) ToGetCollectionsCollectionOutputWithContext(ctx context.Context) GetCollectionsCollectionOutput {
+	return o
+}
+
+// The dimension of the vectors stored in each record held in the collection.
+func (o GetCollectionsCollectionOutput) Dimension() pulumi.IntOutput {
+	return o.ApplyT(func(v GetCollectionsCollection) int { return v.Dimension }).(pulumi.IntOutput)
+}
+
+// The environment where the collection is hosted.
+func (o GetCollectionsCollectionOutput) Environment() pulumi.StringOutput {
+	return o.ApplyT(func(v GetCollectionsCollection) string { return v.Environment }).(pulumi.StringOutput)
+}
+
+// The name of the collection.
+func (o GetCollectionsCollectionOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetCollectionsCollection) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The size of the collection in bytes.
+func (o GetCollectionsCollectionOutput) Size() pulumi.IntOutput {
+	return o.ApplyT(func(v GetCollectionsCollection) int { return v.Size }).(pulumi.IntOutput)
+}
+
+// The status of the collection.
+func (o GetCollectionsCollectionOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v GetCollectionsCollection) string { return v.Status }).(pulumi.StringOutput)
+}
+
+// The number of records stored in the collection.
+func (o GetCollectionsCollectionOutput) VectorCount() pulumi.IntOutput {
+	return o.ApplyT(func(v GetCollectionsCollection) int { return v.VectorCount }).(pulumi.IntOutput)
+}
+
+type GetCollectionsCollectionArrayOutput struct{ *pulumi.OutputState }
+
+func (GetCollectionsCollectionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetCollectionsCollection)(nil)).Elem()
+}
+
+func (o GetCollectionsCollectionArrayOutput) ToGetCollectionsCollectionArrayOutput() GetCollectionsCollectionArrayOutput {
+	return o
+}
+
+func (o GetCollectionsCollectionArrayOutput) ToGetCollectionsCollectionArrayOutputWithContext(ctx context.Context) GetCollectionsCollectionArrayOutput {
+	return o
+}
+
+func (o GetCollectionsCollectionArrayOutput) Index(i pulumi.IntInput) GetCollectionsCollectionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetCollectionsCollection {
+		return vs[0].([]GetCollectionsCollection)[vs[1].(int)]
+	}).(GetCollectionsCollectionOutput)
+}
+
+type GetEmbed struct {
+	// The dimension of the embedding model, specifying the size of the output vector.
+	Dimension int `pulumi:"dimension"`
+	// Identifies the name of the text field from your document model that will be embedded.
+	FieldMap map[string]string `pulumi:"fieldMap"`
+	// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+	Metric string `pulumi:"metric"`
+	// the name of the embedding model to use for the index.
+	Model string `pulumi:"model"`
+	// The read parameters for the embedding model.
+	ReadParameters map[string]string `pulumi:"readParameters"`
+	// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+	VectorType string `pulumi:"vectorType"`
+	// The write parameters for the embedding model.
+	WriteParameters map[string]string `pulumi:"writeParameters"`
+}
+
+// GetEmbedInput is an input type that accepts GetEmbedArgs and GetEmbedOutput values.
+// You can construct a concrete instance of `GetEmbedInput` via:
+//
+//	GetEmbedArgs{...}
+type GetEmbedInput interface {
+	pulumi.Input
+
+	ToGetEmbedOutput() GetEmbedOutput
+	ToGetEmbedOutputWithContext(context.Context) GetEmbedOutput
+}
+
+type GetEmbedArgs struct {
+	// The dimension of the embedding model, specifying the size of the output vector.
+	Dimension pulumi.IntInput `pulumi:"dimension"`
+	// Identifies the name of the text field from your document model that will be embedded.
+	FieldMap pulumi.StringMapInput `pulumi:"fieldMap"`
+	// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+	Metric pulumi.StringInput `pulumi:"metric"`
+	// the name of the embedding model to use for the index.
+	Model pulumi.StringInput `pulumi:"model"`
+	// The read parameters for the embedding model.
+	ReadParameters pulumi.StringMapInput `pulumi:"readParameters"`
+	// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+	VectorType pulumi.StringInput `pulumi:"vectorType"`
+	// The write parameters for the embedding model.
+	WriteParameters pulumi.StringMapInput `pulumi:"writeParameters"`
+}
+
+func (GetEmbedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEmbed)(nil)).Elem()
+}
+
+func (i GetEmbedArgs) ToGetEmbedOutput() GetEmbedOutput {
+	return i.ToGetEmbedOutputWithContext(context.Background())
+}
+
+func (i GetEmbedArgs) ToGetEmbedOutputWithContext(ctx context.Context) GetEmbedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEmbedOutput)
+}
+
+func (i GetEmbedArgs) ToGetEmbedPtrOutput() GetEmbedPtrOutput {
+	return i.ToGetEmbedPtrOutputWithContext(context.Background())
+}
+
+func (i GetEmbedArgs) ToGetEmbedPtrOutputWithContext(ctx context.Context) GetEmbedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEmbedOutput).ToGetEmbedPtrOutputWithContext(ctx)
+}
+
+// GetEmbedPtrInput is an input type that accepts GetEmbedArgs, GetEmbedPtr and GetEmbedPtrOutput values.
+// You can construct a concrete instance of `GetEmbedPtrInput` via:
+//
+//	        GetEmbedArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetEmbedPtrInput interface {
+	pulumi.Input
+
+	ToGetEmbedPtrOutput() GetEmbedPtrOutput
+	ToGetEmbedPtrOutputWithContext(context.Context) GetEmbedPtrOutput
+}
+
+type getEmbedPtrType GetEmbedArgs
+
+func GetEmbedPtr(v *GetEmbedArgs) GetEmbedPtrInput {
+	return (*getEmbedPtrType)(v)
+}
+
+func (*getEmbedPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetEmbed)(nil)).Elem()
+}
+
+func (i *getEmbedPtrType) ToGetEmbedPtrOutput() GetEmbedPtrOutput {
+	return i.ToGetEmbedPtrOutputWithContext(context.Background())
+}
+
+func (i *getEmbedPtrType) ToGetEmbedPtrOutputWithContext(ctx context.Context) GetEmbedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEmbedPtrOutput)
+}
+
+type GetEmbedOutput struct{ *pulumi.OutputState }
+
+func (GetEmbedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEmbed)(nil)).Elem()
+}
+
+func (o GetEmbedOutput) ToGetEmbedOutput() GetEmbedOutput {
+	return o
+}
+
+func (o GetEmbedOutput) ToGetEmbedOutputWithContext(ctx context.Context) GetEmbedOutput {
+	return o
+}
+
+func (o GetEmbedOutput) ToGetEmbedPtrOutput() GetEmbedPtrOutput {
+	return o.ToGetEmbedPtrOutputWithContext(context.Background())
+}
+
+func (o GetEmbedOutput) ToGetEmbedPtrOutputWithContext(ctx context.Context) GetEmbedPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetEmbed) *GetEmbed {
+		return &v
+	}).(GetEmbedPtrOutput)
+}
+
+// The dimension of the embedding model, specifying the size of the output vector.
+func (o GetEmbedOutput) Dimension() pulumi.IntOutput {
+	return o.ApplyT(func(v GetEmbed) int { return v.Dimension }).(pulumi.IntOutput)
+}
+
+// Identifies the name of the text field from your document model that will be embedded.
+func (o GetEmbedOutput) FieldMap() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEmbed) map[string]string { return v.FieldMap }).(pulumi.StringMapOutput)
+}
+
+// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+func (o GetEmbedOutput) Metric() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEmbed) string { return v.Metric }).(pulumi.StringOutput)
+}
+
+// the name of the embedding model to use for the index.
+func (o GetEmbedOutput) Model() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEmbed) string { return v.Model }).(pulumi.StringOutput)
+}
+
+// The read parameters for the embedding model.
+func (o GetEmbedOutput) ReadParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEmbed) map[string]string { return v.ReadParameters }).(pulumi.StringMapOutput)
+}
+
+// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+func (o GetEmbedOutput) VectorType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEmbed) string { return v.VectorType }).(pulumi.StringOutput)
+}
+
+// The write parameters for the embedding model.
+func (o GetEmbedOutput) WriteParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEmbed) map[string]string { return v.WriteParameters }).(pulumi.StringMapOutput)
+}
+
+type GetEmbedPtrOutput struct{ *pulumi.OutputState }
+
+func (GetEmbedPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetEmbed)(nil)).Elem()
+}
+
+func (o GetEmbedPtrOutput) ToGetEmbedPtrOutput() GetEmbedPtrOutput {
+	return o
+}
+
+func (o GetEmbedPtrOutput) ToGetEmbedPtrOutputWithContext(ctx context.Context) GetEmbedPtrOutput {
+	return o
+}
+
+func (o GetEmbedPtrOutput) Elem() GetEmbedOutput {
+	return o.ApplyT(func(v *GetEmbed) GetEmbed {
+		if v != nil {
+			return *v
+		}
+		var ret GetEmbed
+		return ret
+	}).(GetEmbedOutput)
+}
+
+// The dimension of the embedding model, specifying the size of the output vector.
+func (o GetEmbedPtrOutput) Dimension() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *GetEmbed) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Dimension
+	}).(pulumi.IntPtrOutput)
+}
+
+// Identifies the name of the text field from your document model that will be embedded.
+func (o GetEmbedPtrOutput) FieldMap() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *GetEmbed) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.FieldMap
+	}).(pulumi.StringMapOutput)
+}
+
+// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+func (o GetEmbedPtrOutput) Metric() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetEmbed) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Metric
+	}).(pulumi.StringPtrOutput)
+}
+
+// the name of the embedding model to use for the index.
+func (o GetEmbedPtrOutput) Model() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetEmbed) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Model
+	}).(pulumi.StringPtrOutput)
+}
+
+// The read parameters for the embedding model.
+func (o GetEmbedPtrOutput) ReadParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *GetEmbed) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.ReadParameters
+	}).(pulumi.StringMapOutput)
+}
+
+// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+func (o GetEmbedPtrOutput) VectorType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetEmbed) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.VectorType
+	}).(pulumi.StringPtrOutput)
+}
+
+// The write parameters for the embedding model.
+func (o GetEmbedPtrOutput) WriteParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *GetEmbed) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.WriteParameters
+	}).(pulumi.StringMapOutput)
+}
+
+type GetEsIndex struct {
+	// Index deletion protection configuration
+	DeletionProtection string `pulumi:"deletionProtection"`
+	// Index dimension
+	Dimension int `pulumi:"dimension"`
+	// Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.
+	Embed GetEsIndexEmbed `pulumi:"embed"`
+	// The URL address where the index is hosted.
+	Host string `pulumi:"host"`
+	// Index metric
+	Metric string `pulumi:"metric"`
+	// Index name
+	Name string `pulumi:"name"`
+	// Spec
+	Spec GetEsIndexSpec `pulumi:"spec"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadataConfig is present, only specified metadata fields are indexed. To specify metadata fields to index, provide an array of the following form: [exampleMetadataField]
+	Status GetEsIndexStatus `pulumi:"status"`
+	// Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, '', or '-'. Values must be alphanumeric, ';', '@', '', '-', '.', '+', or ' '. To unset a key, set the value to be an empty string.
+	Tags map[string]string `pulumi:"tags"`
+	// Index vector type
+	VectorType string `pulumi:"vectorType"`
+}
+
+// GetEsIndexInput is an input type that accepts GetEsIndexArgs and GetEsIndexOutput values.
+// You can construct a concrete instance of `GetEsIndexInput` via:
+//
+//	GetEsIndexArgs{...}
+type GetEsIndexInput interface {
+	pulumi.Input
+
+	ToGetEsIndexOutput() GetEsIndexOutput
+	ToGetEsIndexOutputWithContext(context.Context) GetEsIndexOutput
+}
+
+type GetEsIndexArgs struct {
+	// Index deletion protection configuration
+	DeletionProtection pulumi.StringInput `pulumi:"deletionProtection"`
+	// Index dimension
+	Dimension pulumi.IntInput `pulumi:"dimension"`
+	// Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.
+	Embed GetEsIndexEmbedInput `pulumi:"embed"`
+	// The URL address where the index is hosted.
+	Host pulumi.StringInput `pulumi:"host"`
+	// Index metric
+	Metric pulumi.StringInput `pulumi:"metric"`
+	// Index name
+	Name pulumi.StringInput `pulumi:"name"`
+	// Spec
+	Spec GetEsIndexSpecInput `pulumi:"spec"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadataConfig is present, only specified metadata fields are indexed. To specify metadata fields to index, provide an array of the following form: [exampleMetadataField]
+	Status GetEsIndexStatusInput `pulumi:"status"`
+	// Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, '', or '-'. Values must be alphanumeric, ';', '@', '', '-', '.', '+', or ' '. To unset a key, set the value to be an empty string.
+	Tags pulumi.StringMapInput `pulumi:"tags"`
+	// Index vector type
+	VectorType pulumi.StringInput `pulumi:"vectorType"`
+}
+
+func (GetEsIndexArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndex)(nil)).Elem()
+}
+
+func (i GetEsIndexArgs) ToGetEsIndexOutput() GetEsIndexOutput {
+	return i.ToGetEsIndexOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexArgs) ToGetEsIndexOutputWithContext(ctx context.Context) GetEsIndexOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexOutput)
+}
+
+// GetEsIndexArrayInput is an input type that accepts GetEsIndexArray and GetEsIndexArrayOutput values.
+// You can construct a concrete instance of `GetEsIndexArrayInput` via:
+//
+//	GetEsIndexArray{ GetEsIndexArgs{...} }
+type GetEsIndexArrayInput interface {
+	pulumi.Input
+
+	ToGetEsIndexArrayOutput() GetEsIndexArrayOutput
+	ToGetEsIndexArrayOutputWithContext(context.Context) GetEsIndexArrayOutput
+}
+
+type GetEsIndexArray []GetEsIndexInput
+
+func (GetEsIndexArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetEsIndex)(nil)).Elem()
+}
+
+func (i GetEsIndexArray) ToGetEsIndexArrayOutput() GetEsIndexArrayOutput {
+	return i.ToGetEsIndexArrayOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexArray) ToGetEsIndexArrayOutputWithContext(ctx context.Context) GetEsIndexArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexArrayOutput)
+}
+
+type GetEsIndexOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndex)(nil)).Elem()
+}
+
+func (o GetEsIndexOutput) ToGetEsIndexOutput() GetEsIndexOutput {
+	return o
+}
+
+func (o GetEsIndexOutput) ToGetEsIndexOutputWithContext(ctx context.Context) GetEsIndexOutput {
+	return o
+}
+
+// Index deletion protection configuration
+func (o GetEsIndexOutput) DeletionProtection() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndex) string { return v.DeletionProtection }).(pulumi.StringOutput)
+}
+
+// Index dimension
+func (o GetEsIndexOutput) Dimension() pulumi.IntOutput {
+	return o.ApplyT(func(v GetEsIndex) int { return v.Dimension }).(pulumi.IntOutput)
+}
+
+// Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.
+func (o GetEsIndexOutput) Embed() GetEsIndexEmbedOutput {
+	return o.ApplyT(func(v GetEsIndex) GetEsIndexEmbed { return v.Embed }).(GetEsIndexEmbedOutput)
+}
+
+// The URL address where the index is hosted.
+func (o GetEsIndexOutput) Host() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndex) string { return v.Host }).(pulumi.StringOutput)
+}
+
+// Index metric
+func (o GetEsIndexOutput) Metric() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndex) string { return v.Metric }).(pulumi.StringOutput)
+}
+
+// Index name
+func (o GetEsIndexOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndex) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// Spec
+func (o GetEsIndexOutput) Spec() GetEsIndexSpecOutput {
+	return o.ApplyT(func(v GetEsIndex) GetEsIndexSpec { return v.Spec }).(GetEsIndexSpecOutput)
+}
+
+// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadataConfig is present, only specified metadata fields are indexed. To specify metadata fields to index, provide an array of the following form: [exampleMetadataField]
+func (o GetEsIndexOutput) Status() GetEsIndexStatusOutput {
+	return o.ApplyT(func(v GetEsIndex) GetEsIndexStatus { return v.Status }).(GetEsIndexStatusOutput)
+}
+
+// Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, ”, or '-'. Values must be alphanumeric, ';', '@', ”, '-', '.', '+', or ' '. To unset a key, set the value to be an empty string.
+func (o GetEsIndexOutput) Tags() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEsIndex) map[string]string { return v.Tags }).(pulumi.StringMapOutput)
+}
+
+// Index vector type
+func (o GetEsIndexOutput) VectorType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndex) string { return v.VectorType }).(pulumi.StringOutput)
+}
+
+type GetEsIndexArrayOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetEsIndex)(nil)).Elem()
+}
+
+func (o GetEsIndexArrayOutput) ToGetEsIndexArrayOutput() GetEsIndexArrayOutput {
+	return o
+}
+
+func (o GetEsIndexArrayOutput) ToGetEsIndexArrayOutputWithContext(ctx context.Context) GetEsIndexArrayOutput {
+	return o
+}
+
+func (o GetEsIndexArrayOutput) Index(i pulumi.IntInput) GetEsIndexOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetEsIndex {
+		return vs[0].([]GetEsIndex)[vs[1].(int)]
+	}).(GetEsIndexOutput)
+}
+
+type GetEsIndexEmbed struct {
+	// The dimension of the embedding model, specifying the size of the output vector.
+	Dimension int `pulumi:"dimension"`
+	// Identifies the name of the text field from your document model that will be embedded.
+	FieldMap map[string]string `pulumi:"fieldMap"`
+	// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+	Metric string `pulumi:"metric"`
+	// the name of the embedding model to use for the index.
+	Model string `pulumi:"model"`
+	// The read parameters for the embedding model.
+	ReadParameters map[string]string `pulumi:"readParameters"`
+	// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+	VectorType string `pulumi:"vectorType"`
+	// The write parameters for the embedding model.
+	WriteParameters map[string]string `pulumi:"writeParameters"`
+}
+
+// GetEsIndexEmbedInput is an input type that accepts GetEsIndexEmbedArgs and GetEsIndexEmbedOutput values.
+// You can construct a concrete instance of `GetEsIndexEmbedInput` via:
+//
+//	GetEsIndexEmbedArgs{...}
+type GetEsIndexEmbedInput interface {
+	pulumi.Input
+
+	ToGetEsIndexEmbedOutput() GetEsIndexEmbedOutput
+	ToGetEsIndexEmbedOutputWithContext(context.Context) GetEsIndexEmbedOutput
+}
+
+type GetEsIndexEmbedArgs struct {
+	// The dimension of the embedding model, specifying the size of the output vector.
+	Dimension pulumi.IntInput `pulumi:"dimension"`
+	// Identifies the name of the text field from your document model that will be embedded.
+	FieldMap pulumi.StringMapInput `pulumi:"fieldMap"`
+	// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+	Metric pulumi.StringInput `pulumi:"metric"`
+	// the name of the embedding model to use for the index.
+	Model pulumi.StringInput `pulumi:"model"`
+	// The read parameters for the embedding model.
+	ReadParameters pulumi.StringMapInput `pulumi:"readParameters"`
+	// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+	VectorType pulumi.StringInput `pulumi:"vectorType"`
+	// The write parameters for the embedding model.
+	WriteParameters pulumi.StringMapInput `pulumi:"writeParameters"`
+}
+
+func (GetEsIndexEmbedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexEmbed)(nil)).Elem()
+}
+
+func (i GetEsIndexEmbedArgs) ToGetEsIndexEmbedOutput() GetEsIndexEmbedOutput {
+	return i.ToGetEsIndexEmbedOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexEmbedArgs) ToGetEsIndexEmbedOutputWithContext(ctx context.Context) GetEsIndexEmbedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexEmbedOutput)
+}
+
+type GetEsIndexEmbedOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexEmbedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexEmbed)(nil)).Elem()
+}
+
+func (o GetEsIndexEmbedOutput) ToGetEsIndexEmbedOutput() GetEsIndexEmbedOutput {
+	return o
+}
+
+func (o GetEsIndexEmbedOutput) ToGetEsIndexEmbedOutputWithContext(ctx context.Context) GetEsIndexEmbedOutput {
+	return o
+}
+
+// The dimension of the embedding model, specifying the size of the output vector.
+func (o GetEsIndexEmbedOutput) Dimension() pulumi.IntOutput {
+	return o.ApplyT(func(v GetEsIndexEmbed) int { return v.Dimension }).(pulumi.IntOutput)
+}
+
+// Identifies the name of the text field from your document model that will be embedded.
+func (o GetEsIndexEmbedOutput) FieldMap() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEsIndexEmbed) map[string]string { return v.FieldMap }).(pulumi.StringMapOutput)
+}
+
+// The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.
+func (o GetEsIndexEmbedOutput) Metric() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexEmbed) string { return v.Metric }).(pulumi.StringOutput)
+}
+
+// the name of the embedding model to use for the index.
+func (o GetEsIndexEmbedOutput) Model() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexEmbed) string { return v.Model }).(pulumi.StringOutput)
+}
+
+// The read parameters for the embedding model.
+func (o GetEsIndexEmbedOutput) ReadParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEsIndexEmbed) map[string]string { return v.ReadParameters }).(pulumi.StringMapOutput)
+}
+
+// The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.
+func (o GetEsIndexEmbedOutput) VectorType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexEmbed) string { return v.VectorType }).(pulumi.StringOutput)
+}
+
+// The write parameters for the embedding model.
+func (o GetEsIndexEmbedOutput) WriteParameters() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEsIndexEmbed) map[string]string { return v.WriteParameters }).(pulumi.StringMapOutput)
+}
+
+type GetEsIndexSpec struct {
+	// Configuration needed to deploy a pod-based index.
+	Pod GetEsIndexSpecPod `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
+	Serverless GetEsIndexSpecServerless `pulumi:"serverless"`
+}
+
+// GetEsIndexSpecInput is an input type that accepts GetEsIndexSpecArgs and GetEsIndexSpecOutput values.
+// You can construct a concrete instance of `GetEsIndexSpecInput` via:
+//
+//	GetEsIndexSpecArgs{...}
+type GetEsIndexSpecInput interface {
+	pulumi.Input
+
+	ToGetEsIndexSpecOutput() GetEsIndexSpecOutput
+	ToGetEsIndexSpecOutputWithContext(context.Context) GetEsIndexSpecOutput
+}
+
+type GetEsIndexSpecArgs struct {
+	// Configuration needed to deploy a pod-based index.
+	Pod GetEsIndexSpecPodInput `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
+	Serverless GetEsIndexSpecServerlessInput `pulumi:"serverless"`
+}
+
+func (GetEsIndexSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpec)(nil)).Elem()
+}
+
+func (i GetEsIndexSpecArgs) ToGetEsIndexSpecOutput() GetEsIndexSpecOutput {
+	return i.ToGetEsIndexSpecOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexSpecArgs) ToGetEsIndexSpecOutputWithContext(ctx context.Context) GetEsIndexSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexSpecOutput)
+}
+
+type GetEsIndexSpecOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpec)(nil)).Elem()
+}
+
+func (o GetEsIndexSpecOutput) ToGetEsIndexSpecOutput() GetEsIndexSpecOutput {
+	return o
+}
+
+func (o GetEsIndexSpecOutput) ToGetEsIndexSpecOutputWithContext(ctx context.Context) GetEsIndexSpecOutput {
+	return o
+}
+
+// Configuration needed to deploy a pod-based index.
+func (o GetEsIndexSpecOutput) Pod() GetEsIndexSpecPodOutput {
+	return o.ApplyT(func(v GetEsIndexSpec) GetEsIndexSpecPod { return v.Pod }).(GetEsIndexSpecPodOutput)
+}
+
+// Configuration needed to deploy a serverless index.
+func (o GetEsIndexSpecOutput) Serverless() GetEsIndexSpecServerlessOutput {
+	return o.ApplyT(func(v GetEsIndexSpec) GetEsIndexSpecServerless { return v.Serverless }).(GetEsIndexSpecServerlessOutput)
+}
+
+type GetEsIndexSpecPod struct {
+	// The environment where the index is hosted.
+	Environment string `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+	MetadataConfig GetEsIndexSpecPodMetadataConfig `pulumi:"metadataConfig"`
+	// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+	PodType string `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to shards x replicas.'
+	Pods int `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas int `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards int `pulumi:"shards"`
+	// The name of the collection to create an index from.
+	SourceCollection string `pulumi:"sourceCollection"`
+}
+
+// GetEsIndexSpecPodInput is an input type that accepts GetEsIndexSpecPodArgs and GetEsIndexSpecPodOutput values.
+// You can construct a concrete instance of `GetEsIndexSpecPodInput` via:
+//
+//	GetEsIndexSpecPodArgs{...}
+type GetEsIndexSpecPodInput interface {
+	pulumi.Input
+
+	ToGetEsIndexSpecPodOutput() GetEsIndexSpecPodOutput
+	ToGetEsIndexSpecPodOutputWithContext(context.Context) GetEsIndexSpecPodOutput
+}
+
+type GetEsIndexSpecPodArgs struct {
+	// The environment where the index is hosted.
+	Environment pulumi.StringInput `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+	MetadataConfig GetEsIndexSpecPodMetadataConfigInput `pulumi:"metadataConfig"`
+	// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+	PodType pulumi.StringInput `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to shards x replicas.'
+	Pods pulumi.IntInput `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards pulumi.IntInput `pulumi:"shards"`
+	// The name of the collection to create an index from.
+	SourceCollection pulumi.StringInput `pulumi:"sourceCollection"`
+}
+
+func (GetEsIndexSpecPodArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpecPod)(nil)).Elem()
+}
+
+func (i GetEsIndexSpecPodArgs) ToGetEsIndexSpecPodOutput() GetEsIndexSpecPodOutput {
+	return i.ToGetEsIndexSpecPodOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexSpecPodArgs) ToGetEsIndexSpecPodOutputWithContext(ctx context.Context) GetEsIndexSpecPodOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexSpecPodOutput)
+}
+
+type GetEsIndexSpecPodOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexSpecPodOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpecPod)(nil)).Elem()
+}
+
+func (o GetEsIndexSpecPodOutput) ToGetEsIndexSpecPodOutput() GetEsIndexSpecPodOutput {
+	return o
+}
+
+func (o GetEsIndexSpecPodOutput) ToGetEsIndexSpecPodOutputWithContext(ctx context.Context) GetEsIndexSpecPodOutput {
+	return o
+}
+
+// The environment where the index is hosted.
+func (o GetEsIndexSpecPodOutput) Environment() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPod) string { return v.Environment }).(pulumi.StringOutput)
+}
+
+// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+func (o GetEsIndexSpecPodOutput) MetadataConfig() GetEsIndexSpecPodMetadataConfigOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPod) GetEsIndexSpecPodMetadataConfig { return v.MetadataConfig }).(GetEsIndexSpecPodMetadataConfigOutput)
+}
+
+// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+func (o GetEsIndexSpecPodOutput) PodType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPod) string { return v.PodType }).(pulumi.StringOutput)
+}
+
+// The number of pods to be used in the index. This should be equal to shards x replicas.'
+func (o GetEsIndexSpecPodOutput) Pods() pulumi.IntOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPod) int { return v.Pods }).(pulumi.IntOutput)
+}
+
+// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+func (o GetEsIndexSpecPodOutput) Replicas() pulumi.IntOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPod) int { return v.Replicas }).(pulumi.IntOutput)
+}
+
+// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+func (o GetEsIndexSpecPodOutput) Shards() pulumi.IntOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPod) int { return v.Shards }).(pulumi.IntOutput)
+}
+
+// The name of the collection to create an index from.
+func (o GetEsIndexSpecPodOutput) SourceCollection() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPod) string { return v.SourceCollection }).(pulumi.StringOutput)
+}
+
+type GetEsIndexSpecPodMetadataConfig struct {
+	// The indexed fields.
+	Indexeds []string `pulumi:"indexeds"`
+}
+
+// GetEsIndexSpecPodMetadataConfigInput is an input type that accepts GetEsIndexSpecPodMetadataConfigArgs and GetEsIndexSpecPodMetadataConfigOutput values.
+// You can construct a concrete instance of `GetEsIndexSpecPodMetadataConfigInput` via:
+//
+//	GetEsIndexSpecPodMetadataConfigArgs{...}
+type GetEsIndexSpecPodMetadataConfigInput interface {
+	pulumi.Input
+
+	ToGetEsIndexSpecPodMetadataConfigOutput() GetEsIndexSpecPodMetadataConfigOutput
+	ToGetEsIndexSpecPodMetadataConfigOutputWithContext(context.Context) GetEsIndexSpecPodMetadataConfigOutput
+}
+
+type GetEsIndexSpecPodMetadataConfigArgs struct {
+	// The indexed fields.
+	Indexeds pulumi.StringArrayInput `pulumi:"indexeds"`
+}
+
+func (GetEsIndexSpecPodMetadataConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpecPodMetadataConfig)(nil)).Elem()
+}
+
+func (i GetEsIndexSpecPodMetadataConfigArgs) ToGetEsIndexSpecPodMetadataConfigOutput() GetEsIndexSpecPodMetadataConfigOutput {
+	return i.ToGetEsIndexSpecPodMetadataConfigOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexSpecPodMetadataConfigArgs) ToGetEsIndexSpecPodMetadataConfigOutputWithContext(ctx context.Context) GetEsIndexSpecPodMetadataConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexSpecPodMetadataConfigOutput)
+}
+
+type GetEsIndexSpecPodMetadataConfigOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexSpecPodMetadataConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpecPodMetadataConfig)(nil)).Elem()
+}
+
+func (o GetEsIndexSpecPodMetadataConfigOutput) ToGetEsIndexSpecPodMetadataConfigOutput() GetEsIndexSpecPodMetadataConfigOutput {
+	return o
+}
+
+func (o GetEsIndexSpecPodMetadataConfigOutput) ToGetEsIndexSpecPodMetadataConfigOutputWithContext(ctx context.Context) GetEsIndexSpecPodMetadataConfigOutput {
+	return o
+}
+
+// The indexed fields.
+func (o GetEsIndexSpecPodMetadataConfigOutput) Indexeds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetEsIndexSpecPodMetadataConfig) []string { return v.Indexeds }).(pulumi.StringArrayOutput)
+}
+
+type GetEsIndexSpecServerless struct {
+	// Ready.
+	Cloud string `pulumi:"cloud"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	Region string `pulumi:"region"`
+}
+
+// GetEsIndexSpecServerlessInput is an input type that accepts GetEsIndexSpecServerlessArgs and GetEsIndexSpecServerlessOutput values.
+// You can construct a concrete instance of `GetEsIndexSpecServerlessInput` via:
+//
+//	GetEsIndexSpecServerlessArgs{...}
+type GetEsIndexSpecServerlessInput interface {
+	pulumi.Input
+
+	ToGetEsIndexSpecServerlessOutput() GetEsIndexSpecServerlessOutput
+	ToGetEsIndexSpecServerlessOutputWithContext(context.Context) GetEsIndexSpecServerlessOutput
+}
+
+type GetEsIndexSpecServerlessArgs struct {
+	// Ready.
+	Cloud pulumi.StringInput `pulumi:"cloud"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	Region pulumi.StringInput `pulumi:"region"`
+}
+
+func (GetEsIndexSpecServerlessArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpecServerless)(nil)).Elem()
+}
+
+func (i GetEsIndexSpecServerlessArgs) ToGetEsIndexSpecServerlessOutput() GetEsIndexSpecServerlessOutput {
+	return i.ToGetEsIndexSpecServerlessOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexSpecServerlessArgs) ToGetEsIndexSpecServerlessOutputWithContext(ctx context.Context) GetEsIndexSpecServerlessOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexSpecServerlessOutput)
+}
+
+type GetEsIndexSpecServerlessOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexSpecServerlessOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexSpecServerless)(nil)).Elem()
+}
+
+func (o GetEsIndexSpecServerlessOutput) ToGetEsIndexSpecServerlessOutput() GetEsIndexSpecServerlessOutput {
+	return o
+}
+
+func (o GetEsIndexSpecServerlessOutput) ToGetEsIndexSpecServerlessOutputWithContext(ctx context.Context) GetEsIndexSpecServerlessOutput {
+	return o
+}
+
+// Ready.
+func (o GetEsIndexSpecServerlessOutput) Cloud() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexSpecServerless) string { return v.Cloud }).(pulumi.StringOutput)
+}
+
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o GetEsIndexSpecServerlessOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexSpecServerless) string { return v.Region }).(pulumi.StringOutput)
+}
+
+type GetEsIndexStatus struct {
+	// Ready.
+	Ready bool `pulumi:"ready"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	State string `pulumi:"state"`
+}
+
+// GetEsIndexStatusInput is an input type that accepts GetEsIndexStatusArgs and GetEsIndexStatusOutput values.
+// You can construct a concrete instance of `GetEsIndexStatusInput` via:
+//
+//	GetEsIndexStatusArgs{...}
+type GetEsIndexStatusInput interface {
+	pulumi.Input
+
+	ToGetEsIndexStatusOutput() GetEsIndexStatusOutput
+	ToGetEsIndexStatusOutputWithContext(context.Context) GetEsIndexStatusOutput
+}
+
+type GetEsIndexStatusArgs struct {
+	// Ready.
+	Ready pulumi.BoolInput `pulumi:"ready"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	State pulumi.StringInput `pulumi:"state"`
+}
+
+func (GetEsIndexStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexStatus)(nil)).Elem()
+}
+
+func (i GetEsIndexStatusArgs) ToGetEsIndexStatusOutput() GetEsIndexStatusOutput {
+	return i.ToGetEsIndexStatusOutputWithContext(context.Background())
+}
+
+func (i GetEsIndexStatusArgs) ToGetEsIndexStatusOutputWithContext(ctx context.Context) GetEsIndexStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetEsIndexStatusOutput)
+}
+
+type GetEsIndexStatusOutput struct{ *pulumi.OutputState }
+
+func (GetEsIndexStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetEsIndexStatus)(nil)).Elem()
+}
+
+func (o GetEsIndexStatusOutput) ToGetEsIndexStatusOutput() GetEsIndexStatusOutput {
+	return o
+}
+
+func (o GetEsIndexStatusOutput) ToGetEsIndexStatusOutputWithContext(ctx context.Context) GetEsIndexStatusOutput {
+	return o
+}
+
+// Ready.
+func (o GetEsIndexStatusOutput) Ready() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetEsIndexStatus) bool { return v.Ready }).(pulumi.BoolOutput)
+}
+
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o GetEsIndexStatusOutput) State() pulumi.StringOutput {
+	return o.ApplyT(func(v GetEsIndexStatus) string { return v.State }).(pulumi.StringOutput)
+}
+
+type GetSpec struct {
+	// Configuration needed to deploy a pod-based index.
+	Pod GetSpecPod `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
+	Serverless GetSpecServerless `pulumi:"serverless"`
+}
+
+// GetSpecInput is an input type that accepts GetSpecArgs and GetSpecOutput values.
+// You can construct a concrete instance of `GetSpecInput` via:
+//
+//	GetSpecArgs{...}
+type GetSpecInput interface {
+	pulumi.Input
+
+	ToGetSpecOutput() GetSpecOutput
+	ToGetSpecOutputWithContext(context.Context) GetSpecOutput
+}
+
+type GetSpecArgs struct {
+	// Configuration needed to deploy a pod-based index.
+	Pod GetSpecPodInput `pulumi:"pod"`
+	// Configuration needed to deploy a serverless index.
+	Serverless GetSpecServerlessInput `pulumi:"serverless"`
+}
+
+func (GetSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpec)(nil)).Elem()
+}
+
+func (i GetSpecArgs) ToGetSpecOutput() GetSpecOutput {
+	return i.ToGetSpecOutputWithContext(context.Background())
+}
+
+func (i GetSpecArgs) ToGetSpecOutputWithContext(ctx context.Context) GetSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecOutput)
+}
+
+func (i GetSpecArgs) ToGetSpecPtrOutput() GetSpecPtrOutput {
+	return i.ToGetSpecPtrOutputWithContext(context.Background())
+}
+
+func (i GetSpecArgs) ToGetSpecPtrOutputWithContext(ctx context.Context) GetSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecOutput).ToGetSpecPtrOutputWithContext(ctx)
+}
+
+// GetSpecPtrInput is an input type that accepts GetSpecArgs, GetSpecPtr and GetSpecPtrOutput values.
+// You can construct a concrete instance of `GetSpecPtrInput` via:
+//
+//	        GetSpecArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSpecPtrInput interface {
+	pulumi.Input
+
+	ToGetSpecPtrOutput() GetSpecPtrOutput
+	ToGetSpecPtrOutputWithContext(context.Context) GetSpecPtrOutput
+}
+
+type getSpecPtrType GetSpecArgs
+
+func GetSpecPtr(v *GetSpecArgs) GetSpecPtrInput {
+	return (*getSpecPtrType)(v)
+}
+
+func (*getSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpec)(nil)).Elem()
+}
+
+func (i *getSpecPtrType) ToGetSpecPtrOutput() GetSpecPtrOutput {
+	return i.ToGetSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *getSpecPtrType) ToGetSpecPtrOutputWithContext(ctx context.Context) GetSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecPtrOutput)
+}
+
+type GetSpecOutput struct{ *pulumi.OutputState }
+
+func (GetSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpec)(nil)).Elem()
+}
+
+func (o GetSpecOutput) ToGetSpecOutput() GetSpecOutput {
+	return o
+}
+
+func (o GetSpecOutput) ToGetSpecOutputWithContext(ctx context.Context) GetSpecOutput {
+	return o
+}
+
+func (o GetSpecOutput) ToGetSpecPtrOutput() GetSpecPtrOutput {
+	return o.ToGetSpecPtrOutputWithContext(context.Background())
+}
+
+func (o GetSpecOutput) ToGetSpecPtrOutputWithContext(ctx context.Context) GetSpecPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSpec) *GetSpec {
+		return &v
+	}).(GetSpecPtrOutput)
+}
+
+// Configuration needed to deploy a pod-based index.
+func (o GetSpecOutput) Pod() GetSpecPodOutput {
+	return o.ApplyT(func(v GetSpec) GetSpecPod { return v.Pod }).(GetSpecPodOutput)
+}
+
+// Configuration needed to deploy a serverless index.
+func (o GetSpecOutput) Serverless() GetSpecServerlessOutput {
+	return o.ApplyT(func(v GetSpec) GetSpecServerless { return v.Serverless }).(GetSpecServerlessOutput)
+}
+
+type GetSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpec)(nil)).Elem()
+}
+
+func (o GetSpecPtrOutput) ToGetSpecPtrOutput() GetSpecPtrOutput {
+	return o
+}
+
+func (o GetSpecPtrOutput) ToGetSpecPtrOutputWithContext(ctx context.Context) GetSpecPtrOutput {
+	return o
+}
+
+func (o GetSpecPtrOutput) Elem() GetSpecOutput {
+	return o.ApplyT(func(v *GetSpec) GetSpec {
+		if v != nil {
+			return *v
+		}
+		var ret GetSpec
+		return ret
+	}).(GetSpecOutput)
+}
+
+// Configuration needed to deploy a pod-based index.
+func (o GetSpecPtrOutput) Pod() GetSpecPodPtrOutput {
+	return o.ApplyT(func(v *GetSpec) *GetSpecPod {
+		if v == nil {
+			return nil
+		}
+		return &v.Pod
+	}).(GetSpecPodPtrOutput)
+}
+
+// Configuration needed to deploy a serverless index.
+func (o GetSpecPtrOutput) Serverless() GetSpecServerlessPtrOutput {
+	return o.ApplyT(func(v *GetSpec) *GetSpecServerless {
+		if v == nil {
+			return nil
+		}
+		return &v.Serverless
+	}).(GetSpecServerlessPtrOutput)
+}
+
+type GetSpecPod struct {
+	// The environment where the index is hosted.
+	Environment string `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+	MetadataConfig GetSpecPodMetadataConfig `pulumi:"metadataConfig"`
+	// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+	PodType string `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to shards x replicas.'
+	Pods int `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas int `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards int `pulumi:"shards"`
+	// The name of the collection to create an index from.
+	SourceCollection string `pulumi:"sourceCollection"`
+}
+
+// GetSpecPodInput is an input type that accepts GetSpecPodArgs and GetSpecPodOutput values.
+// You can construct a concrete instance of `GetSpecPodInput` via:
+//
+//	GetSpecPodArgs{...}
+type GetSpecPodInput interface {
+	pulumi.Input
+
+	ToGetSpecPodOutput() GetSpecPodOutput
+	ToGetSpecPodOutputWithContext(context.Context) GetSpecPodOutput
+}
+
+type GetSpecPodArgs struct {
+	// The environment where the index is hosted.
+	Environment pulumi.StringInput `pulumi:"environment"`
+	// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+	MetadataConfig GetSpecPodMetadataConfigInput `pulumi:"metadataConfig"`
+	// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+	PodType pulumi.StringInput `pulumi:"podType"`
+	// The number of pods to be used in the index. This should be equal to shards x replicas.'
+	Pods pulumi.IntInput `pulumi:"pods"`
+	// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+	// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+	Shards pulumi.IntInput `pulumi:"shards"`
+	// The name of the collection to create an index from.
+	SourceCollection pulumi.StringInput `pulumi:"sourceCollection"`
+}
+
+func (GetSpecPodArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpecPod)(nil)).Elem()
+}
+
+func (i GetSpecPodArgs) ToGetSpecPodOutput() GetSpecPodOutput {
+	return i.ToGetSpecPodOutputWithContext(context.Background())
+}
+
+func (i GetSpecPodArgs) ToGetSpecPodOutputWithContext(ctx context.Context) GetSpecPodOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecPodOutput)
+}
+
+func (i GetSpecPodArgs) ToGetSpecPodPtrOutput() GetSpecPodPtrOutput {
+	return i.ToGetSpecPodPtrOutputWithContext(context.Background())
+}
+
+func (i GetSpecPodArgs) ToGetSpecPodPtrOutputWithContext(ctx context.Context) GetSpecPodPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecPodOutput).ToGetSpecPodPtrOutputWithContext(ctx)
+}
+
+// GetSpecPodPtrInput is an input type that accepts GetSpecPodArgs, GetSpecPodPtr and GetSpecPodPtrOutput values.
+// You can construct a concrete instance of `GetSpecPodPtrInput` via:
+//
+//	        GetSpecPodArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSpecPodPtrInput interface {
+	pulumi.Input
+
+	ToGetSpecPodPtrOutput() GetSpecPodPtrOutput
+	ToGetSpecPodPtrOutputWithContext(context.Context) GetSpecPodPtrOutput
+}
+
+type getSpecPodPtrType GetSpecPodArgs
+
+func GetSpecPodPtr(v *GetSpecPodArgs) GetSpecPodPtrInput {
+	return (*getSpecPodPtrType)(v)
+}
+
+func (*getSpecPodPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpecPod)(nil)).Elem()
+}
+
+func (i *getSpecPodPtrType) ToGetSpecPodPtrOutput() GetSpecPodPtrOutput {
+	return i.ToGetSpecPodPtrOutputWithContext(context.Background())
+}
+
+func (i *getSpecPodPtrType) ToGetSpecPodPtrOutputWithContext(ctx context.Context) GetSpecPodPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecPodPtrOutput)
+}
+
+type GetSpecPodOutput struct{ *pulumi.OutputState }
+
+func (GetSpecPodOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpecPod)(nil)).Elem()
+}
+
+func (o GetSpecPodOutput) ToGetSpecPodOutput() GetSpecPodOutput {
+	return o
+}
+
+func (o GetSpecPodOutput) ToGetSpecPodOutputWithContext(ctx context.Context) GetSpecPodOutput {
+	return o
+}
+
+func (o GetSpecPodOutput) ToGetSpecPodPtrOutput() GetSpecPodPtrOutput {
+	return o.ToGetSpecPodPtrOutputWithContext(context.Background())
+}
+
+func (o GetSpecPodOutput) ToGetSpecPodPtrOutputWithContext(ctx context.Context) GetSpecPodPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSpecPod) *GetSpecPod {
+		return &v
+	}).(GetSpecPodPtrOutput)
+}
+
+// The environment where the index is hosted.
+func (o GetSpecPodOutput) Environment() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSpecPod) string { return v.Environment }).(pulumi.StringOutput)
+}
+
+// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+func (o GetSpecPodOutput) MetadataConfig() GetSpecPodMetadataConfigOutput {
+	return o.ApplyT(func(v GetSpecPod) GetSpecPodMetadataConfig { return v.MetadataConfig }).(GetSpecPodMetadataConfigOutput)
+}
+
+// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+func (o GetSpecPodOutput) PodType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSpecPod) string { return v.PodType }).(pulumi.StringOutput)
+}
+
+// The number of pods to be used in the index. This should be equal to shards x replicas.'
+func (o GetSpecPodOutput) Pods() pulumi.IntOutput {
+	return o.ApplyT(func(v GetSpecPod) int { return v.Pods }).(pulumi.IntOutput)
+}
+
+// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+func (o GetSpecPodOutput) Replicas() pulumi.IntOutput {
+	return o.ApplyT(func(v GetSpecPod) int { return v.Replicas }).(pulumi.IntOutput)
+}
+
+// The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
+func (o GetSpecPodOutput) Shards() pulumi.IntOutput {
+	return o.ApplyT(func(v GetSpecPod) int { return v.Shards }).(pulumi.IntOutput)
+}
+
+// The name of the collection to create an index from.
+func (o GetSpecPodOutput) SourceCollection() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSpecPod) string { return v.SourceCollection }).(pulumi.StringOutput)
+}
+
+type GetSpecPodPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSpecPodPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpecPod)(nil)).Elem()
+}
+
+func (o GetSpecPodPtrOutput) ToGetSpecPodPtrOutput() GetSpecPodPtrOutput {
+	return o
+}
+
+func (o GetSpecPodPtrOutput) ToGetSpecPodPtrOutputWithContext(ctx context.Context) GetSpecPodPtrOutput {
+	return o
+}
+
+func (o GetSpecPodPtrOutput) Elem() GetSpecPodOutput {
+	return o.ApplyT(func(v *GetSpecPod) GetSpecPod {
+		if v != nil {
+			return *v
+		}
+		var ret GetSpecPod
+		return ret
+	}).(GetSpecPodOutput)
+}
+
+// The environment where the index is hosted.
+func (o GetSpecPodPtrOutput) Environment() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSpecPod) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Environment
+	}).(pulumi.StringPtrOutput)
+}
+
+// Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.
+func (o GetSpecPodPtrOutput) MetadataConfig() GetSpecPodMetadataConfigPtrOutput {
+	return o.ApplyT(func(v *GetSpecPod) *GetSpecPodMetadataConfig {
+		if v == nil {
+			return nil
+		}
+		return &v.MetadataConfig
+	}).(GetSpecPodMetadataConfigPtrOutput)
+}
+
+// The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.
+func (o GetSpecPodPtrOutput) PodType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSpecPod) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PodType
+	}).(pulumi.StringPtrOutput)
+}
+
+// The number of pods to be used in the index. This should be equal to shards x replicas.'
+func (o GetSpecPodPtrOutput) Pods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *GetSpecPod) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Pods
+	}).(pulumi.IntPtrOutput)
+}
+
+// The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.
+func (o GetSpecPodPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *GetSpecPod) *int {
 		if v == nil {
 			return nil
 		}
@@ -382,174 +2838,311 @@ func (o PineconePodSpecPtrOutput) Replicas() pulumi.IntPtrOutput {
 }
 
 // The number of shards. Shards split your data across multiple pods so you can fit more data into an index.
-func (o PineconePodSpecPtrOutput) Shards() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *PineconePodSpec) *int {
+func (o GetSpecPodPtrOutput) Shards() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *GetSpecPod) *int {
 		if v == nil {
 			return nil
 		}
-		return v.Shards
+		return &v.Shards
 	}).(pulumi.IntPtrOutput)
 }
 
-// The name of the collection to be used as the source for the index.
-func (o PineconePodSpecPtrOutput) SourceCollection() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *PineconePodSpec) *string {
+// The name of the collection to create an index from.
+func (o GetSpecPodPtrOutput) SourceCollection() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSpecPod) *string {
 		if v == nil {
 			return nil
 		}
-		return v.SourceCollection
+		return &v.SourceCollection
 	}).(pulumi.StringPtrOutput)
 }
 
-type PineconeServerlessSpec struct {
-	// The public cloud where you would like your index hosted.
-	Cloud ServerlessSpecCloud `pulumi:"cloud"`
-	// The region where you would like your index to be created. Different cloud providers have different regions available.
-	Region string `pulumi:"region"`
+type GetSpecPodMetadataConfig struct {
+	// The indexed fields.
+	Indexeds []string `pulumi:"indexeds"`
 }
 
-// PineconeServerlessSpecInput is an input type that accepts PineconeServerlessSpecArgs and PineconeServerlessSpecOutput values.
-// You can construct a concrete instance of `PineconeServerlessSpecInput` via:
+// GetSpecPodMetadataConfigInput is an input type that accepts GetSpecPodMetadataConfigArgs and GetSpecPodMetadataConfigOutput values.
+// You can construct a concrete instance of `GetSpecPodMetadataConfigInput` via:
 //
-//	PineconeServerlessSpecArgs{...}
-type PineconeServerlessSpecInput interface {
+//	GetSpecPodMetadataConfigArgs{...}
+type GetSpecPodMetadataConfigInput interface {
 	pulumi.Input
 
-	ToPineconeServerlessSpecOutput() PineconeServerlessSpecOutput
-	ToPineconeServerlessSpecOutputWithContext(context.Context) PineconeServerlessSpecOutput
+	ToGetSpecPodMetadataConfigOutput() GetSpecPodMetadataConfigOutput
+	ToGetSpecPodMetadataConfigOutputWithContext(context.Context) GetSpecPodMetadataConfigOutput
 }
 
-type PineconeServerlessSpecArgs struct {
-	// The public cloud where you would like your index hosted.
-	Cloud ServerlessSpecCloudInput `pulumi:"cloud"`
-	// The region where you would like your index to be created. Different cloud providers have different regions available.
-	Region pulumi.StringInput `pulumi:"region"`
+type GetSpecPodMetadataConfigArgs struct {
+	// The indexed fields.
+	Indexeds pulumi.StringArrayInput `pulumi:"indexeds"`
 }
 
-func (PineconeServerlessSpecArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*PineconeServerlessSpec)(nil)).Elem()
+func (GetSpecPodMetadataConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpecPodMetadataConfig)(nil)).Elem()
 }
 
-func (i PineconeServerlessSpecArgs) ToPineconeServerlessSpecOutput() PineconeServerlessSpecOutput {
-	return i.ToPineconeServerlessSpecOutputWithContext(context.Background())
+func (i GetSpecPodMetadataConfigArgs) ToGetSpecPodMetadataConfigOutput() GetSpecPodMetadataConfigOutput {
+	return i.ToGetSpecPodMetadataConfigOutputWithContext(context.Background())
 }
 
-func (i PineconeServerlessSpecArgs) ToPineconeServerlessSpecOutputWithContext(ctx context.Context) PineconeServerlessSpecOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PineconeServerlessSpecOutput)
+func (i GetSpecPodMetadataConfigArgs) ToGetSpecPodMetadataConfigOutputWithContext(ctx context.Context) GetSpecPodMetadataConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecPodMetadataConfigOutput)
 }
 
-func (i PineconeServerlessSpecArgs) ToPineconeServerlessSpecPtrOutput() PineconeServerlessSpecPtrOutput {
-	return i.ToPineconeServerlessSpecPtrOutputWithContext(context.Background())
+func (i GetSpecPodMetadataConfigArgs) ToGetSpecPodMetadataConfigPtrOutput() GetSpecPodMetadataConfigPtrOutput {
+	return i.ToGetSpecPodMetadataConfigPtrOutputWithContext(context.Background())
 }
 
-func (i PineconeServerlessSpecArgs) ToPineconeServerlessSpecPtrOutputWithContext(ctx context.Context) PineconeServerlessSpecPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PineconeServerlessSpecOutput).ToPineconeServerlessSpecPtrOutputWithContext(ctx)
+func (i GetSpecPodMetadataConfigArgs) ToGetSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) GetSpecPodMetadataConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecPodMetadataConfigOutput).ToGetSpecPodMetadataConfigPtrOutputWithContext(ctx)
 }
 
-// PineconeServerlessSpecPtrInput is an input type that accepts PineconeServerlessSpecArgs, PineconeServerlessSpecPtr and PineconeServerlessSpecPtrOutput values.
-// You can construct a concrete instance of `PineconeServerlessSpecPtrInput` via:
+// GetSpecPodMetadataConfigPtrInput is an input type that accepts GetSpecPodMetadataConfigArgs, GetSpecPodMetadataConfigPtr and GetSpecPodMetadataConfigPtrOutput values.
+// You can construct a concrete instance of `GetSpecPodMetadataConfigPtrInput` via:
 //
-//	        PineconeServerlessSpecArgs{...}
+//	        GetSpecPodMetadataConfigArgs{...}
 //
 //	or:
 //
 //	        nil
-type PineconeServerlessSpecPtrInput interface {
+type GetSpecPodMetadataConfigPtrInput interface {
 	pulumi.Input
 
-	ToPineconeServerlessSpecPtrOutput() PineconeServerlessSpecPtrOutput
-	ToPineconeServerlessSpecPtrOutputWithContext(context.Context) PineconeServerlessSpecPtrOutput
+	ToGetSpecPodMetadataConfigPtrOutput() GetSpecPodMetadataConfigPtrOutput
+	ToGetSpecPodMetadataConfigPtrOutputWithContext(context.Context) GetSpecPodMetadataConfigPtrOutput
 }
 
-type pineconeServerlessSpecPtrType PineconeServerlessSpecArgs
+type getSpecPodMetadataConfigPtrType GetSpecPodMetadataConfigArgs
 
-func PineconeServerlessSpecPtr(v *PineconeServerlessSpecArgs) PineconeServerlessSpecPtrInput {
-	return (*pineconeServerlessSpecPtrType)(v)
+func GetSpecPodMetadataConfigPtr(v *GetSpecPodMetadataConfigArgs) GetSpecPodMetadataConfigPtrInput {
+	return (*getSpecPodMetadataConfigPtrType)(v)
 }
 
-func (*pineconeServerlessSpecPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**PineconeServerlessSpec)(nil)).Elem()
+func (*getSpecPodMetadataConfigPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpecPodMetadataConfig)(nil)).Elem()
 }
 
-func (i *pineconeServerlessSpecPtrType) ToPineconeServerlessSpecPtrOutput() PineconeServerlessSpecPtrOutput {
-	return i.ToPineconeServerlessSpecPtrOutputWithContext(context.Background())
+func (i *getSpecPodMetadataConfigPtrType) ToGetSpecPodMetadataConfigPtrOutput() GetSpecPodMetadataConfigPtrOutput {
+	return i.ToGetSpecPodMetadataConfigPtrOutputWithContext(context.Background())
 }
 
-func (i *pineconeServerlessSpecPtrType) ToPineconeServerlessSpecPtrOutputWithContext(ctx context.Context) PineconeServerlessSpecPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PineconeServerlessSpecPtrOutput)
+func (i *getSpecPodMetadataConfigPtrType) ToGetSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) GetSpecPodMetadataConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecPodMetadataConfigPtrOutput)
 }
 
-type PineconeServerlessSpecOutput struct{ *pulumi.OutputState }
+type GetSpecPodMetadataConfigOutput struct{ *pulumi.OutputState }
 
-func (PineconeServerlessSpecOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*PineconeServerlessSpec)(nil)).Elem()
+func (GetSpecPodMetadataConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpecPodMetadataConfig)(nil)).Elem()
 }
 
-func (o PineconeServerlessSpecOutput) ToPineconeServerlessSpecOutput() PineconeServerlessSpecOutput {
+func (o GetSpecPodMetadataConfigOutput) ToGetSpecPodMetadataConfigOutput() GetSpecPodMetadataConfigOutput {
 	return o
 }
 
-func (o PineconeServerlessSpecOutput) ToPineconeServerlessSpecOutputWithContext(ctx context.Context) PineconeServerlessSpecOutput {
+func (o GetSpecPodMetadataConfigOutput) ToGetSpecPodMetadataConfigOutputWithContext(ctx context.Context) GetSpecPodMetadataConfigOutput {
 	return o
 }
 
-func (o PineconeServerlessSpecOutput) ToPineconeServerlessSpecPtrOutput() PineconeServerlessSpecPtrOutput {
-	return o.ToPineconeServerlessSpecPtrOutputWithContext(context.Background())
+func (o GetSpecPodMetadataConfigOutput) ToGetSpecPodMetadataConfigPtrOutput() GetSpecPodMetadataConfigPtrOutput {
+	return o.ToGetSpecPodMetadataConfigPtrOutputWithContext(context.Background())
 }
 
-func (o PineconeServerlessSpecOutput) ToPineconeServerlessSpecPtrOutputWithContext(ctx context.Context) PineconeServerlessSpecPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v PineconeServerlessSpec) *PineconeServerlessSpec {
+func (o GetSpecPodMetadataConfigOutput) ToGetSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) GetSpecPodMetadataConfigPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSpecPodMetadataConfig) *GetSpecPodMetadataConfig {
 		return &v
-	}).(PineconeServerlessSpecPtrOutput)
+	}).(GetSpecPodMetadataConfigPtrOutput)
 }
 
-// The public cloud where you would like your index hosted.
-func (o PineconeServerlessSpecOutput) Cloud() ServerlessSpecCloudOutput {
-	return o.ApplyT(func(v PineconeServerlessSpec) ServerlessSpecCloud { return v.Cloud }).(ServerlessSpecCloudOutput)
+// The indexed fields.
+func (o GetSpecPodMetadataConfigOutput) Indexeds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetSpecPodMetadataConfig) []string { return v.Indexeds }).(pulumi.StringArrayOutput)
 }
 
-// The region where you would like your index to be created. Different cloud providers have different regions available.
-func (o PineconeServerlessSpecOutput) Region() pulumi.StringOutput {
-	return o.ApplyT(func(v PineconeServerlessSpec) string { return v.Region }).(pulumi.StringOutput)
+type GetSpecPodMetadataConfigPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSpecPodMetadataConfigPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpecPodMetadataConfig)(nil)).Elem()
 }
 
-type PineconeServerlessSpecPtrOutput struct{ *pulumi.OutputState }
-
-func (PineconeServerlessSpecPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**PineconeServerlessSpec)(nil)).Elem()
-}
-
-func (o PineconeServerlessSpecPtrOutput) ToPineconeServerlessSpecPtrOutput() PineconeServerlessSpecPtrOutput {
+func (o GetSpecPodMetadataConfigPtrOutput) ToGetSpecPodMetadataConfigPtrOutput() GetSpecPodMetadataConfigPtrOutput {
 	return o
 }
 
-func (o PineconeServerlessSpecPtrOutput) ToPineconeServerlessSpecPtrOutputWithContext(ctx context.Context) PineconeServerlessSpecPtrOutput {
+func (o GetSpecPodMetadataConfigPtrOutput) ToGetSpecPodMetadataConfigPtrOutputWithContext(ctx context.Context) GetSpecPodMetadataConfigPtrOutput {
 	return o
 }
 
-func (o PineconeServerlessSpecPtrOutput) Elem() PineconeServerlessSpecOutput {
-	return o.ApplyT(func(v *PineconeServerlessSpec) PineconeServerlessSpec {
+func (o GetSpecPodMetadataConfigPtrOutput) Elem() GetSpecPodMetadataConfigOutput {
+	return o.ApplyT(func(v *GetSpecPodMetadataConfig) GetSpecPodMetadataConfig {
 		if v != nil {
 			return *v
 		}
-		var ret PineconeServerlessSpec
+		var ret GetSpecPodMetadataConfig
 		return ret
-	}).(PineconeServerlessSpecOutput)
+	}).(GetSpecPodMetadataConfigOutput)
 }
 
-// The public cloud where you would like your index hosted.
-func (o PineconeServerlessSpecPtrOutput) Cloud() ServerlessSpecCloudPtrOutput {
-	return o.ApplyT(func(v *PineconeServerlessSpec) *ServerlessSpecCloud {
+// The indexed fields.
+func (o GetSpecPodMetadataConfigPtrOutput) Indexeds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *GetSpecPodMetadataConfig) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Indexeds
+	}).(pulumi.StringArrayOutput)
+}
+
+type GetSpecServerless struct {
+	// Ready.
+	Cloud string `pulumi:"cloud"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	Region string `pulumi:"region"`
+}
+
+// GetSpecServerlessInput is an input type that accepts GetSpecServerlessArgs and GetSpecServerlessOutput values.
+// You can construct a concrete instance of `GetSpecServerlessInput` via:
+//
+//	GetSpecServerlessArgs{...}
+type GetSpecServerlessInput interface {
+	pulumi.Input
+
+	ToGetSpecServerlessOutput() GetSpecServerlessOutput
+	ToGetSpecServerlessOutputWithContext(context.Context) GetSpecServerlessOutput
+}
+
+type GetSpecServerlessArgs struct {
+	// Ready.
+	Cloud pulumi.StringInput `pulumi:"cloud"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	Region pulumi.StringInput `pulumi:"region"`
+}
+
+func (GetSpecServerlessArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpecServerless)(nil)).Elem()
+}
+
+func (i GetSpecServerlessArgs) ToGetSpecServerlessOutput() GetSpecServerlessOutput {
+	return i.ToGetSpecServerlessOutputWithContext(context.Background())
+}
+
+func (i GetSpecServerlessArgs) ToGetSpecServerlessOutputWithContext(ctx context.Context) GetSpecServerlessOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecServerlessOutput)
+}
+
+func (i GetSpecServerlessArgs) ToGetSpecServerlessPtrOutput() GetSpecServerlessPtrOutput {
+	return i.ToGetSpecServerlessPtrOutputWithContext(context.Background())
+}
+
+func (i GetSpecServerlessArgs) ToGetSpecServerlessPtrOutputWithContext(ctx context.Context) GetSpecServerlessPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecServerlessOutput).ToGetSpecServerlessPtrOutputWithContext(ctx)
+}
+
+// GetSpecServerlessPtrInput is an input type that accepts GetSpecServerlessArgs, GetSpecServerlessPtr and GetSpecServerlessPtrOutput values.
+// You can construct a concrete instance of `GetSpecServerlessPtrInput` via:
+//
+//	        GetSpecServerlessArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSpecServerlessPtrInput interface {
+	pulumi.Input
+
+	ToGetSpecServerlessPtrOutput() GetSpecServerlessPtrOutput
+	ToGetSpecServerlessPtrOutputWithContext(context.Context) GetSpecServerlessPtrOutput
+}
+
+type getSpecServerlessPtrType GetSpecServerlessArgs
+
+func GetSpecServerlessPtr(v *GetSpecServerlessArgs) GetSpecServerlessPtrInput {
+	return (*getSpecServerlessPtrType)(v)
+}
+
+func (*getSpecServerlessPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpecServerless)(nil)).Elem()
+}
+
+func (i *getSpecServerlessPtrType) ToGetSpecServerlessPtrOutput() GetSpecServerlessPtrOutput {
+	return i.ToGetSpecServerlessPtrOutputWithContext(context.Background())
+}
+
+func (i *getSpecServerlessPtrType) ToGetSpecServerlessPtrOutputWithContext(ctx context.Context) GetSpecServerlessPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSpecServerlessPtrOutput)
+}
+
+type GetSpecServerlessOutput struct{ *pulumi.OutputState }
+
+func (GetSpecServerlessOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSpecServerless)(nil)).Elem()
+}
+
+func (o GetSpecServerlessOutput) ToGetSpecServerlessOutput() GetSpecServerlessOutput {
+	return o
+}
+
+func (o GetSpecServerlessOutput) ToGetSpecServerlessOutputWithContext(ctx context.Context) GetSpecServerlessOutput {
+	return o
+}
+
+func (o GetSpecServerlessOutput) ToGetSpecServerlessPtrOutput() GetSpecServerlessPtrOutput {
+	return o.ToGetSpecServerlessPtrOutputWithContext(context.Background())
+}
+
+func (o GetSpecServerlessOutput) ToGetSpecServerlessPtrOutputWithContext(ctx context.Context) GetSpecServerlessPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSpecServerless) *GetSpecServerless {
+		return &v
+	}).(GetSpecServerlessPtrOutput)
+}
+
+// Ready.
+func (o GetSpecServerlessOutput) Cloud() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSpecServerless) string { return v.Cloud }).(pulumi.StringOutput)
+}
+
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o GetSpecServerlessOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSpecServerless) string { return v.Region }).(pulumi.StringOutput)
+}
+
+type GetSpecServerlessPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSpecServerlessPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSpecServerless)(nil)).Elem()
+}
+
+func (o GetSpecServerlessPtrOutput) ToGetSpecServerlessPtrOutput() GetSpecServerlessPtrOutput {
+	return o
+}
+
+func (o GetSpecServerlessPtrOutput) ToGetSpecServerlessPtrOutputWithContext(ctx context.Context) GetSpecServerlessPtrOutput {
+	return o
+}
+
+func (o GetSpecServerlessPtrOutput) Elem() GetSpecServerlessOutput {
+	return o.ApplyT(func(v *GetSpecServerless) GetSpecServerless {
+		if v != nil {
+			return *v
+		}
+		var ret GetSpecServerless
+		return ret
+	}).(GetSpecServerlessOutput)
+}
+
+// Ready.
+func (o GetSpecServerlessPtrOutput) Cloud() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSpecServerless) *string {
 		if v == nil {
 			return nil
 		}
 		return &v.Cloud
-	}).(ServerlessSpecCloudPtrOutput)
+	}).(pulumi.StringPtrOutput)
 }
 
-// The region where you would like your index to be created. Different cloud providers have different regions available.
-func (o PineconeServerlessSpecPtrOutput) Region() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *PineconeServerlessSpec) *string {
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o GetSpecServerlessPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSpecServerless) *string {
 		if v == nil {
 			return nil
 		}
@@ -557,80 +3150,237 @@ func (o PineconeServerlessSpecPtrOutput) Region() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-type PineconeSpec struct {
-	// Configuration needed to deploy a pod index.
-	Pod *PineconePodSpec `pulumi:"pod"`
-	// Configuration needed to deploy a serverless index.
-	Serverless *PineconeServerlessSpec `pulumi:"serverless"`
+type GetStatus struct {
+	// Ready.
+	Ready bool `pulumi:"ready"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	State string `pulumi:"state"`
 }
 
-// PineconeSpecInput is an input type that accepts PineconeSpecArgs and PineconeSpecOutput values.
-// You can construct a concrete instance of `PineconeSpecInput` via:
+// GetStatusInput is an input type that accepts GetStatusArgs and GetStatusOutput values.
+// You can construct a concrete instance of `GetStatusInput` via:
 //
-//	PineconeSpecArgs{...}
-type PineconeSpecInput interface {
+//	GetStatusArgs{...}
+type GetStatusInput interface {
 	pulumi.Input
 
-	ToPineconeSpecOutput() PineconeSpecOutput
-	ToPineconeSpecOutputWithContext(context.Context) PineconeSpecOutput
+	ToGetStatusOutput() GetStatusOutput
+	ToGetStatusOutputWithContext(context.Context) GetStatusOutput
 }
 
-type PineconeSpecArgs struct {
-	// Configuration needed to deploy a pod index.
-	Pod PineconePodSpecPtrInput `pulumi:"pod"`
-	// Configuration needed to deploy a serverless index.
-	Serverless PineconeServerlessSpecPtrInput `pulumi:"serverless"`
+type GetStatusArgs struct {
+	// Ready.
+	Ready pulumi.BoolInput `pulumi:"ready"`
+	// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+	State pulumi.StringInput `pulumi:"state"`
 }
 
-func (PineconeSpecArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*PineconeSpec)(nil)).Elem()
+func (GetStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetStatus)(nil)).Elem()
 }
 
-func (i PineconeSpecArgs) ToPineconeSpecOutput() PineconeSpecOutput {
-	return i.ToPineconeSpecOutputWithContext(context.Background())
+func (i GetStatusArgs) ToGetStatusOutput() GetStatusOutput {
+	return i.ToGetStatusOutputWithContext(context.Background())
 }
 
-func (i PineconeSpecArgs) ToPineconeSpecOutputWithContext(ctx context.Context) PineconeSpecOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PineconeSpecOutput)
+func (i GetStatusArgs) ToGetStatusOutputWithContext(ctx context.Context) GetStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetStatusOutput)
 }
 
-type PineconeSpecOutput struct{ *pulumi.OutputState }
-
-func (PineconeSpecOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*PineconeSpec)(nil)).Elem()
+func (i GetStatusArgs) ToGetStatusPtrOutput() GetStatusPtrOutput {
+	return i.ToGetStatusPtrOutputWithContext(context.Background())
 }
 
-func (o PineconeSpecOutput) ToPineconeSpecOutput() PineconeSpecOutput {
+func (i GetStatusArgs) ToGetStatusPtrOutputWithContext(ctx context.Context) GetStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetStatusOutput).ToGetStatusPtrOutputWithContext(ctx)
+}
+
+// GetStatusPtrInput is an input type that accepts GetStatusArgs, GetStatusPtr and GetStatusPtrOutput values.
+// You can construct a concrete instance of `GetStatusPtrInput` via:
+//
+//	        GetStatusArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetStatusPtrInput interface {
+	pulumi.Input
+
+	ToGetStatusPtrOutput() GetStatusPtrOutput
+	ToGetStatusPtrOutputWithContext(context.Context) GetStatusPtrOutput
+}
+
+type getStatusPtrType GetStatusArgs
+
+func GetStatusPtr(v *GetStatusArgs) GetStatusPtrInput {
+	return (*getStatusPtrType)(v)
+}
+
+func (*getStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetStatus)(nil)).Elem()
+}
+
+func (i *getStatusPtrType) ToGetStatusPtrOutput() GetStatusPtrOutput {
+	return i.ToGetStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *getStatusPtrType) ToGetStatusPtrOutputWithContext(ctx context.Context) GetStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetStatusPtrOutput)
+}
+
+type GetStatusOutput struct{ *pulumi.OutputState }
+
+func (GetStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetStatus)(nil)).Elem()
+}
+
+func (o GetStatusOutput) ToGetStatusOutput() GetStatusOutput {
 	return o
 }
 
-func (o PineconeSpecOutput) ToPineconeSpecOutputWithContext(ctx context.Context) PineconeSpecOutput {
+func (o GetStatusOutput) ToGetStatusOutputWithContext(ctx context.Context) GetStatusOutput {
 	return o
 }
 
-// Configuration needed to deploy a pod index.
-func (o PineconeSpecOutput) Pod() PineconePodSpecPtrOutput {
-	return o.ApplyT(func(v PineconeSpec) *PineconePodSpec { return v.Pod }).(PineconePodSpecPtrOutput)
+func (o GetStatusOutput) ToGetStatusPtrOutput() GetStatusPtrOutput {
+	return o.ToGetStatusPtrOutputWithContext(context.Background())
 }
 
-// Configuration needed to deploy a serverless index.
-func (o PineconeSpecOutput) Serverless() PineconeServerlessSpecPtrOutput {
-	return o.ApplyT(func(v PineconeSpec) *PineconeServerlessSpec { return v.Serverless }).(PineconeServerlessSpecPtrOutput)
+func (o GetStatusOutput) ToGetStatusPtrOutputWithContext(ctx context.Context) GetStatusPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetStatus) *GetStatus {
+		return &v
+	}).(GetStatusPtrOutput)
+}
+
+// Ready.
+func (o GetStatusOutput) Ready() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetStatus) bool { return v.Ready }).(pulumi.BoolOutput)
+}
+
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o GetStatusOutput) State() pulumi.StringOutput {
+	return o.ApplyT(func(v GetStatus) string { return v.State }).(pulumi.StringOutput)
+}
+
+type GetStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (GetStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetStatus)(nil)).Elem()
+}
+
+func (o GetStatusPtrOutput) ToGetStatusPtrOutput() GetStatusPtrOutput {
+	return o
+}
+
+func (o GetStatusPtrOutput) ToGetStatusPtrOutputWithContext(ctx context.Context) GetStatusPtrOutput {
+	return o
+}
+
+func (o GetStatusPtrOutput) Elem() GetStatusOutput {
+	return o.ApplyT(func(v *GetStatus) GetStatus {
+		if v != nil {
+			return *v
+		}
+		var ret GetStatus
+		return ret
+	}).(GetStatusOutput)
+}
+
+// Ready.
+func (o GetStatusPtrOutput) Ready() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.Ready
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready
+func (o GetStatusPtrOutput) State() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.State
+	}).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*MetaDataConfigInput)(nil)).Elem(), MetaDataConfigArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*MetaDataConfigPtrInput)(nil)).Elem(), MetaDataConfigArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*PineconePodSpecInput)(nil)).Elem(), PineconePodSpecArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*PineconePodSpecPtrInput)(nil)).Elem(), PineconePodSpecArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*PineconeServerlessSpecInput)(nil)).Elem(), PineconeServerlessSpecArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*PineconeServerlessSpecPtrInput)(nil)).Elem(), PineconeServerlessSpecArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*PineconeSpecInput)(nil)).Elem(), PineconeSpecArgs{})
-	pulumi.RegisterOutputType(MetaDataConfigOutput{})
-	pulumi.RegisterOutputType(MetaDataConfigPtrOutput{})
-	pulumi.RegisterOutputType(PineconePodSpecOutput{})
-	pulumi.RegisterOutputType(PineconePodSpecPtrOutput{})
-	pulumi.RegisterOutputType(PineconeServerlessSpecOutput{})
-	pulumi.RegisterOutputType(PineconeServerlessSpecPtrOutput{})
-	pulumi.RegisterOutputType(PineconeSpecOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CollectionTimeoutsInput)(nil)).Elem(), CollectionTimeoutsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CollectionTimeoutsPtrInput)(nil)).Elem(), CollectionTimeoutsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexEmbedInput)(nil)).Elem(), IndexEmbedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexEmbedPtrInput)(nil)).Elem(), IndexEmbedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecInput)(nil)).Elem(), IndexSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecPtrInput)(nil)).Elem(), IndexSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecPodInput)(nil)).Elem(), IndexSpecPodArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecPodPtrInput)(nil)).Elem(), IndexSpecPodArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecPodMetadataConfigInput)(nil)).Elem(), IndexSpecPodMetadataConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecPodMetadataConfigPtrInput)(nil)).Elem(), IndexSpecPodMetadataConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecServerlessInput)(nil)).Elem(), IndexSpecServerlessArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexSpecServerlessPtrInput)(nil)).Elem(), IndexSpecServerlessArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexStatusInput)(nil)).Elem(), IndexStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexStatusPtrInput)(nil)).Elem(), IndexStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexTimeoutsInput)(nil)).Elem(), IndexTimeoutsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IndexTimeoutsPtrInput)(nil)).Elem(), IndexTimeoutsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetCollectionsCollectionInput)(nil)).Elem(), GetCollectionsCollectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetCollectionsCollectionArrayInput)(nil)).Elem(), GetCollectionsCollectionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEmbedInput)(nil)).Elem(), GetEmbedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEmbedPtrInput)(nil)).Elem(), GetEmbedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexInput)(nil)).Elem(), GetEsIndexArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexArrayInput)(nil)).Elem(), GetEsIndexArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexEmbedInput)(nil)).Elem(), GetEsIndexEmbedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexSpecInput)(nil)).Elem(), GetEsIndexSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexSpecPodInput)(nil)).Elem(), GetEsIndexSpecPodArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexSpecPodMetadataConfigInput)(nil)).Elem(), GetEsIndexSpecPodMetadataConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexSpecServerlessInput)(nil)).Elem(), GetEsIndexSpecServerlessArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetEsIndexStatusInput)(nil)).Elem(), GetEsIndexStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecInput)(nil)).Elem(), GetSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecPtrInput)(nil)).Elem(), GetSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecPodInput)(nil)).Elem(), GetSpecPodArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecPodPtrInput)(nil)).Elem(), GetSpecPodArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecPodMetadataConfigInput)(nil)).Elem(), GetSpecPodMetadataConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecPodMetadataConfigPtrInput)(nil)).Elem(), GetSpecPodMetadataConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecServerlessInput)(nil)).Elem(), GetSpecServerlessArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSpecServerlessPtrInput)(nil)).Elem(), GetSpecServerlessArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetStatusInput)(nil)).Elem(), GetStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetStatusPtrInput)(nil)).Elem(), GetStatusArgs{})
+	pulumi.RegisterOutputType(CollectionTimeoutsOutput{})
+	pulumi.RegisterOutputType(CollectionTimeoutsPtrOutput{})
+	pulumi.RegisterOutputType(IndexEmbedOutput{})
+	pulumi.RegisterOutputType(IndexEmbedPtrOutput{})
+	pulumi.RegisterOutputType(IndexSpecOutput{})
+	pulumi.RegisterOutputType(IndexSpecPtrOutput{})
+	pulumi.RegisterOutputType(IndexSpecPodOutput{})
+	pulumi.RegisterOutputType(IndexSpecPodPtrOutput{})
+	pulumi.RegisterOutputType(IndexSpecPodMetadataConfigOutput{})
+	pulumi.RegisterOutputType(IndexSpecPodMetadataConfigPtrOutput{})
+	pulumi.RegisterOutputType(IndexSpecServerlessOutput{})
+	pulumi.RegisterOutputType(IndexSpecServerlessPtrOutput{})
+	pulumi.RegisterOutputType(IndexStatusOutput{})
+	pulumi.RegisterOutputType(IndexStatusPtrOutput{})
+	pulumi.RegisterOutputType(IndexTimeoutsOutput{})
+	pulumi.RegisterOutputType(IndexTimeoutsPtrOutput{})
+	pulumi.RegisterOutputType(GetCollectionsCollectionOutput{})
+	pulumi.RegisterOutputType(GetCollectionsCollectionArrayOutput{})
+	pulumi.RegisterOutputType(GetEmbedOutput{})
+	pulumi.RegisterOutputType(GetEmbedPtrOutput{})
+	pulumi.RegisterOutputType(GetEsIndexOutput{})
+	pulumi.RegisterOutputType(GetEsIndexArrayOutput{})
+	pulumi.RegisterOutputType(GetEsIndexEmbedOutput{})
+	pulumi.RegisterOutputType(GetEsIndexSpecOutput{})
+	pulumi.RegisterOutputType(GetEsIndexSpecPodOutput{})
+	pulumi.RegisterOutputType(GetEsIndexSpecPodMetadataConfigOutput{})
+	pulumi.RegisterOutputType(GetEsIndexSpecServerlessOutput{})
+	pulumi.RegisterOutputType(GetEsIndexStatusOutput{})
+	pulumi.RegisterOutputType(GetSpecOutput{})
+	pulumi.RegisterOutputType(GetSpecPtrOutput{})
+	pulumi.RegisterOutputType(GetSpecPodOutput{})
+	pulumi.RegisterOutputType(GetSpecPodPtrOutput{})
+	pulumi.RegisterOutputType(GetSpecPodMetadataConfigOutput{})
+	pulumi.RegisterOutputType(GetSpecPodMetadataConfigPtrOutput{})
+	pulumi.RegisterOutputType(GetSpecServerlessOutput{})
+	pulumi.RegisterOutputType(GetSpecServerlessPtrOutput{})
+	pulumi.RegisterOutputType(GetStatusOutput{})
+	pulumi.RegisterOutputType(GetStatusPtrOutput{})
 }

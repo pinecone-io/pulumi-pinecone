@@ -11,7 +11,15 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
-// The API token for Pinecone.
-func GetAPIKey(ctx *pulumi.Context) string {
-	return config.Get(ctx, "pinecone:apikey")
+// Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
+func GetApiKey(ctx *pulumi.Context) string {
+	v, err := config.Try(ctx, "pinecone:apiKey")
+	if err == nil {
+		return v
+	}
+	var value string
+	if d := internal.GetEnvOrDefault(nil, nil, "PINECONE_API_KEY"); d != nil {
+		value = d.(string)
+	}
+	return value
 }

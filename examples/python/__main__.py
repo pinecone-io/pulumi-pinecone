@@ -1,19 +1,14 @@
 import pulumi
 import pinecone_pulumi as pinecone
 
-pinecone_index = pinecone.PineconeIndex(
-    "my-index",
-    name="my-index",
-    spec=pinecone.PineconeSpecArgs(
-        pod=pinecone.PineconePodSpecArgs(
-            environment="gcp-starter",
-            pod_type="starter",
-            replicas=1,
-        ),
-    ),
-    metric="cosine",
-    dimension=1536,
-) 
-pulumi.export("output", {
-    "value": pinecone_index.host,
-})
+my_pinecone_index = pinecone.Index("myPineconeIndex",
+    name="example-index",
+    dimension=10,
+    spec={
+        "serverless": {
+            "cloud": "aws",
+            "region": "us-east-1",
+        },
+    })
+pulumi.export("name", my_pinecone_index.name)
+pulumi.export("host", my_pinecone_index.host)

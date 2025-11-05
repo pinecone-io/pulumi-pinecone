@@ -1,0 +1,31 @@
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+jobs:
+  upgrade_provider:
+    if: ${{ (contains(github.event.issue.title, 'Upgrade terraform-provider-')) || github.event_name == 'workflow_dispatch' }}
+    name: upgrade-provider
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup mise
+      uses: jdx/mise-action@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        cache_key: "mise-{{platform}}-{{file_hash}}"
+        # only saving the cache in the prerequisites job
+        cache_save: false
+    - name: Call upgrade provider action
+      uses: pulumi/pulumi-upgrade-provider-action@e247104aede3eb4641f48c8ad0ea9de9346f2457 # v0.0.18
+      with:
+        kind: all
+        email: botdirien.de
+        username: dirien-bot
+name: Upgrade provider
+
+permissions:
+  contents: write
+
+on:
+  issues:
+    types:
+    - opened
+  workflow_dispatch: {}

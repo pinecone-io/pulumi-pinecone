@@ -1,385 +1,1266 @@
 {
-    "config": {
-        "variables": {
-            "APIKey": {
-                "description": "The API token for Pinecone.",
-                "secret": true,
-                "type": "string"
-            }
-        }
-    },
-    "description": "A Pulumi native provider for Pinecone",
+    "name": "pinecone",
     "displayName": "Pinecone",
-    "functions": {
-        "pinecone:index:lookupPineconeCollection": {
-            "description": "The result of a get operation on a Pinecone collection.",
-            "inputs": {
-                "properties": {
-                    "name": {
-                        "description": "The name of the Pinecone collection.",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "name"
-                ],
-                "type": "object"
-            },
-            "outputs": {
-                "description": "The result of a get operation on a Pinecone collection.",
-                "properties": {
-                    "dimension": {
-                        "description": "The dimension of the vectors stored in each record held in the collection.",
-                        "type": "integer"
-                    },
-                    "environment": {
-                        "description": "The environment where the collection is hosted.",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "The name of the collection to be created.",
-                        "type": "string"
-                    },
-                    "size": {
-                        "description": "The size of the collection in bytes.",
-                        "type": "integer"
-                    },
-                    "source": {
-                        "description": "The name of the index to be used as the source for the collection.",
-                        "type": "string"
-                    },
-                    "vectorCount": {
-                        "description": "The number of records stored in the collection.",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "name",
-                    "source",
-                    "size",
-                    "dimension",
-                    "vectorCount",
-                    "environment"
-                ],
-                "type": "object"
-            }
-        },
-        "pinecone:index:lookupPineconeIndex": {
-            "inputs": {
-                "properties": {
-                    "name": {
-                        "description": "The name of the Pinecone index.",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "name"
-                ],
-                "type": "object"
-            },
-            "outputs": {
-                "properties": {
-                    "dimension": {
-                        "description": "The dimensions of the vectors in the index. Defaults to 1536.",
-                        "type": "integer"
-                    },
-                    "host": {
-                        "description": "The host of the index.",
-                        "type": "string"
-                    },
-                    "metric": {
-                        "$ref": "#/types/pinecone:index:IndexMetric",
-                        "description": "The metric used to compute the distance between vectors."
-                    },
-                    "name": {
-                        "description": "The name of the Pinecone index.",
-                        "type": "string"
-                    },
-                    "spec": {
-                        "$ref": "#/types/pinecone:index:PineconeSpec",
-                        "description": "Describe how the index should be deployed."
-                    },
-                    "status": {
-                        "description": "The status of the index.",
-                        "type": "boolean"
-                    }
-                },
-                "required": [
-                    "name",
-                    "metric",
-                    "spec",
-                    "host",
-                    "status"
-                ],
-                "type": "object"
-            }
-        }
-    },
-    "homepage": "https://www.pinecone.io",
+    "description": "A Pulumi package for creating and managing Pinecone resources.",
     "keywords": [
         "pulumi",
         "pinecone",
         "category/utility",
         "kind/native"
     ],
+    "homepage": "https://www.pinecone.io",
+    "license": "Apache-2.0",
+    "attribution": "This Pulumi package is based on the [`pinecone` Terraform Provider](https://github.com/pinecone-io/terraform-provider-pinecone).",
+    "repository": "https://github.com/pinecone-io/pulumi-pinecone",
+    "pluginDownloadURL": "github://api.github.com/pinecone-io/pulumi-pinecone",
+    "publisher": "pinecone-io",
+    "meta": {
+        "moduleFormat": "(.*)(?:/[^/]*)"
+    },
     "language": {
         "csharp": {
             "packageReferences": {
                 "Pulumi": "3.*"
             },
+            "compatibility": "tfbridge20",
             "rootNamespace": "PineconeDatabase"
         },
         "go": {
+            "importBasePath": "github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone",
             "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone"
+            "generateExtraInputTypes": true
         },
         "nodejs": {
+            "packageName": "@pinecone-database/pulumi",
+            "packageDescription": "A Pulumi package for creating and managing Pinecone resources.",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/pinecone-io/terraform-provider-pinecone)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-pinecone` repo](https://github.com/pinecone-io/pulumi-pinecone/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-pinecone` repo](https://github.com/pinecone-io/terraform-provider-pinecone/issues).",
             "dependencies": {
                 "@pulumi/pulumi": "^3.0.0"
             },
-            "packageName": "@pinecone-database/pulumi"
+            "devDependencies": {
+                "@types/mime": "^2.0.0",
+                "@types/node": "^10.0.0"
+            },
+            "compatibility": "tfbridge20",
+            "disableUnionOutputTypes": true
         },
         "python": {
             "packageName": "pinecone_pulumi",
             "requires": {
-                "pulumi": ">=3.0.0,<4.0.0"
-            }
+                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
+            },
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/pinecone-io/terraform-provider-pinecone)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-pinecone` repo](https://github.com/pinecone-io/pulumi-pinecone/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-pinecone` repo](https://github.com/pinecone-io/terraform-provider-pinecone/issues).",
+            "compatibility": "tfbridge20",
+            "pyproject": {}
         }
     },
-    "license": "Apache-2.0",
-    "name": "pinecone",
-    "pluginDownloadURL": "github://api.github.com/pinecone-io/pulumi-pinecone",
-    "provider": {
-        "inputProperties": {
-            "APIKey": {
-                "description": "The API token for Pinecone.",
-                "secret": true,
-                "type": "string"
+    "config": {
+        "variables": {
+            "apiKey": {
+                "type": "string",
+                "description": "Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.",
+                "defaultInfo": {
+                    "environment": [
+                        "PINECONE_API_KEY"
+                    ]
+                },
+                "secret": true
             }
-        },
-        "properties": {
-            "APIKey": {
-                "description": "The API token for Pinecone.",
-                "secret": true,
-                "type": "string"
-            }
-        }
-    },
-    "publisher": "pinecone-io",
-    "repository": "https://github.com/pinecone-io/pulumi-pinecone",
-    "resources": {
-        "pinecone:index:PineconeCollection": {
-            "inputProperties": {
-                "name": {
-                    "description": "The name of the collection to be created.",
-                    "type": "string"
-                },
-                "source": {
-                    "description": "The name of the index to be used as the source for the collection.",
-                    "type": "string"
-                }
-            },
-            "properties": {
-                "dimension": {
-                    "description": "The dimension of the vectors stored in each record held in the collection.",
-                    "type": "integer"
-                },
-                "environment": {
-                    "description": "The environment where the collection is hosted.",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "The name of the collection to be created.",
-                    "type": "string"
-                },
-                "size": {
-                    "description": "The size of the collection in bytes.",
-                    "type": "integer"
-                },
-                "source": {
-                    "description": "The name of the index to be used as the source for the collection.",
-                    "type": "string"
-                },
-                "vectorCount": {
-                    "description": "The number of records stored in the collection.",
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "name",
-                "source",
-                "size",
-                "dimension",
-                "vectorCount",
-                "environment"
-            ],
-            "requiredInputs": [
-                "name",
-                "source"
-            ]
-        },
-        "pinecone:index:PineconeIndex": {
-            "inputProperties": {
-                "dimension": {
-                    "description": "The dimensions of the vectors in the index. Defaults to 1536.",
-                    "type": "integer"
-                },
-                "metric": {
-                    "$ref": "#/types/pinecone:index:IndexMetric",
-                    "description": "The metric used to compute the distance between vectors."
-                },
-                "name": {
-                    "description": "The name of the Pinecone index.",
-                    "type": "string"
-                },
-                "spec": {
-                    "$ref": "#/types/pinecone:index:PineconeSpec",
-                    "description": "Describe how the index should be deployed."
-                }
-            },
-            "properties": {
-                "dimension": {
-                    "description": "The dimensions of the vectors in the index. Defaults to 1536.",
-                    "type": "integer"
-                },
-                "host": {
-                    "description": "The URL address where the index is hosted.",
-                    "type": "string"
-                },
-                "metric": {
-                    "$ref": "#/types/pinecone:index:IndexMetric",
-                    "description": "The metric used to compute the distance between vectors."
-                },
-                "name": {
-                    "description": "The name of the Pinecone index.",
-                    "type": "string"
-                },
-                "spec": {
-                    "$ref": "#/types/pinecone:index:PineconeSpec",
-                    "description": "Describe how the index should be deployed."
-                }
-            },
-            "required": [
-                "name",
-                "metric",
-                "spec",
-                "host"
-            ],
-            "requiredInputs": [
-                "name",
-                "metric",
-                "spec"
-            ]
         }
     },
     "types": {
-        "pinecone:index:IndexMetric": {
-            "enum": [
-                {
-                    "value": "dotproduct"
-                },
-                {
-                    "value": "cosine"
-                },
-                {
-                    "value": "euclidean"
-                }
-            ],
-            "type": "string"
-        },
-        "pinecone:index:MetaDataConfig": {
+        "pinecone:index/CollectionTimeouts:CollectionTimeouts": {
             "properties": {
-                "indexed": {
-                    "description": " Indexed By default, all metadata is indexed; to change this behavior, use this property to specify an array of metadata fields which should be indexed.",
+                "create": {
+                    "type": "string",
+                    "description": "Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+                },
+                "delete": {
+                    "type": "string",
+                    "description": "Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+                }
+            },
+            "type": "object"
+        },
+        "pinecone:index/IndexEmbed:IndexEmbed": {
+            "properties": {
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimension of the embedding model, specifying the size of the output vector.\n"
+                },
+                "fieldMap": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Identifies the name of the text field from your document model that will be embedded.\n"
+                },
+                "metric": {
+                    "type": "string",
+                    "description": "The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.\n"
+                },
+                "model": {
+                    "type": "string",
+                    "description": "the name of the embedding model to use for the index.\n"
+                },
+                "readParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The read parameters for the embedding model.\n"
+                },
+                "vectorType": {
+                    "type": "string",
+                    "description": "The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.\n"
+                },
+                "writeParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The write parameters for the embedding model.\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "dimension",
+                        "fieldMap",
+                        "metric",
+                        "model",
+                        "readParameters",
+                        "vectorType",
+                        "writeParameters"
+                    ]
+                }
+            }
+        },
+        "pinecone:index/IndexSpec:IndexSpec": {
+            "properties": {
+                "pod": {
+                    "$ref": "#/types/pinecone:index/IndexSpecPod:IndexSpecPod",
+                    "description": "Configuration needed to deploy a pod-based index.\n"
+                },
+                "serverless": {
+                    "$ref": "#/types/pinecone:index/IndexSpecServerless:IndexSpecServerless",
+                    "description": "Configuration needed to deploy a serverless index.\n"
+                }
+            },
+            "type": "object"
+        },
+        "pinecone:index/IndexSpecPod:IndexSpecPod": {
+            "properties": {
+                "environment": {
+                    "type": "string",
+                    "description": "The environment where the index is hosted.\n"
+                },
+                "metadataConfig": {
+                    "$ref": "#/types/pinecone:index/IndexSpecPodMetadataConfig:IndexSpecPodMetadataConfig",
+                    "description": "Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.\n"
+                },
+                "podType": {
+                    "type": "string",
+                    "description": "The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.\n"
+                },
+                "pods": {
+                    "type": "integer",
+                    "description": "The number of pods to be used in the index. This should be equal to shards x replicas.'\n"
+                },
+                "replicas": {
+                    "type": "integer",
+                    "description": "The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.\n"
+                },
+                "shards": {
+                    "type": "integer",
+                    "description": "The number of shards. Shards split your data across multiple pods so you can fit more data into an index.\n"
+                },
+                "sourceCollection": {
+                    "type": "string",
+                    "description": "The name of the collection to create an index from.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "environment",
+                "podType"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "environment",
+                        "metadataConfig",
+                        "podType",
+                        "pods",
+                        "replicas",
+                        "shards"
+                    ]
+                }
+            }
+        },
+        "pinecone:index/IndexSpecPodMetadataConfig:IndexSpecPodMetadataConfig": {
+            "properties": {
+                "indexeds": {
+                    "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "type": "array"
+                    "description": "The indexed fields.\n"
                 }
             },
-            "type": "object"
-        },
-        "pinecone:index:PineconePodSpec": {
-            "properties": {
-                "environment": {
-                    "description": "The environment where the index is hosted.",
-                    "type": "string"
-                },
-                "metaDataConfig": {
-                    "$ref": "#/types/pinecone:index:MetaDataConfig",
-                    "description": "Configuration for the behavior of Pinecone's internal metadata index."
-                },
-                "podType": {
-                    "description": "The type of pod to use. One of `s1`, `p1`, or `p2` appended with `.` and one of `x1`, `x2`, `x4`, or `x8`.",
-                    "type": "string"
-                },
-                "pods": {
-                    "description": "The number of pods to be used in the index. This should be equal to `shards` x `replicas`.",
-                    "type": "integer"
-                },
-                "replicas": {
-                    "description": "The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.",
-                    "type": "integer"
-                },
-                "shards": {
-                    "description": "The number of shards. Shards split your data across multiple pods so you can fit more data into an index.",
-                    "type": "integer"
-                },
-                "sourceCollection": {
-                    "description": "The name of the collection to be used as the source for the index.",
-                    "type": "string"
-                }
-            },
+            "type": "object",
             "required": [
-                "environment",
-                "replicas",
-                "podType"
-            ],
-            "type": "object"
+                "indexeds"
+            ]
         },
-        "pinecone:index:PineconeServerlessSpec": {
+        "pinecone:index/IndexSpecServerless:IndexSpecServerless": {
             "properties": {
                 "cloud": {
-                    "$ref": "#/types/pinecone:index:ServerlessSpecCloud",
-                    "description": "The public cloud where you would like your index hosted."
+                    "type": "string",
+                    "description": "The public cloud where you would like your index hosted. [gcp|aws|azure]\n"
                 },
                 "region": {
-                    "description": "The region where you would like your index to be created. Different cloud providers have different regions available.",
-                    "type": "string"
+                    "type": "string",
+                    "description": "The region where you would like your index to be created.\n"
                 }
             },
+            "type": "object",
+            "required": [
+                "cloud",
+                "region"
+            ]
+        },
+        "pinecone:index/IndexStatus:IndexStatus": {
+            "properties": {
+                "ready": {
+                    "type": "boolean",
+                    "description": "Ready.\n"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "ready",
+                        "state"
+                    ]
+                }
+            }
+        },
+        "pinecone:index/IndexTimeouts:IndexTimeouts": {
+            "properties": {
+                "create": {
+                    "type": "string",
+                    "description": "Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+                },
+                "delete": {
+                    "type": "string",
+                    "description": "Timeout defaults to 5 mins. Accepts a string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours).\n"
+                }
+            },
+            "type": "object"
+        },
+        "pinecone:index/getCollectionsCollection:getCollectionsCollection": {
+            "properties": {
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimension of the vectors stored in each record held in the collection.\n"
+                },
+                "environment": {
+                    "type": "string",
+                    "description": "The environment where the collection is hosted.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the collection.\n"
+                },
+                "size": {
+                    "type": "integer",
+                    "description": "The size of the collection in bytes.\n"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The status of the collection.\n"
+                },
+                "vectorCount": {
+                    "type": "integer",
+                    "description": "The number of records stored in the collection.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "dimension",
+                "environment",
+                "name",
+                "size",
+                "status",
+                "vectorCount"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getEmbed:getEmbed": {
+            "properties": {
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimension of the embedding model, specifying the size of the output vector.\n"
+                },
+                "fieldMap": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Identifies the name of the text field from your document model that will be embedded.\n"
+                },
+                "metric": {
+                    "type": "string",
+                    "description": "The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.\n"
+                },
+                "model": {
+                    "type": "string",
+                    "description": "the name of the embedding model to use for the index.\n"
+                },
+                "readParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The read parameters for the embedding model.\n"
+                },
+                "vectorType": {
+                    "type": "string",
+                    "description": "The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.\n"
+                },
+                "writeParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The write parameters for the embedding model.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "dimension",
+                "fieldMap",
+                "metric",
+                "model",
+                "readParameters",
+                "vectorType",
+                "writeParameters"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getEsIndex:getEsIndex": {
+            "properties": {
+                "deletionProtection": {
+                    "type": "string",
+                    "description": "Index deletion protection configuration\n"
+                },
+                "dimension": {
+                    "type": "integer",
+                    "description": "Index dimension\n"
+                },
+                "embed": {
+                    "$ref": "#/types/pinecone:index/getEsIndexEmbed:getEsIndexEmbed",
+                    "description": "Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.\n"
+                },
+                "host": {
+                    "type": "string",
+                    "description": "The URL address where the index is hosted.\n"
+                },
+                "metric": {
+                    "type": "string",
+                    "description": "Index metric\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Index name\n"
+                },
+                "spec": {
+                    "$ref": "#/types/pinecone:index/getEsIndexSpec:getEsIndexSpec",
+                    "description": "Spec\n"
+                },
+                "status": {
+                    "$ref": "#/types/pinecone:index/getEsIndexStatus:getEsIndexStatus",
+                    "description": "Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when\u003cspan pulumi-lang-nodejs=\" metadataConfig \" pulumi-lang-dotnet=\" MetadataConfig \" pulumi-lang-go=\" metadataConfig \" pulumi-lang-python=\" metadata_config \" pulumi-lang-yaml=\" metadataConfig \" pulumi-lang-java=\" metadataConfig \"\u003e metadata_config \u003c/span\u003eis present, only specified metadata fields are indexed. To specify metadata fields to index, provide an array of the following form: \u003cspan pulumi-lang-nodejs=\"[exampleMetadataField]\" pulumi-lang-dotnet=\"[ExampleMetadataField]\" pulumi-lang-go=\"[exampleMetadataField]\" pulumi-lang-python=\"[example_metadata_field]\" pulumi-lang-yaml=\"[exampleMetadataField]\" pulumi-lang-java=\"[exampleMetadataField]\"\u003e[example_metadata_field]\u003c/span\u003e\n"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, '', or '-'. Values must be alphanumeric, ';', '@', '', '-', '.', '+', or ' '. To unset a key, set the value to be an empty string.\n"
+                },
+                "vectorType": {
+                    "type": "string",
+                    "description": "Index vector type\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "deletionProtection",
+                "dimension",
+                "embed",
+                "host",
+                "metric",
+                "name",
+                "spec",
+                "status",
+                "tags",
+                "vectorType"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getEsIndexEmbed:getEsIndexEmbed": {
+            "properties": {
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimension of the embedding model, specifying the size of the output vector.\n"
+                },
+                "fieldMap": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Identifies the name of the text field from your document model that will be embedded.\n"
+                },
+                "metric": {
+                    "type": "string",
+                    "description": "The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector*type' is 'sparse', the metric must be 'dotproduct'. If the vector*type is dense, the metric defaults to 'cosine'.\n"
+                },
+                "model": {
+                    "type": "string",
+                    "description": "the name of the embedding model to use for the index.\n"
+                },
+                "readParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The read parameters for the embedding model.\n"
+                },
+                "vectorType": {
+                    "type": "string",
+                    "description": "The index vector type associated with the model. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension will be nil.\n"
+                },
+                "writeParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The write parameters for the embedding model.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "dimension",
+                "fieldMap",
+                "metric",
+                "model",
+                "readParameters",
+                "vectorType",
+                "writeParameters"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getEsIndexSpec:getEsIndexSpec": {
+            "properties": {
+                "pod": {
+                    "$ref": "#/types/pinecone:index/getEsIndexSpecPod:getEsIndexSpecPod",
+                    "description": "Configuration needed to deploy a pod-based index.\n"
+                },
+                "serverless": {
+                    "$ref": "#/types/pinecone:index/getEsIndexSpecServerless:getEsIndexSpecServerless",
+                    "description": "Configuration needed to deploy a serverless index.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "pod",
+                "serverless"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getEsIndexSpecPod:getEsIndexSpecPod": {
+            "properties": {
+                "environment": {
+                    "type": "string",
+                    "description": "The environment where the index is hosted.\n"
+                },
+                "metadataConfig": {
+                    "$ref": "#/types/pinecone:index/getEsIndexSpecPodMetadataConfig:getEsIndexSpecPodMetadataConfig",
+                    "description": "Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.\n"
+                },
+                "podType": {
+                    "type": "string",
+                    "description": "The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.\n"
+                },
+                "pods": {
+                    "type": "integer",
+                    "description": "The number of pods to be used in the index. This should be equal to shards x replicas.'\n"
+                },
+                "replicas": {
+                    "type": "integer",
+                    "description": "The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.\n"
+                },
+                "shards": {
+                    "type": "integer",
+                    "description": "The number of shards. Shards split your data across multiple pods so you can fit more data into an index.\n"
+                },
+                "sourceCollection": {
+                    "type": "string",
+                    "description": "The name of the collection to create an index from.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "environment",
+                "metadataConfig",
+                "podType",
+                "pods",
+                "replicas",
+                "shards",
+                "sourceCollection"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getEsIndexSpecPodMetadataConfig:getEsIndexSpecPodMetadataConfig": {
+            "properties": {
+                "indexeds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The indexed fields.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "indexeds"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getEsIndexSpecServerless:getEsIndexSpecServerless": {
+            "properties": {
+                "cloud": {
+                    "type": "string",
+                    "description": "Ready.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready\n"
+                }
+            },
+            "type": "object",
             "required": [
                 "cloud",
                 "region"
             ],
-            "type": "object"
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
         },
-        "pinecone:index:PineconeSpec": {
+        "pinecone:index/getEsIndexStatus:getEsIndexStatus": {
             "properties": {
-                "pod": {
-                    "$ref": "#/types/pinecone:index:PineconePodSpec",
-                    "description": "Configuration needed to deploy a pod index."
+                "ready": {
+                    "type": "boolean",
+                    "description": "Ready.\n"
                 },
-                "serverless": {
-                    "$ref": "#/types/pinecone:index:PineconeServerlessSpec",
-                    "description": "Configuration needed to deploy a serverless index."
+                "state": {
+                    "type": "string",
+                    "description": "Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready\n"
                 }
             },
-            "type": "object"
-        },
-        "pinecone:index:ServerlessSpecCloud": {
-            "enum": [
-                {
-                    "value": "aws"
-                },
-                {
-                    "value": "azure"
-                },
-                {
-                    "value": "gcp"
-                }
+            "type": "object",
+            "required": [
+                "ready",
+                "state"
             ],
-            "type": "string"
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getSpec:getSpec": {
+            "properties": {
+                "pod": {
+                    "$ref": "#/types/pinecone:index/getSpecPod:getSpecPod",
+                    "description": "Configuration needed to deploy a pod-based index.\n"
+                },
+                "serverless": {
+                    "$ref": "#/types/pinecone:index/getSpecServerless:getSpecServerless",
+                    "description": "Configuration needed to deploy a serverless index.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "pod",
+                "serverless"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getSpecPod:getSpecPod": {
+            "properties": {
+                "environment": {
+                    "type": "string",
+                    "description": "The environment where the index is hosted.\n"
+                },
+                "metadataConfig": {
+                    "$ref": "#/types/pinecone:index/getSpecPodMetadataConfig:getSpecPodMetadataConfig",
+                    "description": "Configuration for the behavior of Pinecone's internal metadata index. By default, all metadata is indexed; when metadata*config is present, only specified metadata fields are indexed. These configurations are only valid for use with pod-based indexes.\n"
+                },
+                "podType": {
+                    "type": "string",
+                    "description": "The type of pod to use. One of s1, p1, or p2 appended with . and one of x1, x2, x4, or x8.\n"
+                },
+                "pods": {
+                    "type": "integer",
+                    "description": "The number of pods to be used in the index. This should be equal to shards x replicas.'\n"
+                },
+                "replicas": {
+                    "type": "integer",
+                    "description": "The number of replicas. Replicas duplicate your index. They provide higher availability and throughput. Replicas can be scaled up or down as your needs change.\n"
+                },
+                "shards": {
+                    "type": "integer",
+                    "description": "The number of shards. Shards split your data across multiple pods so you can fit more data into an index.\n"
+                },
+                "sourceCollection": {
+                    "type": "string",
+                    "description": "The name of the collection to create an index from.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "environment",
+                "metadataConfig",
+                "podType",
+                "pods",
+                "replicas",
+                "shards",
+                "sourceCollection"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getSpecPodMetadataConfig:getSpecPodMetadataConfig": {
+            "properties": {
+                "indexeds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The indexed fields.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "indexeds"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getSpecServerless:getSpecServerless": {
+            "properties": {
+                "cloud": {
+                    "type": "string",
+                    "description": "Ready.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "cloud",
+                "region"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "pinecone:index/getStatus:getStatus": {
+            "properties": {
+                "ready": {
+                    "type": "boolean",
+                    "description": "Ready.\n"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "Initializing InitializationFailed ScalingUp ScalingDown ScalingUpPodSize ScalingDownPodSize Upgrading Terminating Ready\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "ready",
+                "state"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        }
+    },
+    "provider": {
+        "description": "The provider type for the pinecone package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+        "properties": {
+            "apiKey": {
+                "type": "string",
+                "description": "Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.",
+                "secret": true
+            }
+        },
+        "inputProperties": {
+            "apiKey": {
+                "type": "string",
+                "description": "Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.",
+                "defaultInfo": {
+                    "environment": [
+                        "PINECONE_API_KEY"
+                    ]
+                },
+                "secret": true
+            }
+        },
+        "methods": {
+            "terraformConfig": "pulumi:providers:pinecone/terraformConfig"
+        }
+    },
+    "resources": {
+        "pinecone:index/collection:Collection": {
+            "description": "The \u003cspan pulumi-lang-nodejs=\"`pinecone.Collection`\" pulumi-lang-dotnet=\"`pinecone.Collection`\" pulumi-lang-go=\"`Collection`\" pulumi-lang-python=\"`Collection`\" pulumi-lang-yaml=\"`pinecone.Collection`\" pulumi-lang-java=\"`pinecone.Collection`\"\u003e`pinecone.Collection`\u003c/span\u003e resource lets you create and manage collections in Pinecone. Learn more about collections in the docs.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pinecone from \"@pulumi/pinecone\";\n\nconst test = new pinecone.Index(\"test\", {\n    name: \"tftestindex\",\n    dimension: 10,\n    spec: {\n        pod: {\n            environment: \"us-west4-gcp\",\n            podType: \"s1.x1\",\n        },\n    },\n});\nconst testCollection = new pinecone.Collection(\"test\", {\n    name: \"tftestcollection\",\n    source: test.name,\n});\n```\n```python\nimport pulumi\nimport pulumi_pinecone as pinecone\n\ntest = pinecone.Index(\"test\",\n    name=\"tftestindex\",\n    dimension=10,\n    spec={\n        \"pod\": {\n            \"environment\": \"us-west4-gcp\",\n            \"pod_type\": \"s1.x1\",\n        },\n    })\ntest_collection = pinecone.Collection(\"test\",\n    name=\"tftestcollection\",\n    source=test.name)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Pinecone = Pulumi.Pinecone;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var test = new Pinecone.Index(\"test\", new()\n    {\n        Name = \"tftestindex\",\n        Dimension = 10,\n        Spec = new Pinecone.Inputs.IndexSpecArgs\n        {\n            Pod = new Pinecone.Inputs.IndexSpecPodArgs\n            {\n                Environment = \"us-west4-gcp\",\n                PodType = \"s1.x1\",\n            },\n        },\n    });\n\n    var testCollection = new Pinecone.Collection(\"test\", new()\n    {\n        Name = \"tftestcollection\",\n        Source = test.Name,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/pinecone/v2/pinecone\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\ttest, err := pinecone.NewIndex(ctx, \"test\", \u0026pinecone.IndexArgs{\n\t\t\tName:      pulumi.String(\"tftestindex\"),\n\t\t\tDimension: pulumi.Float64(10),\n\t\t\tSpec: \u0026pinecone.IndexSpecArgs{\n\t\t\t\tPod: \u0026pinecone.IndexSpecPodArgs{\n\t\t\t\t\tEnvironment: pulumi.String(\"us-west4-gcp\"),\n\t\t\t\t\tPodType:     pulumi.String(\"s1.x1\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = pinecone.NewCollection(ctx, \"test\", \u0026pinecone.CollectionArgs{\n\t\t\tName:   pulumi.String(\"tftestcollection\"),\n\t\t\tSource: test.Name,\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.pinecone.Index;\nimport com.pulumi.pinecone.IndexArgs;\nimport com.pulumi.pinecone.inputs.IndexSpecArgs;\nimport com.pulumi.pinecone.inputs.IndexSpecPodArgs;\nimport com.pulumi.pinecone.Collection;\nimport com.pulumi.pinecone.CollectionArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var test = new Index(\"test\", IndexArgs.builder()\n            .name(\"tftestindex\")\n            .dimension(10.0)\n            .spec(IndexSpecArgs.builder()\n                .pod(IndexSpecPodArgs.builder()\n                    .environment(\"us-west4-gcp\")\n                    .podType(\"s1.x1\")\n                    .build())\n                .build())\n            .build());\n\n        var testCollection = new Collection(\"testCollection\", CollectionArgs.builder()\n            .name(\"tftestcollection\")\n            .source(test.name())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  test:\n    type: pinecone:Index\n    properties:\n      name: tftestindex\n      dimension: 10\n      spec:\n        pod:\n          environment: us-west4-gcp\n          podType: s1.x1\n  testCollection:\n    type: pinecone:Collection\n    name: test\n    properties:\n      name: tftestcollection\n      source: ${test.name}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimension of the vectors stored in each record held in the collection.\n"
+                },
+                "environment": {
+                    "type": "string",
+                    "description": "The environment where the collection is hosted.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the collection.\n"
+                },
+                "size": {
+                    "type": "integer",
+                    "description": "The size of the collection in bytes.\n"
+                },
+                "source": {
+                    "type": "string",
+                    "description": "The name of the source index to be used as the source for the collection.\n"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The status of the collection.\n"
+                },
+                "timeouts": {
+                    "$ref": "#/types/pinecone:index/CollectionTimeouts:CollectionTimeouts"
+                },
+                "vectorCount": {
+                    "type": "integer",
+                    "description": "The number of records stored in the collection.\n"
+                }
+            },
+            "required": [
+                "dimension",
+                "environment",
+                "name",
+                "size",
+                "source",
+                "status",
+                "vectorCount"
+            ],
+            "inputProperties": {
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimension of the vectors stored in each record held in the collection.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the collection.\n"
+                },
+                "size": {
+                    "type": "integer",
+                    "description": "The size of the collection in bytes.\n"
+                },
+                "source": {
+                    "type": "string",
+                    "description": "The name of the source index to be used as the source for the collection.\n"
+                },
+                "timeouts": {
+                    "$ref": "#/types/pinecone:index/CollectionTimeouts:CollectionTimeouts"
+                },
+                "vectorCount": {
+                    "type": "integer",
+                    "description": "The number of records stored in the collection.\n"
+                }
+            },
+            "requiredInputs": [
+                "source"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Collection resources.\n",
+                "properties": {
+                    "dimension": {
+                        "type": "integer",
+                        "description": "The dimension of the vectors stored in each record held in the collection.\n"
+                    },
+                    "environment": {
+                        "type": "string",
+                        "description": "The environment where the collection is hosted.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the collection.\n"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "description": "The size of the collection in bytes.\n"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "The name of the source index to be used as the source for the collection.\n"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The status of the collection.\n"
+                    },
+                    "timeouts": {
+                        "$ref": "#/types/pinecone:index/CollectionTimeouts:CollectionTimeouts"
+                    },
+                    "vectorCount": {
+                        "type": "integer",
+                        "description": "The number of records stored in the collection.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "pinecone:index/index:Index": {
+            "description": "The \u003cspan pulumi-lang-nodejs=\"`pinecone.Index`\" pulumi-lang-dotnet=\"`pinecone.Index`\" pulumi-lang-go=\"`Index`\" pulumi-lang-python=\"`Index`\" pulumi-lang-yaml=\"`pinecone.Index`\" pulumi-lang-java=\"`pinecone.Index`\"\u003e`pinecone.Index`\u003c/span\u003e resource lets you create and manage indexes in Pinecone. Learn more about indexes in the [docs](https://docs.pinecone.io/guides/indexes/understanding-indexes).\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pinecone from \"@pulumi/pinecone\";\n\nconst test = new pinecone.Index(\"test\", {\n    name: \"tftestindex\",\n    dimension: 10,\n    spec: {\n        serverless: {\n            cloud: \"aws\",\n            region: \"us-west-2\",\n        },\n    },\n});\n```\n```python\nimport pulumi\nimport pulumi_pinecone as pinecone\n\ntest = pinecone.Index(\"test\",\n    name=\"tftestindex\",\n    dimension=10,\n    spec={\n        \"serverless\": {\n            \"cloud\": \"aws\",\n            \"region\": \"us-west-2\",\n        },\n    })\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Pinecone = Pulumi.Pinecone;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var test = new Pinecone.Index(\"test\", new()\n    {\n        Name = \"tftestindex\",\n        Dimension = 10,\n        Spec = new Pinecone.Inputs.IndexSpecArgs\n        {\n            Serverless = new Pinecone.Inputs.IndexSpecServerlessArgs\n            {\n                Cloud = \"aws\",\n                Region = \"us-west-2\",\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-terraform-provider/sdks/go/pinecone/v2/pinecone\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := pinecone.NewIndex(ctx, \"test\", \u0026pinecone.IndexArgs{\n\t\t\tName:      pulumi.String(\"tftestindex\"),\n\t\t\tDimension: pulumi.Float64(10),\n\t\t\tSpec: \u0026pinecone.IndexSpecArgs{\n\t\t\t\tServerless: \u0026pinecone.IndexSpecServerlessArgs{\n\t\t\t\t\tCloud:  pulumi.String(\"aws\"),\n\t\t\t\t\tRegion: pulumi.String(\"us-west-2\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.pinecone.Index;\nimport com.pulumi.pinecone.IndexArgs;\nimport com.pulumi.pinecone.inputs.IndexSpecArgs;\nimport com.pulumi.pinecone.inputs.IndexSpecServerlessArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var test = new Index(\"test\", IndexArgs.builder()\n            .name(\"tftestindex\")\n            .dimension(10.0)\n            .spec(IndexSpecArgs.builder()\n                .serverless(IndexSpecServerlessArgs.builder()\n                    .cloud(\"aws\")\n                    .region(\"us-west-2\")\n                    .build())\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  test:\n    type: pinecone:Index\n    properties:\n      name: tftestindex\n      dimension: 10\n      spec:\n        serverless:\n          cloud: aws\n          region: us-west-2\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "deletionProtection": {
+                    "type": "string",
+                    "description": "Whether deletion protection for the index is enabled. You can use 'enabled', or 'disabled'.\n"
+                },
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimensions of the vectors to be inserted in the index\n"
+                },
+                "embed": {
+                    "$ref": "#/types/pinecone:index/IndexEmbed:IndexEmbed",
+                    "description": "Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.\n"
+                },
+                "host": {
+                    "type": "string",
+                    "description": "The URL address where the index is hosted."
+                },
+                "metric": {
+                    "type": "string",
+                    "description": "The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector_type' is 'sparse', the metric must be 'dotproduct'. If the\u003cspan pulumi-lang-nodejs=\" vectorType \" pulumi-lang-dotnet=\" VectorType \" pulumi-lang-go=\" vectorType \" pulumi-lang-python=\" vector_type \" pulumi-lang-yaml=\" vectorType \" pulumi-lang-java=\" vectorType \"\u003e vector_type \u003c/span\u003eis dense, the metric defaults to 'cosine'."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the index to be created. The maximum length is 45 characters.\n"
+                },
+                "spec": {
+                    "$ref": "#/types/pinecone:index/IndexSpec:IndexSpec",
+                    "description": "Spec"
+                },
+                "status": {
+                    "$ref": "#/types/pinecone:index/IndexStatus:IndexStatus",
+                    "description": "Status"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, '', or '-'. Values must be alphanumeric, ';', '@', '', '-', '.', '+', or ' '. To unset a key, set the value to be an empty string."
+                },
+                "timeouts": {
+                    "$ref": "#/types/pinecone:index/IndexTimeouts:IndexTimeouts"
+                },
+                "vectorType": {
+                    "type": "string",
+                    "description": "The index vector type. You can use 'dense' or 'sparse'. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension should not be specified."
+                }
+            },
+            "required": [
+                "deletionProtection",
+                "dimension",
+                "embed",
+                "host",
+                "metric",
+                "name",
+                "status",
+                "tags",
+                "vectorType"
+            ],
+            "inputProperties": {
+                "deletionProtection": {
+                    "type": "string",
+                    "description": "Whether deletion protection for the index is enabled. You can use 'enabled', or 'disabled'.\n"
+                },
+                "dimension": {
+                    "type": "integer",
+                    "description": "The dimensions of the vectors to be inserted in the index\n"
+                },
+                "embed": {
+                    "$ref": "#/types/pinecone:index/IndexEmbed:IndexEmbed",
+                    "description": "Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.\n"
+                },
+                "metric": {
+                    "type": "string",
+                    "description": "The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector_type' is 'sparse', the metric must be 'dotproduct'. If the\u003cspan pulumi-lang-nodejs=\" vectorType \" pulumi-lang-dotnet=\" VectorType \" pulumi-lang-go=\" vectorType \" pulumi-lang-python=\" vector_type \" pulumi-lang-yaml=\" vectorType \" pulumi-lang-java=\" vectorType \"\u003e vector_type \u003c/span\u003eis dense, the metric defaults to 'cosine'."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the index to be created. The maximum length is 45 characters.\n"
+                },
+                "spec": {
+                    "$ref": "#/types/pinecone:index/IndexSpec:IndexSpec",
+                    "description": "Spec"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, '', or '-'. Values must be alphanumeric, ';', '@', '', '-', '.', '+', or ' '. To unset a key, set the value to be an empty string."
+                },
+                "timeouts": {
+                    "$ref": "#/types/pinecone:index/IndexTimeouts:IndexTimeouts"
+                },
+                "vectorType": {
+                    "type": "string",
+                    "description": "The index vector type. You can use 'dense' or 'sparse'. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension should not be specified."
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Index resources.\n",
+                "properties": {
+                    "deletionProtection": {
+                        "type": "string",
+                        "description": "Whether deletion protection for the index is enabled. You can use 'enabled', or 'disabled'.\n"
+                    },
+                    "dimension": {
+                        "type": "integer",
+                        "description": "The dimensions of the vectors to be inserted in the index\n"
+                    },
+                    "embed": {
+                        "$ref": "#/types/pinecone:index/IndexEmbed:IndexEmbed",
+                        "description": "Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.\n"
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "The URL address where the index is hosted."
+                    },
+                    "metric": {
+                        "type": "string",
+                        "description": "The distance metric to be used for similarity search. You can use 'euclidean', 'cosine', or 'dotproduct'. If the 'vector_type' is 'sparse', the metric must be 'dotproduct'. If the\u003cspan pulumi-lang-nodejs=\" vectorType \" pulumi-lang-dotnet=\" VectorType \" pulumi-lang-go=\" vectorType \" pulumi-lang-python=\" vector_type \" pulumi-lang-yaml=\" vectorType \" pulumi-lang-java=\" vectorType \"\u003e vector_type \u003c/span\u003eis dense, the metric defaults to 'cosine'."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the index to be created. The maximum length is 45 characters.\n"
+                    },
+                    "spec": {
+                        "$ref": "#/types/pinecone:index/IndexSpec:IndexSpec",
+                        "description": "Spec"
+                    },
+                    "status": {
+                        "$ref": "#/types/pinecone:index/IndexStatus:IndexStatus",
+                        "description": "Status"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Custom user tags added to an index. Keys must be 80 characters or less. Values must be 120 characters or less. Keys must be alphanumeric, '', or '-'. Values must be alphanumeric, ';', '@', '', '-', '.', '+', or ' '. To unset a key, set the value to be an empty string."
+                    },
+                    "timeouts": {
+                        "$ref": "#/types/pinecone:index/IndexTimeouts:IndexTimeouts"
+                    },
+                    "vectorType": {
+                        "type": "string",
+                        "description": "The index vector type. You can use 'dense' or 'sparse'. If 'dense', the vector dimension must be specified. If 'sparse', the vector dimension should not be specified."
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "functions": {
+        "pinecone:index/get:get": {
+            "description": "Index data source\n\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking get.\n",
+                "properties": {
+                    "embed": {
+                        "$ref": "#/types/pinecone:index/getEmbed:getEmbed",
+                        "description": "Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Index name\n"
+                    },
+                    "spec": {
+                        "$ref": "#/types/pinecone:index/getSpec:getSpec"
+                    },
+                    "status": {
+                        "$ref": "#/types/pinecone:index/getStatus:getStatus"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by get.\n",
+                "properties": {
+                    "deletionProtection": {
+                        "type": "string"
+                    },
+                    "dimension": {
+                        "type": "integer"
+                    },
+                    "embed": {
+                        "$ref": "#/types/pinecone:index/getEmbed:getEmbed",
+                        "description": "Specify the integrated inference embedding configuration for the index. Once set, the model cannot be changed. However, you can later update the embedding configuration—including field map, read parameters, and write parameters.\n"
+                    },
+                    "host": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "metric": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Index name\n",
+                        "type": "string"
+                    },
+                    "spec": {
+                        "$ref": "#/types/pinecone:index/getSpec:getSpec"
+                    },
+                    "status": {
+                        "$ref": "#/types/pinecone:index/getStatus:getStatus"
+                    },
+                    "tags": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "type": "object"
+                    },
+                    "vectorType": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "deletionProtection",
+                    "dimension",
+                    "embed",
+                    "host",
+                    "id",
+                    "metric",
+                    "name",
+                    "spec",
+                    "status",
+                    "tags",
+                    "vectorType"
+                ],
+                "type": "object"
+            }
+        },
+        "pinecone:index/getCollection:getCollection": {
+            "description": "Collection data source\n\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getCollection.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the collection.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getCollection.\n",
+                "properties": {
+                    "dimension": {
+                        "description": "The dimension of the vectors stored in each record held in the collection.\n",
+                        "type": "integer"
+                    },
+                    "environment": {
+                        "description": "The environment where the collection is hosted.\n",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Collection identifier\n",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of the collection.\n",
+                        "type": "string"
+                    },
+                    "size": {
+                        "description": "The size of the collection in bytes.\n",
+                        "type": "integer"
+                    },
+                    "status": {
+                        "description": "The status of the collection.\n",
+                        "type": "string"
+                    },
+                    "vectorCount": {
+                        "description": "The number of records stored in the collection.\n",
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "dimension",
+                    "environment",
+                    "id",
+                    "name",
+                    "size",
+                    "status",
+                    "vectorCount"
+                ],
+                "type": "object"
+            }
+        },
+        "pinecone:index/getCollections:getCollections": {
+            "description": "Collections data source\n\n",
+            "outputs": {
+                "description": "A collection of values returned by getCollections.\n",
+                "properties": {
+                    "collections": {
+                        "description": "List of the collections in your project\n",
+                        "items": {
+                            "$ref": "#/types/pinecone:index/getCollectionsCollection:getCollectionsCollection"
+                        },
+                        "type": "array"
+                    },
+                    "id": {
+                        "description": "Collections identifier\n",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "collections",
+                    "id"
+                ],
+                "type": "object"
+            }
+        },
+        "pinecone:index/getEs:getEs": {
+            "description": "Indexes data source\n\n",
+            "outputs": {
+                "description": "A collection of values returned by getEs.\n",
+                "properties": {
+                    "id": {
+                        "description": "Indexes identifier\n",
+                        "type": "string"
+                    },
+                    "indexes": {
+                        "description": "List of the indexes in your project\n",
+                        "items": {
+                            "$ref": "#/types/pinecone:index/getEsIndex:getEsIndex"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "id",
+                    "indexes"
+                ],
+                "type": "object"
+            }
+        },
+        "pulumi:providers:pinecone/terraformConfig": {
+            "description": "This function returns a Terraform config object with terraform-namecased keys,to be used with the Terraform Module Provider.",
+            "inputs": {
+                "properties": {
+                    "__self__": {
+                        "type": "ref",
+                        "$ref": "#/provider"
+                    }
+                },
+                "type": "pulumi:providers:pinecone/terraformConfig",
+                "required": [
+                    "__self__"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "result": {
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "result"
+                ],
+                "type": "object"
+            }
         }
     }
 }

@@ -1,0 +1,6 @@
+name: pinecone-yaml
+runtime: dotnet
+plugins:
+  providers:
+    - name: pinecone
+      path: ../../bin
