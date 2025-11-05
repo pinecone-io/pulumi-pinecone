@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/pinecone-io/pulumi-pinecone/provider/pkg/version"
+	"github.com/pinecone-io/pulumi-pinecone/provider/v2/pkg/version"
 	"github.com/pinecone-io/terraform-provider-pinecone/shim"
 	pftfbridge "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
@@ -136,7 +136,7 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
-				fmt.Sprintf("github.com/pinecone-io/pulumi-%[1]s/sdk/v2/", mainPkg),
+				fmt.Sprintf("github.com/pinecone-io/pulumi-%[1]s/sdk/", mainPkg),
 				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
 				mainPkg,
