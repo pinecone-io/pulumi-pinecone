@@ -27,11 +27,10 @@ signs:
   - cmd: cosign
     env:
       - COSIGN_EXPERIMENTAL=1
-    certificate: '${artifact}.pem'
+    signature: "${artifact}.sigstore.json"
     args:
       - sign-blob
       - '-y'
-      - '--output-certificate=${certificate}'
       - '--bundle=${signature}'
       - '${artifact}'
     artifacts: all
