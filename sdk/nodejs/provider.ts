@@ -29,6 +29,14 @@ export class Provider extends pulumi.ProviderResource {
      * Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
      */
     declare public readonly apiKey: pulumi.Output<string | undefined>;
+    /**
+     * Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+     */
+    declare public readonly clientId: pulumi.Output<string | undefined>;
+    /**
+     * Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+     */
+    declare public readonly clientSecret: pulumi.Output<string | undefined>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -42,9 +50,11 @@ export class Provider extends pulumi.ProviderResource {
         opts = opts || {};
         {
             resourceInputs["apiKey"] = (args?.apiKey ? pulumi.secret(args.apiKey) : undefined) ?? utilities.getEnv("PINECONE_API_KEY");
+            resourceInputs["clientId"] = (args?.clientId ? pulumi.secret(args.clientId) : undefined) ?? utilities.getEnv("PINECONE_CLIENT_ID");
+            resourceInputs["clientSecret"] = (args?.clientSecret ? pulumi.secret(args.clientSecret) : undefined) ?? utilities.getEnv("PINECONE_CLIENT_SECRET");
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["apiKey"] };
+        const secretOpts = { additionalSecretOutputs: ["apiKey", "clientId", "clientSecret"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
     }
@@ -67,6 +77,14 @@ export interface ProviderArgs {
      * Pinecone API Key. Can be configured by setting PINECONE_API_KEY environment variable.
      */
     apiKey?: pulumi.Input<string>;
+    /**
+     * Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+     */
+    clientId?: pulumi.Input<string>;
+    /**
+     * Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+     */
+    clientSecret?: pulumi.Input<string>;
 }
 
 export namespace Provider {

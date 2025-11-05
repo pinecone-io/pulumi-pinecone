@@ -5,6 +5,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
+export { ApiKeyArgs, ApiKeyState } from "./apiKey";
+export type ApiKey = import("./apiKey").ApiKey;
+export const ApiKey: typeof import("./apiKey").ApiKey = null as any;
+utilities.lazyLoad(exports, ["ApiKey"], () => require("./apiKey"));
+
 export { CollectionArgs, CollectionState } from "./collection";
 export type Collection = import("./collection").Collection;
 export const Collection: typeof import("./collection").Collection = null as any;
@@ -52,6 +57,8 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "pinecone:index/apiKey:ApiKey":
+                return new ApiKey(name, <any>undefined, { urn })
             case "pinecone:index/collection:Collection":
                 return new Collection(name, <any>undefined, { urn })
             case "pinecone:index/index:Index":
@@ -61,6 +68,7 @@ const _module = {
         }
     },
 };
+pulumi.runtime.registerResourceModule("pinecone", "index/apiKey", _module)
 pulumi.runtime.registerResourceModule("pinecone", "index/collection", _module)
 pulumi.runtime.registerResourceModule("pinecone", "index/index", _module)
 pulumi.runtime.registerResourcePackage("pinecone", {

@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/blang/semver"
-	"github.com/pinecone-io/pulumi-pinecone/sdk/go/pinecone/internal"
+	"github.com/pinecone-io/pulumi-pinecone/sdk/v2/go/pinecone/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -21,6 +21,8 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "pinecone:index/apiKey:ApiKey":
+		r = &ApiKey{}
 	case "pinecone:index/collection:Collection":
 		r = &Collection{}
 	case "pinecone:index/index:Index":
@@ -56,6 +58,11 @@ func init() {
 	if err != nil {
 		version = semver.Version{Major: 1}
 	}
+	pulumi.RegisterResourceModule(
+		"pinecone",
+		"index/apiKey",
+		&module{version},
+	)
 	pulumi.RegisterResourceModule(
 		"pinecone",
 		"index/collection",

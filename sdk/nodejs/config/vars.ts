@@ -18,3 +18,25 @@ Object.defineProperty(exports, "apiKey", {
     enumerable: true,
 });
 
+/**
+ * Pinecone Client ID for admin operations. Can be configured by setting PINECONE_CLIENT_ID environment variable.
+ */
+export declare const clientId: string | undefined;
+Object.defineProperty(exports, "clientId", {
+    get() {
+        return __config.get("clientId") ?? utilities.getEnv("PINECONE_CLIENT_ID");
+    },
+    enumerable: true,
+});
+
+/**
+ * Pinecone Client Secret for admin operations. Can be configured by setting PINECONE_CLIENT_SECRET environment variable.
+ */
+export declare const clientSecret: string | undefined;
+Object.defineProperty(exports, "clientSecret", {
+    get() {
+        return __config.get("clientSecret") ?? utilities.getEnv("PINECONE_CLIENT_SECRET");
+    },
+    enumerable: true,
+});
+

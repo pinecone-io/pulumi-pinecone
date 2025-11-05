@@ -1,4 +1,4 @@
-module github.com/pinecone-io/pulumi-pinecone/examples
+module github.com/pinecone-io/pulumi-pinecone/examples/v2
 
 go 1.23.0
 

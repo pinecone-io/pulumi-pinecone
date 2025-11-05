@@ -1,4 +1,4 @@
-module github.com/pinecone-io/pulumi-pinecone/provider
+module github.com/pinecone-io/pulumi-pinecone/provider/v2
 
 go 1.24.7
 
@@ -8,6 +8,7 @@ replace (
 )
 
 require (
+	github.com/pinecone-io/pulumi-pinecone/provider v0.0.0-20240509211302-39cdd174a9e7
 	github.com/pinecone-io/terraform-provider-pinecone/shim v0.0.0
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.116.0
 )
@@ -58,7 +59,6 @@ require (
 	github.com/go-git/go-git/v5 v5.16.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/gofrs/uuid v4.3.1+incompatible // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/glog v1.2.5 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
@@ -131,8 +131,8 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pgavlin/fx v0.1.6 // indirect
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386 // indirect
-	github.com/pinecone-io/go-pinecone/v3 v3.1.0 // indirect
-	github.com/pinecone-io/terraform-provider-pinecone v1.0.0 // indirect
+	github.com/pinecone-io/go-pinecone/v4 v4.1.3 // indirect
+	github.com/pinecone-io/terraform-provider-pinecone v1.0.1-0.20250815120509-23c938a23f33 // indirect
 	github.com/pjbgf/sha1cd v0.3.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/term v1.1.0 // indirect
