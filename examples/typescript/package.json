@@ -5,7 +5,7 @@
 	},
 	"dependencies": {
 		"typescript": "^4.0.0",
-		"@pulumi/pulumi": "^3.0.0",
+		"@pulumi/pulumi": "^3.217.1",
 		"@pinecone-database/pulumi": "0.4.3+dirty"
 	}
 }
