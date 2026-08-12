@@ -1,0 +1,172 @@
+name: test
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # Fast core gate: compile the bridged provider (pulls in the terraform-bridge
+  # and the upstream terraform-provider-pinecone), regenerate the Pulumi schema,
+  # and fail if the checked-in generated schema drifts. This is the primary guard
+  # for dependency bumps -- a broken or behavior-changing dependency shows up here.
+  build_provider:
+    name: build provider + schema drift
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+        with:
+          # Full history + tags so `pulumictl get version` works.
+          fetch-depth: 0
+      - name: Setup mise
+        uses: jdx/mise-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          cache_save: false
+      - name: Install Go
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
+        with:
+          go-version: ${{ matrix.goversion }}
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@d7ceb0215da5a14ec84f50b703365ddf0194a9c8 # tag=v6.6.0
+        with:
+          pulumi-version: 3.205.0
+      - name: Build provider (tfgen + provider binary)
+        run: make provider
+      - name: Check generated schema is up to date
+        run: |
+          # `make provider` regenerates these tracked, generated files. If they
+          # differ from what is committed, the schema is stale -- regenerate
+          # locally with `make provider` and commit the result.
+          files="provider/cmd/pulumi-resource-pinecone/schema.json provider/cmd/pulumi-resource-pinecone/bridge-metadata.json"
+          if ! git diff --exit-code -- $files; then
+            echo "::error::Generated schema is out of date. Run 'make provider' locally and commit the changes to $files"
+            exit 1
+          fi
+    strategy:
+      fail-fast: true
+      matrix:
+        goversion:
+          - 1.24.x
+
+  # Verify every language SDK still generates cleanly from the (regenerated)
+  # schema. Mirrors the release workflow's SDK build, minus publishing. Catches
+  # codegen breakage a dependency bump can introduce per language.
+  build_sdks:
+    name: build ${{ matrix.language }} SDK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+        with:
+          fetch-depth: 0
+      - name: Setup mise
+        uses: jdx/mise-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          cache_save: false
+      - name: Install Go
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
+        with:
+          go-version: ${{ matrix.goversion }}
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@d7ceb0215da5a14ec84f50b703365ddf0194a9c8 # tag=v6.6.0
+        with:
+          pulumi-version: 3.205.0
+      - name: Setup Node
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # tag=v6.0.0
+        with:
+          node-version: ${{ matrix.nodeversion }}
+      - name: Setup DotNet
+        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # tag=v2.1.0
+        with:
+          dotnet-version: ${{ matrix.dotnetversion }}
+      - name: Setup Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # tag=v6.0.0
+        with:
+          python-version: ${{ matrix.pythonversion }}
+      - name: Build SDK
+        run: make build_${{ matrix.language }}
+      - name: Check worktree clean
+        run: |
+          git update-index -q --refresh
+          if ! git diff-files --quiet; then
+              >&2 echo "error: working tree is not clean after generating the ${{ matrix.language }} SDK, aborting!"
+              git status
+              git diff
+              exit 1
+          fi
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - nodejs
+          - python
+          - dotnet
+          - go
+        dotnetversion:
+          - 3.1.301
+        goversion:
+          - 1.24.x
+        nodeversion:
+          - 24.x
+        pythonversion:
+          - "3.9"
+
+  # Static analysis of the provider code with the golangci-lint version pinned
+  # in mise.toml. Config lives in .golangci.yml (golangci-lint v2 format).
+  lint:
+    name: lint provider
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+        with:
+          fetch-depth: 0
+      - name: Setup mise
+        uses: jdx/mise-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          cache_save: false
+      - name: Install Go
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
+        with:
+          go-version: ${{ matrix.goversion }}
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@d7ceb0215da5a14ec84f50b703365ddf0194a9c8 # tag=v6.6.0
+        with:
+          pulumi-version: 3.205.0
+      - name: Lint provider
+        run: make lint_provider
+    strategy:
+      fail-fast: false
+      matrix:
+        goversion:
+          - 1.24.x
