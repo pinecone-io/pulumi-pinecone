@@ -30,6 +30,12 @@ jobs:
         with:
           # Full history + tags so `pulumictl get version` works.
           fetch-depth: 0
+      - name: Setup mise
+        uses: jdx/mise-action@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          cache_save: false
       - name: Install Go
         uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
         with:
@@ -87,6 +93,12 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
         with:
           fetch-depth: 0
+      - name: Setup mise
+        uses: jdx/mise-action@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          cache_save: false
       - name: Install Go
         uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
         with:
@@ -130,9 +142,8 @@ jobs:
         pythonversion:
           - "3.9"
 
-  # Static analysis of the provider code. golangci-lint is installed directly
-  # (not via mise) to avoid the flaky mise binary download, but the version is
-  # still read from mise.toml so that file stays the single source of truth.
+  # Static analysis of the provider code with the golangci-lint version pinned
+  # in mise.toml. Config lives in .golangci.yml (golangci-lint v2 format).
   lint:
     name: lint provider
     runs-on: ubuntu-latest
@@ -141,25 +152,16 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
         with:
           fetch-depth: 0
+      - name: Setup mise
+        uses: jdx/mise-action@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cache_key: "mise-{{platform}}-{{file_hash}}"
+          cache_save: false
       - name: Install Go
         uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
         with:
           go-version: ${{ matrix.goversion }}
-      - name: Install golangci-lint (version pinned in mise.toml)
-        run: |
-          version="$(grep -E '^\s*golangci-lint' mise.toml | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')"
-          if [ -z "$version" ]; then echo "::error::could not read golangci-lint version from mise.toml"; exit 1; fi
-          bindir="$(go env GOPATH)/bin"
-          echo "Installing golangci-lint v$version to $bindir"
-          for attempt in 1 2 3; do
-            if curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh \
-                | sh -s -- -b "$bindir" "v$version"; then
-              break
-            fi
-            echo "install attempt $attempt failed; retrying in 5s..."; sleep 5
-          done
-          echo "$bindir" >> "$GITHUB_PATH"
-          "$bindir/golangci-lint" version
       - name: Install pulumictl
         uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
         with:
