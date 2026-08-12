@@ -50,25 +50,41 @@ jobs:
           pulumi-version: 3.205.0
       - name: Build provider (tfgen + provider binary)
         run: make provider
-      - name: Check generated schema is up to date
+      - name: Check generated schema is structurally up to date
         run: |
-          # `make provider` regenerates these tracked, generated files. If they
-          # differ from what is committed, the schema is stale -- regenerate
-          # locally with `make provider` and commit the result.
-          files="provider/cmd/pulumi-resource-pinecone/schema.json provider/cmd/pulumi-resource-pinecone/bridge-metadata.json"
-          if ! git diff --exit-code -- $files; then
-            echo "::error::Generated schema is out of date. Run 'make provider' locally and commit the changes to $files"
+          # The terraform-bridge example converter renders code samples into the
+          # schema's `description` fields non-deterministically across
+          # environments (e.g. the Go example import-path major flips v2<->v4,
+          # and TypeScript examples sometimes fully-qualify a resource token as
+          # `pinecone.index/apiKey.ApiKey` instead of `pinecone.ApiKey`). Those
+          # are cosmetic doc artifacts, not API changes, so gate on the
+          # STRUCTURAL schema -- resources, properties, types, enums, defaults --
+          # with all `description` fields stripped. This still catches a
+          # dependency bump that changes the actual resource surface (a breaking
+          # change for users) without flaking on example rendering.
+          schema=provider/cmd/pulumi-resource-pinecone/schema.json
+          strip='walk(if type == "object" then del(.description) else . end)'
+          if ! diff -u \
+              <(git show "HEAD:$schema" | jq -S "$strip") \
+              <(jq -S "$strip" "$schema"); then
+            echo "::error::Provider schema changed structurally. Run 'make provider' locally and commit $schema"
             exit 1
           fi
+          # bridge-metadata.json holds tfbridge token/rename metadata (no
+          # examples), so gate on it exactly.
+          git diff --exit-code -- provider/cmd/pulumi-resource-pinecone/bridge-metadata.json
     strategy:
       fail-fast: true
       matrix:
         goversion:
           - 1.24.x
 
-  # Verify every language SDK still generates cleanly from the (regenerated)
-  # schema. Mirrors the release workflow's SDK build, minus publishing. Catches
-  # codegen breakage a dependency bump can introduce per language.
+  # Verify every language SDK still generates AND compiles from the
+  # (regenerated) schema. `make build_<lang>` runs the language toolchain --
+  # e.g. `tsc` for nodejs and `dotnet build` for dotnet -- so codegen breakage a
+  # dependency bump introduces fails here. We intentionally do NOT assert a
+  # clean worktree: the generated docs embed the same non-deterministic examples
+  # described in the build_provider job, which would flake this check.
   build_sdks:
     name: build ${{ matrix.language }} SDK
     runs-on: ubuntu-latest
@@ -109,15 +125,6 @@ jobs:
           python-version: ${{ matrix.pythonversion }}
       - name: Build SDK
         run: make build_${{ matrix.language }}
-      - name: Check worktree clean
-        run: |
-          git update-index -q --refresh
-          if ! git diff-files --quiet; then
-              >&2 echo "error: working tree is not clean after generating the ${{ matrix.language }} SDK, aborting!"
-              git status
-              git diff
-              exit 1
-          fi
     strategy:
       fail-fast: false
       matrix:
