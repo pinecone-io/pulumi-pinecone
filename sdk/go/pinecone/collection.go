@@ -21,7 +21,7 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-terraform-provider/sdks/go/pinecone/v2/pinecone"
+//	"github.com/pulumi/pulumi-terraform-provider/sdks/go/pinecone/v4/pinecone"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //
 // )
