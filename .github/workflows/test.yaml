@@ -140,7 +140,7 @@ jobs:
         nodeversion:
           - 24.x
         pythonversion:
-          - "3.9"
+          - "3.11"
 
   # Static analysis of the provider code with the golangci-lint version pinned
   # in mise.toml. Config lives in .golangci.yml (golangci-lint v2 format).
