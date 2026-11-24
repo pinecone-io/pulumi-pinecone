@@ -29,35 +29,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
       - name: Unshallow clone for tags
         run: git fetch --prune --unshallow --tags
       - name: Setup mise
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # tag=v5.3.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           cache_key: "mise-{{platform}}-{{file_hash}}"
           # only saving the cache in the prerequisites job
           cache_save: false
       - name: Install Go
-        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
+        uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # tag=v7.1.0
         with:
           go-version: ${{matrix.goversion}}
       - name: Install pulumictl
-        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
+        uses: jaxxstorm/action-install-gh-release@b82b2052fdf822192f2119b7e289a6f63e668bc8 # tag=v4.0.0
         with:
           repo: pulumi/pulumictl
       - name: Set PreRelease Version
         run: echo "GORELEASER_CURRENT_TAG=v$(pulumictl get version --language generic)" >> $GITHUB_ENV
-      - uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
-      - uses: anchore/sbom-action/download-syft@8e94d75ddd33f69f691467e42275782e4bfefe84 # v0.20.9
+      - uses: sigstore/cosign-installer@881c63bd87e38389154debd8331404ce7ca8a3ab # v4.1.4
+      - uses: anchore/sbom-action/download-syft@dfcb83b97731532d72be422cbc51ee64adb6fd56 # v0.24.4
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # tag=v6.4.0
+        uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # tag=v7.3.0
         with:
           args: -p 3 release --clean
           version: '~> v2'
       - name: Create tag
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # tag=v8.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # tag=v9.0.0
         with:
           script: |
             github.rest.git.createRef({
@@ -77,39 +77,39 @@ jobs:
     needs: publish_binary
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
       - name: Unshallow clone for tags
         run: git fetch --prune --unshallow --tags
       - name: Setup mise
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # tag=v5.3.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           cache_key: "mise-{{platform}}-{{file_hash}}"
           # only saving the cache in the prerequisites job
           cache_save: false
       - name: Install Go
-        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # tag=v6.0.0
+        uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # tag=v7.1.0
         with:
           go-version: ${{ matrix.goversion }}
       - name: Install pulumictl
-        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # tag=v2.1.0
+        uses: jaxxstorm/action-install-gh-release@b82b2052fdf822192f2119b7e289a6f63e668bc8 # tag=v4.0.0
         with:
           repo: pulumi/pulumictl
       - name: Install Pulumi CLI
-        uses: pulumi/actions@d7ceb0215da5a14ec84f50b703365ddf0194a9c8 # tag=v6.6.0
+        uses: pulumi/actions@96c7761824268174e0d2a4e8c7d75671eebd24a7 # tag=v7.1.0
         with:
           pulumi-version: 3.205.0
       - name: Setup Node
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # tag=v6.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # tag=v7.1.0
         with:
           node-version: ${{matrix.nodeversion}}
           registry-url: ${{env.NPM_REGISTRY_URL}}
       - name: Setup DotNet
-        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # tag=v2.1.0
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # tag=v6.1.0
         with:
           dotnet-version: ${{matrix.dotnetverson}}
       - name: Setup Python
-        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # tag=v6.0.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # tag=v7.1.0
         with:
           python-version: ${{matrix.pythonversion}}
       - name: Build SDK
@@ -125,11 +125,11 @@ jobs:
           fi
       - if: ${{ matrix.language == 'python' && env.PUBLISH_PYPI == 'true' }}
         name: Publish package to PyPI
-        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # tag=v1.13.0
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # tag=v1.14.3
         with:
           user: ${{ env.PYPI_USERNAME }}
           password: ${{ env.PYPI_PASSWORD }}
-          packages_dir: ${{github.workspace}}/sdk/python/bin/dist
+          packages-dir: ${{github.workspace}}/sdk/python/bin/dist
       - if: ${{ matrix.language == 'nodejs' && env.PUBLISH_NPM == 'true' }}
         uses: JS-DevTools/npm-publish@7f8fe47b3bea1be0c3aec2b717c5ec1f3e03410b # tag=v4.1.1
         with:
