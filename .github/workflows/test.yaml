@@ -134,7 +134,7 @@ jobs:
           - dotnet
           - go
         dotnetversion:
-          - 3.1.301
+          - 8.0.x
         goversion:
           - 1.26.x
         nodeversion:
